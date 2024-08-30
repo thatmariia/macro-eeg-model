@@ -1,0 +1,24 @@
+src.utils
+=========
+
+.. py:module:: src.utils
+
+.. autoapi-nested-parse::
+
+   utils
+   ------
+   This package contains the utility functions (for plotting and path handling).
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/utils/hidden_prints/index
+   /autoapi/src/utils/paths/index
+   /autoapi/src/utils/plotting_setup/index
+
+

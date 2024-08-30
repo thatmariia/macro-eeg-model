@@ -1,0 +1,184 @@
+src.config.connectivity_model
+=============================
+
+.. py:module:: src.config.connectivity_model
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.config.connectivity_model.ConnectivityModel
+
+
+Module Contents
+---------------
+
+.. py:class:: ConnectivityModel(given_nodes, relay_station)
+
+   A class to model the connectivity between brain nodes. It computes
+   distances and connectivity weights between nodes, with optional
+   relay stations.
+
+   .. attribute:: nodes
+
+      The processed list of nodes used in the model.
+
+      :type: list
+
+   .. attribute:: nr_nodes
+
+      The total number of nodes in the model.
+
+      :type: int
+
+   .. attribute:: distances
+
+      The matrix of distances between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: connectivity_weights
+
+      The matrix of connectivity weights between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _given_nodes
+
+      The list of nodes provided for the connectivity model.
+
+      :type: list
+
+   .. attribute:: _relay_station
+
+      The relay station node name, if any.
+
+      :type: str
+
+   .. attribute:: _relay_nodes
+
+      The list of relay nodes derived from the relay station, if applicable.
+
+      :type: list
+
+   .. attribute:: _relay_indices
+
+      The indices of the relay nodes in the connectivity model.
+
+      :type: list
+
+   .. attribute:: _nodes_indices
+
+      A dictionary mapping each node to its corresponding indices.
+
+      :type: dict
+
+   .. attribute:: _avg_counts
+
+      The average counts of connections between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _avg_fc
+
+      The average functional connectivity between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _avg_lengths
+
+      The average distances (lengths) between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _relay_distances
+
+      The dictionary of average distances between nodes and the relay station.
+
+      :type: dict
+
+
+   .. py:method:: __init__(given_nodes, relay_station)
+
+      Initializes the ConnectivityModel with given nodes and an optional relay station.
+
+      :param given_nodes: The list of nodes to be used in the connectivity model.
+      :type given_nodes: list
+      :param relay_station: The relay station name (or None).
+      :type relay_station: str
+
+
+
+   .. py:method:: set_connectivity(custom_connectivity)
+
+      Assigns streamline lengths to the distances matrix (relayed, if applicable) and
+      weights to the connectivity matrix based on either
+      custom-provided values or default calculations based on functional connectivity (FC).
+
+      The values for a pair of nodes are extracted from :py:meth:`_get_pair_stats`.
+
+      :param custom_connectivity: If True, attempts to load and use custom connectivity weights from
+                                  `connectivity_weights.csv` file in the configs path (see :py:class:`src.utils.paths.Paths`).
+      :type custom_connectivity: bool
+
+      :raises AssertionError: If the shape of the custom connectivity matrix is incorrect or the matrix has been incorrectly constructed.
+
+
+
+   .. py:method:: _get_pair_stats(node1, node2)
+
+      Retrieves statistics for a pair of nodes, including counts, functional connectivity, and distances.
+
+      :param node1: The name of the first node.
+      :type node1: str
+      :param node2: The name of the second node.
+      :type node2: str
+
+      :returns: A tuple containing lists of counts, functional connectivity values,
+                and distances between the two nodes.
+      :rtype: tuple
+
+
+
+   .. py:method:: _init_relay_distances()
+
+      Calculates and stores the average distance between each node
+      and the relay station, if a relay station is specified.
+
+
+
+   .. py:method:: _init_nodes()
+
+      Initializes and processes nodes using :py:meth:`src.config.nodes_processor.NodesProcessor.get_nodes_indices`.
+
+
+
+   .. py:method:: _init_connectivity()
+
+      Initializes the connectivity matrix and distances between nodes.
+
+      It creates matrices for distances and connectivity weights
+      between nodes, initializing with zeros or tuples as appropriate
+      (depending on whether there is a relay station) and NaNs on the diagonal.
+
+
+
+   .. py:method:: _load_data()
+
+      Loads precomputed connectivity data such as counts, functional connectivity,
+      and streamline lengths between nodes from the connectivity data path
+      (see :py:class:`src.utils.paths.Paths`).
+
+
+
+   .. py:method:: _init_data()
+
+      Checks if the necessary structural and functional connectivity data files exist.
+      If the files are found, it loads them; otherwise, it triggers the data preparation
+      process using :py:class:`src.data_prep.data_preparator.DataPreparator`
+      and then loads the prepared data.
+
+
+

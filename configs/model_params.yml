@@ -1,0 +1,15 @@
+nodes:
+  "frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus"
+relay_station: "none"
+sample_rate: 1000
+t_lags: 300
+t_secs: 500
+t_burnit: 10
+noise_color: "white"
+std_noise: 1950
+dist_shape: -0.25
+dist_scale: 0.09
+dist_location: 0.25
+dist_trunc_percent: 0.0
+model_name: "Simulated macro EEG model"
+custom_connectivity: True

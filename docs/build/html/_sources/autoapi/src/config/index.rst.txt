@@ -1,0 +1,26 @@
+src.config
+==========
+
+.. py:module:: src.config
+
+.. autoapi-nested-parse::
+
+   config
+   -------
+   This package contains the configuration files for the simulation.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/config/configs/index
+   /autoapi/src/config/connectivity_model/index
+   /autoapi/src/config/model_config/index
+   /autoapi/src/config/nodes_processor/index
+   /autoapi/src/config/parser/index
+
+

@@ -1,0 +1,190 @@
+src.config.model_config
+=======================
+
+.. py:module:: src.config.model_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.config.model_config.ModelConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: ModelConfig(nodes: list[str], relay_station: Optional[str], sample_rate: int, t_lags: int, t_secs: int, t_burnit: int, noise_color: str, std_noise: int, dist_shape: float, dist_scale: float, dist_location: float, dist_trunc_percent: float, custom_connectivity=False)
+
+   A class to configure parameters and model the connectivity between brain nodes, including
+   the distances, connectivity weights, and the generation of delays.
+
+   .. attribute:: nodes
+
+      The list of processed nodes used in the model.
+
+      :type: list[str]
+
+   .. attribute:: nr_nodes
+
+      The total number of nodes in the model.
+
+      :type: int
+
+   .. attribute:: relay_station
+
+      The relay station node name, if any.
+
+      :type: str, optional
+
+   .. attribute:: sample_rate
+
+      The sampling rate of the model, in Hz.
+
+      :type: int
+
+   .. attribute:: nr_lags
+
+      The number of time lags calculated based on the sample rate and the total time (ms) in lags.
+
+      :type: int
+
+   .. attribute:: t_secs
+
+      The total time of the simulation in seconds.
+
+      :type: int
+
+   .. attribute:: t_burnit
+
+      The burn-in time for the simulation, in seconds.
+
+      :type: int
+
+   .. attribute:: noise_color
+
+      The color of the noise to be used in the simulation.
+
+      :type: str
+
+   .. attribute:: std_noise
+
+      The standard deviation of the noise to be used in the simulation.
+
+      :type: int
+
+   .. attribute:: distances
+
+      A matrix containing the distances between the nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: connectivity_weights
+
+      A matrix containing the connectivity weights between the nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: delay_calculator
+
+      An instance of the :py:class:`src.simulation.delay_calculator.DelayCalculator` class used to calculate delay distributions.
+
+      :type: DelayCalculator
+
+   .. attribute:: _dist_shape
+
+      The shape parameter for the delay distribution (xi in GEV distribution).
+
+      :type: float
+
+   .. attribute:: _dist_scale
+
+      The scale parameter for the delay distribution (sigma in GEV distribution).
+
+      :type: float
+
+   .. attribute:: _dist_location
+
+      The location parameter for the delay distribution (mu in GEV distribution).
+
+      :type: float
+
+   .. attribute:: _truncation_percentile
+
+      The percentile at which to truncate the delay distribution.
+
+      :type: float
+
+
+   .. py:method:: __init__(nodes: list[str], relay_station: Optional[str], sample_rate: int, t_lags: int, t_secs: int, t_burnit: int, noise_color: str, std_noise: int, dist_shape: float, dist_scale: float, dist_location: float, dist_trunc_percent: float, custom_connectivity=False)
+
+      Initializes the ModelConfig with specified parameters for nodes, connectivity,
+      simulation, and delay distribution.
+
+      :param nodes: The list of nodes to be used in the connectivity model.
+      :type nodes: list[str]
+      :param relay_station: The relay station name, if any.
+      :type relay_station: str, optional
+      :param sample_rate: The sampling rate of the model, in Hz.
+      :type sample_rate: int
+      :param t_lags: The total time in lags for the simulation.
+      :type t_lags: int
+      :param t_secs: The total time of the simulation in seconds.
+      :type t_secs: int
+      :param t_burnit: The burn-in time for the simulation, in seconds.
+      :type t_burnit: int
+      :param noise_color: The color of the noise to be used in the simulation.
+      :type noise_color: str
+      :param std_noise: The standard deviation of the noise to be used in the simulation.
+      :type std_noise: int
+      :param dist_shape: The shape parameter for the delay distribution (xi in GEV distribution).
+      :type dist_shape: float
+      :param dist_scale: The scale parameter for the delay distribution (sigma in GEV distribution).
+      :type dist_scale: float
+      :param dist_location: The location parameter for the delay distribution (mu in GEV distribution).
+      :type dist_location: float
+      :param dist_trunc_percent: The percentile at which to truncate the delay distribution.
+      :type dist_trunc_percent: float
+      :param custom_connectivity: If True, use custom connectivity weights from a pre-specified file.
+      :type custom_connectivity: bool, optional
+
+
+
+   .. py:method:: __str__()
+
+      Returns a string representation of the ModelConfig object, including details
+      about the nodes, connectivity, simulation parameters, and GEV distribution parameters.
+
+      :returns: A formatted string representation of the ModelConfig object.
+      :rtype: str
+
+
+
+   .. py:method:: plot(plots_dir)
+
+      Plots (using :py:meth:`_plot_properties`) the connectivity model's distances
+      (summed through the relay, if applicable) and normalized weights matrices using heatmaps.
+
+      :param plots_dir: The directory where the plots are saved.
+      :type plots_dir: pathlib.Path
+
+      :raises AssertionError: If the plots directory does not exist.
+
+
+
+   .. py:method:: _plot_properties(matrix, title, plots_dir, factor=1.0)
+
+      Helper method to plot a heatmap of a given matrix with specified properties.
+
+      :param matrix: The matrix to be plotted as a heatmap.
+      :type matrix: numpy.ndarray
+      :param title: The title for the plot, used to label the saved file.
+      :type title: str
+      :param plots_dir: The directory where the plots are saved.
+      :type plots_dir: pathlib.Path
+      :param factor: A scaling factor applied to the matrix values (default is 1.0).
+      :type factor: float, optional
+
+
+

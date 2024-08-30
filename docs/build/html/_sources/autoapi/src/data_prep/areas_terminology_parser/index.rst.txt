@@ -1,0 +1,39 @@
+src.data_prep.areas_terminology_parser
+======================================
+
+.. py:module:: src.data_prep.areas_terminology_parser
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.data_prep.areas_terminology_parser.AreasTerminologyParser
+
+
+Module Contents
+---------------
+
+.. py:class:: AreasTerminologyParser
+
+   A class to parse the Julich hierarchical parcellation terminology into a dictionary.
+
+
+   .. py:method:: parse_into_dict()
+      :staticmethod:
+
+
+      Parses the `areas_terminology.json` file located in the Julich data path
+      (see :py:class:`src.utils.paths.Paths`) into a nested dictionary.
+
+      The method reads a JSON file containing the hierarchical structure of
+      brain areas, processes the data, and returns it in a clean dictionary
+      format.
+
+      :returns: A nested dictionary where each key represents a brain area and its
+                corresponding children areas are stored as values.
+      :rtype: dict
+
+
+

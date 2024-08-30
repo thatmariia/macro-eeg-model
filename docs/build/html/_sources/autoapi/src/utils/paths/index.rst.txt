@@ -1,0 +1,80 @@
+src.utils.paths
+===============
+
+.. py:module:: src.utils.paths
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.utils.paths.paths
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.utils.paths.Paths
+
+
+Module Contents
+---------------
+
+.. py:class:: Paths(base_dir=None)
+
+   A class responsible for managing directory paths used in the project.
+   It ensures that the necessary directories exist, creating them if they do not.
+
+   .. attribute:: base_dir
+
+      The base directory for all project-related paths. Defaults to the current working directory.
+
+      :type: pathlib.Path
+
+   .. attribute:: configs_path
+
+      The path to the 'configs' directory, used for storing configuration files.
+
+      :type: pathlib.Path
+
+   .. attribute:: connectivity_data_path
+
+      The path to the 'connectivity_data' directory, used for storing connectivity-related data.
+
+      :type: pathlib.Path
+
+   .. attribute:: julich_data_path
+
+      The path to the 'julich_brain_data' directory, used for storing Julich brain data.
+
+      :type: pathlib.Path
+
+   .. attribute:: plots_path
+
+      The path to the 'plots' directory, used for storing generated plots.
+
+      :type: pathlib.Path
+
+   .. attribute:: output_path
+
+      The path to the 'output' directory, used for storing output files and results.
+
+      :type: pathlib.Path
+
+
+   .. py:method:: __init__(base_dir=None)
+
+      Initializes the Paths object, setting up the base directory and subdirectories.
+
+      :param base_dir: The base directory for the project. If not provided, the current working directory is used.
+      :type base_dir: str or pathlib.Path, optional
+
+      :raises AssertionError: If the 'configs' or 'julich_brain_data' directories do not exist within the base directory.
+
+
+
+.. py:data:: paths
+

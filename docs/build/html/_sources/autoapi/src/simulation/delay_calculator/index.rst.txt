@@ -1,0 +1,123 @@
+src.simulation.delay_calculator
+===============================
+
+.. py:module:: src.simulation.delay_calculator
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.delay_calculator.DelayCalculator
+
+
+Module Contents
+---------------
+
+.. py:class:: DelayCalculator(shape_param, scale_param, location_param, truncation_percentile)
+
+   A class to calculate delay distributions based on distance and various statistical parameters.
+   The delay is modeled using inverse generalized extreme value (GEV) distributions.
+
+   .. attribute:: _shape_param
+
+      The shape parameter (xi) for the GEV distribution.
+
+      :type: float
+
+   .. attribute:: _scale_param
+
+      The scale parameter (sigma) for the GEV distribution.
+
+      :type: float
+
+   .. attribute:: _location_param
+
+      The location parameter (mu) for the GEV distribution.
+
+      :type: float
+
+   .. attribute:: _truncation_percentile
+
+      The percentile at which to truncate the resulting delay distribution.
+
+      :type: float
+
+   .. attribute:: _velocity_factor
+
+      A constant velocity factor (= 6) used to calculate the scale coefficient from the distance.
+      Expressed in meters per second per micron diameter.
+
+      :type: float
+
+
+   .. py:method:: __init__(shape_param, scale_param, location_param, truncation_percentile)
+
+      Initializes the DelayCalculator with specified parameters for the GEV distribution
+      and the truncation percentile.
+
+      :param shape_param: The shape parameter (xi) for the GEV distribution.
+      :type shape_param: float
+      :param scale_param: The scale parameter (sigma) for the GEV distribution.
+      :type scale_param: float
+      :param location_param: The location parameter (mu) for the GEV distribution.
+      :type location_param: float
+      :param truncation_percentile: The percentile at which to truncate the resulting delay distribution. Must be in the range [0, 1).
+      :type truncation_percentile: float
+
+
+
+   .. py:method:: get_delays_distribution(tempx, distance)
+
+      Generates a probability density function (PDF) for delays using inverse GEV distributions.
+      The distributions are also scaled with parameter computed by :py:meth:`_calculate_scale_coefficient`.
+
+      Depending on whether the distance is a single value or a tuple (in case of a relay station),
+      it either sums inverse GEV distributions or uses a single inverse GEV distribution
+      (see :py:class:`src.simulation.distributions.LagDistributions` and
+      :py:class:`src.simulation.distributions.DistributionFactory`).
+      It then truncates the resulting PDF using :py:meth:`_truncate_result`.
+
+      :param tempx: The array of time points (x-axis) over which to calculate the delay distribution.
+      :type tempx: numpy.ndarray
+      :param distance: The distance(s) over which to calculate the delay. If a tuple, the method will use
+                       the sum of two inverse GEV distributions.
+      :type distance: float or tuple
+
+      :returns: The truncated probability density function (PDF) representing the delay distribution.
+      :rtype: numpy.ndarray
+
+      :raises AssertionError: If the distribution cannot be created.
+
+
+
+   .. py:method:: _calculate_scale_coefficient(distance)
+
+      Calculates the scale coefficient for the GEV distribution based on the given distance.
+
+      :param distance: The distance for which to calculate the scale coefficient.
+      :type distance: float
+
+      :returns: The scale coefficient used in the GEV distribution.
+      :rtype: float
+
+
+
+   .. py:method:: _truncate_result(tempx, result)
+
+      Truncates the PDF by setting values beyond a certain index to zero, based on the cumulative
+      distribution function (CDF) and the truncation percentile.
+
+      :param tempx: The array of time points (x-axis) corresponding to the PDF.
+      :type tempx: numpy.ndarray
+      :param result: The PDF to be truncated.
+      :type result: numpy.ndarray
+
+      :returns: The truncated PDF.
+      :rtype: numpy.ndarray
+
+      :raises AssertionError: If the truncation percentile is outside the valid range [0, 1).
+
+
+

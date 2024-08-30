@@ -1,0 +1,61 @@
+src.simulation.global_simulation
+================================
+
+.. py:module:: src.simulation.global_simulation
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.global_simulation.GlobalSimulation
+
+
+Module Contents
+---------------
+
+.. py:class:: GlobalSimulation(config)
+
+   A class responsible for orchestrating the entire simulation process.
+   It integrates the development of a stationary model, the simulation of EEG data, data processing, and data analysis.
+
+   The class uses:
+   - :py:class:`src.simulation.stationary_model_developer.StationaryModelDeveloper` to create a stationary model from the provided configuration.
+   - :py:class:`src.simulation.simulator.Simulator` to generate synthetic EEG data based on the model.
+   - :py:class:`src.simulation.data_processor.DataProcessor` to filter and segment the simulated data.
+   - :py:class:`src.simulation.eeg_analyzer.EEGAnalyzer` to calculate and plot the power spectrum of the EEG data.
+   - :py:class:`src.simulation.simulation_info.SimulationInfo` to save the simulation results.
+
+
+   .. py:method:: __init__(config)
+
+      Initializes the GlobalSimulation class with the provided configuration.
+
+      :param config: The configuration object containing parameters for the simulation
+                     (instance of the :py:class:`src.config.model_config.ModelConfig` class).
+      :type config: ModelConfig
+
+
+
+   .. py:method:: run(save_data=False, make_plots=False, verbose=False, simulation_name=None)
+
+      Runs the global simulation process, including model development, data simulation, processing, analysis, and optional saving/plotting.
+
+      :param save_data: If True, saves the simulation results (default is False).
+      :type save_data: bool, optional
+      :param make_plots: If True, generates and saves plots of the connectivity and power spectrum (default is False).
+      :type make_plots: bool, optional
+      :param verbose: If True, displays progress bars and detailed information during the simulation (default is False).
+      :type verbose: bool, optional
+      :param simulation_name: The name of the simulation, used for saving the results (default is None).
+      :type simulation_name: str, optional
+
+      :returns: A tuple containing:
+                - simulation_data (numpy.ndarray): The simulated EEG data.
+                - frequencies (numpy.ndarray): The array of frequencies corresponding to the power spectrum.
+                - power (numpy.ndarray): The power spectrum of the simulated EEG data.
+      :rtype: tuple
+
+
+

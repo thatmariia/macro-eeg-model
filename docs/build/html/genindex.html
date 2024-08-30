@@ -1,0 +1,1359 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+
+    <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 --><title>Index - macro-eeg-model 0.1 documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">macro-eeg-model 0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">macro-eeg-model 0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_access.html">Data Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="autoapi/src/index.html">src</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of src</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/src/config/index.html">src.config</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of src.config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/config/configs/index.html">src.config.configs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/config/connectivity_model/index.html">src.config.connectivity_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/config/model_config/index.html">src.config.model_config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/config/nodes_processor/index.html">src.config.nodes_processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/config/parser/index.html">src.config.parser</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/src/data_prep/index.html">src.data_prep</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of src.data_prep</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/data_prep/areas_terminology_parser/index.html">src.data_prep.areas_terminology_parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/data_prep/data_preparator/index.html">src.data_prep.data_preparator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/data_prep/labels/index.html">src.data_prep.labels</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/src/evaluation/index.html">src.evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of src.evaluation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/evaluation/alphawaves_data_extractor/index.html">src.evaluation.alphawaves_data_extractor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/evaluation/coherence_computer/index.html">src.evaluation.coherence_computer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/evaluation/evaluator/index.html">src.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/evaluation/simulation_data_extractor/index.html">src.evaluation.simulation_data_extractor</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/src/simulation/index.html">src.simulation</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of src.simulation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/data_processor/index.html">src.simulation.data_processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/delay_calculator/index.html">src.simulation.delay_calculator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/distributions/index.html">src.simulation.distributions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/eeg_analyzer/index.html">src.simulation.eeg_analyzer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/global_simulation/index.html">src.simulation.global_simulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/simulation_info/index.html">src.simulation.simulation_info</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/simulator/index.html">src.simulation.simulator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/simulation/stationary_model_developer/index.html">src.simulation.stationary_model_developer</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/src/utils/index.html">src.utils</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of src.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/utils/hidden_prints/index.html">src.utils.hidden_prints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/utils/paths/index.html">src.utils.paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/src/utils/plotting_setup/index.html">src.utils.plotting_setup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/src/evaluate/index.html">src.evaluate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/src/simulate/index.html">src.simulate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#J"><strong>J</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#X"><strong>X</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/utils/hidden_prints/index.html#src.utils.hidden_prints.HiddenPrints.__enter__">__enter__() (src.utils.hidden_prints.HiddenPrints method)</a>
+</li>
+        <li><a href="autoapi/src/utils/hidden_prints/index.html#src.utils.hidden_prints.HiddenPrints.__exit__">__exit__() (src.utils.hidden_prints.HiddenPrints method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel.__init__">__init__() (src.config.connectivity_model.ConnectivityModel method)</a>
+
+        <ul>
+          <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.__init__">(src.config.model_config.ModelConfig method)</a>
+</li>
+          <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor.__init__">(src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+          <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser.__init__">(src.config.parser.Parser method)</a>
+</li>
+          <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.__init__">(src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor method)</a>
+</li>
+          <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer.__init__">(src.evaluation.coherence_computer.CoherenceComputer method)</a>
+</li>
+          <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator.__init__">(src.evaluation.evaluator.Evaluator method)</a>
+</li>
+          <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor.__init__">(src.evaluation.simulation_data_extractor.SimulationDataExtractor method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator.__init__">(src.simulation.delay_calculator.DelayCalculator method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV.__init__">(src.simulation.distributions.InverseGEV method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum.__init__">(src.simulation.distributions.InverseGEVSum method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/global_simulation/index.html#src.simulation.global_simulation.GlobalSimulation.__init__">(src.simulation.global_simulation.GlobalSimulation method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.__init__">(src.simulation.simulation_info.SimulationInfo method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator.__init__">(src.simulation.simulator.Simulator method)</a>
+</li>
+          <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper.__init__">(src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+          <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.__init__">(src.utils.paths.Paths method)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.__str__">__str__() (src.config.model_config.ModelConfig method)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._add_arguments">_add_arguments() (src.config.parser.Parser method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._adjust_connectivity_weights">_adjust_connectivity_weights() (src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor._areas_dict">_areas_dict (src.config.nodes_processor.NodesProcessor attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV._argcheck">_argcheck() (src.simulation.distributions.InverseGEV method)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum._argcheck">(src.simulation.distributions.InverseGEVSum method)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._avg_counts">_avg_counts (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._avg_fc">_avg_fc (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._avg_lengths">_avg_lengths (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator._calculate_avg_array">_calculate_avg_array() (src.data_prep.data_preparator.DataPreparator static method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._calculate_lag_connectivity_weights">_calculate_lag_connectivity_weights() (src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._calculate_scale_coefficient">_calculate_scale_coefficient() (src.simulation.delay_calculator.DelayCalculator method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV._cdf">_cdf() (src.simulation.distributions.InverseGEV method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._channels_all">_channels_all (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer._compute_coherence">_compute_coherence() (src.evaluation.coherence_computer.CoherenceComputer method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._connectivity_weights">_connectivity_weights (src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator._convert_csv_file_to_numpy_array">_convert_csv_file_to_numpy_array() (src.data_prep.data_preparator.DataPreparator static method)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_custom_connectivity">_default_custom_connectivity (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_dist_location">_default_dist_location (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_dist_scale">_default_dist_scale (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_dist_shape">_default_dist_shape (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_dist_trunc_percent">_default_dist_trunc_percent (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_model_name">_default_model_name (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_nodes">_default_nodes (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_noise_color">_default_noise_color (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_relay_station">_default_relay_station (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_sample_rate">_default_sample_rate (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_std_noise">_default_std_noise (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_t_burnit">_default_t_burnit (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_t_lags">_default_t_lags (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._default_t_secs">_default_t_secs (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._delay_calculator">_delay_calculator (src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._delays_x">_delays_x (src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig._dist_location">_dist_location (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig._dist_scale">_dist_scale (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig._dist_shape">_dist_shape (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._distances">_distances (src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._electrode_positions">_electrode_positions (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._evaluate_coherence_node_pair">_evaluate_coherence_node_pair() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._evaluate_metric">_evaluate_metric() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._evaluate_power_node">_evaluate_power_node() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator._extract_csv_files">_extract_csv_files() (src.data_prep.data_preparator.DataPreparator static method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._extract_real_data">_extract_real_data() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor._find_final_generation_children">_find_final_generation_children() (src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._frequencies">_frequencies (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator._get_arrays_from_files">_get_arrays_from_files() (src.data_prep.data_preparator.DataPreparator method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._get_ax">_get_ax() (src.evaluation.evaluator.Evaluator static method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._get_event_data_per_subject">_get_event_data_per_subject() (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum._get_kde">_get_kde() (src.simulation.distributions.InverseGEVSum method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._get_lag_distribution">_get_lag_distribution() (src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._get_nodes">_get_nodes() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor._get_nodes_and_indices">_get_nodes_and_indices() (src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._get_pair_stats">_get_pair_stats() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_data">_get_processed_simulations_data() (src.evaluation.simulation_data_extractor.SimulationDataExtractor static method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_power">_get_processed_simulations_power() (src.evaluation.simulation_data_extractor.SimulationDataExtractor static method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._get_psd_per_subject_channel_event">_get_psd_per_subject_channel_event() (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._get_real_coherences_per_subject">_get_real_coherences_per_subject() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._get_simulated_coherences">_get_simulated_coherences() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._get_simulated_power">_get_simulated_power() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_data_per_node">_get_simulations_data_per_node() (src.evaluation.simulation_data_extractor.SimulationDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_info">_get_simulations_info() (src.evaluation.simulation_data_extractor.SimulationDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_power_per_node">_get_simulations_power_per_node() (src.evaluation.simulation_data_extractor.SimulationDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._get_time_series_per_subject_channel_event">_get_time_series_per_subject_channel_event() (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._given_nodes">_given_nodes (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._init_connectivity">_init_connectivity() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._init_data">_init_data() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._init_nodes">_init_nodes() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._init_relay_distances">_init_relay_distances() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor._initialize_nodes_and_indices">_initialize_nodes_and_indices() (src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._is_stationary">_is_stationary() (src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum._kde">_kde (src.simulation.distributions.InverseGEVSum attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._lag_connectivity_weights">_lag_connectivity_weights (src.simulation.simulator.Simulator attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._load_data">_load_data() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._load_yaml">_load_yaml() (src.config.parser.Parser static method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._location_param">_location_param (src.simulation.delay_calculator.DelayCalculator attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._nodes">_nodes (src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._nodes_indices">_nodes_indices (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._noise_color">_noise_color (src.simulation.simulator.Simulator attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._nr_lags">_nr_lags (src.simulation.simulator.Simulator attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._nr_lags">(src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._nr_nodes">_nr_nodes (src.simulation.simulator.Simulator attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._nr_nodes">(src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo._output_dir">_output_dir (src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._parse_nodes">_parse_nodes() (src.config.parser.Parser static method)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._parse_relay_station">_parse_relay_station() (src.config.parser.Parser static method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV._pdf">_pdf() (src.simulation.distributions.InverseGEV method)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum._pdf">(src.simulation.distributions.InverseGEVSum method)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._plot_metric">_plot_metric() (src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig._plot_properties">_plot_properties() (src.config.model_config.ModelConfig method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._plot_real_data">_plot_real_data() (src.evaluation.evaluator.Evaluator static method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._plot_simulated_data">_plot_simulated_data() (src.evaluation.evaluator.Evaluator static method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor._populate_nodes_indices">_populate_nodes_indices() (src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV._ppf">_ppf() (src.simulation.distributions.InverseGEV method)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator._prep_and_save_data">_prep_and_save_data() (src.data_prep.data_preparator.DataPreparator method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor._process_nodes">_process_nodes() (src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._real_avg_time_series">_real_avg_time_series (src.evaluation.evaluator.Evaluator attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._real_frequencies">_real_frequencies (src.evaluation.evaluator.Evaluator attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator._real_powers">_real_powers (src.evaluation.evaluator.Evaluator attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._relay_distances">_relay_distances (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._relay_indices">_relay_indices (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._relay_nodes">_relay_nodes (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel._relay_station">_relay_station (src.config.connectivity_model.ConnectivityModel attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV._rvs">_rvs() (src.simulation.distributions.InverseGEV method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._sample_rate">_sample_rate (src.simulation.simulator.Simulator attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._sample_rate">(src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._scale_param">_scale_param (src.simulation.delay_calculator.DelayCalculator attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._shape_param">_shape_param (src.simulation.delay_calculator.DelayCalculator attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer._smooth_signal">_smooth_signal() (src.evaluation.coherence_computer.CoherenceComputer method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._std_noise">_std_noise (src.simulation.simulator.Simulator attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor._subject_epochs">_subject_epochs (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._t_burnit">_t_burnit (src.simulation.simulator.Simulator attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator._t_secs">_t_secs (src.simulation.simulator.Simulator attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper._tempx">_tempx (src.simulation.stationary_model_developer.StationaryModelDeveloper attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._truncate_result">_truncate_result() (src.simulation.delay_calculator.DelayCalculator method)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig._truncation_percentile">_truncation_percentile (src.config.model_config.ModelConfig attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._truncation_percentile">(src.simulation.delay_calculator.DelayCalculator attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser._validate_args">_validate_args() (src.config.parser.Parser static method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator._velocity_factor">_velocity_factor (src.simulation.delay_calculator.DelayCalculator attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer._window_type">_window_type (src.evaluation.coherence_computer.CoherenceComputer attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator.alpha_waves_data_extractor">alpha_waves_data_extractor (src.evaluation.evaluator.Evaluator attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor">AlphaWavesDataExtractor (class in src.evaluation.alphawaves_data_extractor)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/areas_terminology_parser/index.html#src.data_prep.areas_terminology_parser.AreasTerminologyParser">AreasTerminologyParser (class in src.data_prep.areas_terminology_parser)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.base_dir">base_dir (src.utils.paths.Paths attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/eeg_analyzer/index.html#src.simulation.eeg_analyzer.EEGAnalyzer.calculate_power">calculate_power() (src.simulation.eeg_analyzer.EEGAnalyzer static method)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.channels_collections">channels_collections (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer">CoherenceComputer (class in src.evaluation.coherence_computer)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.COLOR_MAP">COLOR_MAP (in module src.utils.plotting_setup)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.COLORS">COLORS (in module src.utils.plotting_setup)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer.compute_coherence_matched">compute_coherence_matched() (src.evaluation.coherence_computer.CoherenceComputer method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.configs_path">configs_path (src.utils.paths.Paths attribute)</a>
+</li>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.connectivity_data_path">connectivity_data_path (src.utils.paths.Paths attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel.connectivity_weights">connectivity_weights (src.config.connectivity_model.ConnectivityModel attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.connectivity_weights">(src.config.model_config.ModelConfig attribute)</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.connectivity_weights">(src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel">ConnectivityModel (class in src.config.connectivity_model)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator">DataPreparator (class in src.data_prep.data_preparator)</a>
+</li>
+        <li><a href="autoapi/src/simulation/data_processor/index.html#src.simulation.data_processor.DataProcessor">DataProcessor (class in src.simulation.data_processor)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.dataset">dataset (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.delay_calculator">delay_calculator (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator">DelayCalculator (class in src.simulation.delay_calculator)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper.develop">develop() (src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel.distances">distances (src.config.connectivity_model.ConnectivityModel attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.distances">(src.config.model_config.ModelConfig attribute)</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.distances">(src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.DistributionFactory">DistributionFactory (class in src.simulation.distributions)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/eeg_analyzer/index.html#src.simulation.eeg_analyzer.EEGAnalyzer">EEGAnalyzer (class in src.simulation.eeg_analyzer)</a>
+</li>
+        <li><a href="autoapi/src/evaluate/index.html#src.evaluate.evaluate">evaluate() (in module src.evaluate)</a>
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator.evaluate">(src.evaluation.evaluator.Evaluator method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator">Evaluator (class in src.evaluation.evaluator)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator.event">event (src.evaluation.evaluator.Evaluator attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/data_processor/index.html#src.simulation.data_processor.DataProcessor.filter_data">filter_data() (src.simulation.data_processor.DataProcessor static method)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.font_path">font_path (in module src.utils.plotting_setup)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator.frequencies">frequencies (src.evaluation.evaluator.Evaluator attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.frequencies">(src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.fs">fs (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/coherence_computer/index.html#src.evaluation.coherence_computer.CoherenceComputer.fs">(src.evaluation.coherence_computer.CoherenceComputer attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/delay_calculator/index.html#src.simulation.delay_calculator.DelayCalculator.get_delays_distribution">get_delays_distribution() (src.simulation.delay_calculator.DelayCalculator method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.DistributionFactory.get_distribution">get_distribution() (src.simulation.distributions.DistributionFactory static method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor.get_nodes_indices">get_nodes_indices() (src.config.nodes_processor.NodesProcessor method)</a>
+</li>
+        <li><a href="autoapi/src/config/configs/index.html#src.config.configs.get_parsed_args">get_parsed_args() (in module src.config.configs)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/configs/index.html#src.config.configs.get_simulate_config">get_simulate_config() (in module src.config.configs)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.get_time_series_per_subject_collection_event">get_time_series_per_subject_collection_event() (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor method)</a>
+</li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor.given_nodes">given_nodes (src.config.nodes_processor.NodesProcessor attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/global_simulation/index.html#src.simulation.global_simulation.GlobalSimulation">GlobalSimulation (class in src.simulation.global_simulation)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/utils/hidden_prints/index.html#src.utils.hidden_prints.HiddenPrints">HiddenPrints (class in src.utils.hidden_prints)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.LagDistributions.INVERSE_GEV">INVERSE_GEV (src.simulation.distributions.LagDistributions attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.LagDistributions.INVERSE_GEV_SUM">INVERSE_GEV_SUM (src.simulation.distributions.LagDistributions attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV">InverseGEV (class in src.simulation.distributions)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum">InverseGEVSum (class in src.simulation.distributions)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="J" class="genindex-section">
+  <h2>J</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.julich_data_path">julich_data_path (src.utils.paths.Paths attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/data_prep/labels/index.html#src.data_prep.labels.labels_julich">labels_julich (in module src.data_prep.labels)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.lag_connectivity_weights">lag_connectivity_weights (src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.LagDistributions">LagDistributions (class in src.simulation.distributions)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV.lmbd">lmbd (src.simulation.distributions.InverseGEV attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum.lmbd1">lmbd1 (src.simulation.distributions.InverseGEVSum attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum.lmbd2">lmbd2 (src.simulation.distributions.InverseGEVSum attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.load_simulation_info">load_simulation_info() (src.simulation.simulation_info.SimulationInfo method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig">ModelConfig (class in src.config.model_config)</a>
+</li>
+        <li>
+    module
+
+        <ul>
+          <li><a href="autoapi/src/index.html#module-src">src</a>
+</li>
+          <li><a href="autoapi/src/config/index.html#module-src.config">src.config</a>
+</li>
+          <li><a href="autoapi/src/config/configs/index.html#module-src.config.configs">src.config.configs</a>
+</li>
+          <li><a href="autoapi/src/config/connectivity_model/index.html#module-src.config.connectivity_model">src.config.connectivity_model</a>
+</li>
+          <li><a href="autoapi/src/config/model_config/index.html#module-src.config.model_config">src.config.model_config</a>
+</li>
+          <li><a href="autoapi/src/config/nodes_processor/index.html#module-src.config.nodes_processor">src.config.nodes_processor</a>
+</li>
+          <li><a href="autoapi/src/config/parser/index.html#module-src.config.parser">src.config.parser</a>
+</li>
+          <li><a href="autoapi/src/data_prep/index.html#module-src.data_prep">src.data_prep</a>
+</li>
+          <li><a href="autoapi/src/data_prep/areas_terminology_parser/index.html#module-src.data_prep.areas_terminology_parser">src.data_prep.areas_terminology_parser</a>
+</li>
+          <li><a href="autoapi/src/data_prep/data_preparator/index.html#module-src.data_prep.data_preparator">src.data_prep.data_preparator</a>
+</li>
+          <li><a href="autoapi/src/data_prep/labels/index.html#module-src.data_prep.labels">src.data_prep.labels</a>
+</li>
+          <li><a href="autoapi/src/evaluate/index.html#module-src.evaluate">src.evaluate</a>
+</li>
+          <li><a href="autoapi/src/evaluation/index.html#module-src.evaluation">src.evaluation</a>
+</li>
+          <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#module-src.evaluation.alphawaves_data_extractor">src.evaluation.alphawaves_data_extractor</a>
+</li>
+          <li><a href="autoapi/src/evaluation/coherence_computer/index.html#module-src.evaluation.coherence_computer">src.evaluation.coherence_computer</a>
+</li>
+          <li><a href="autoapi/src/evaluation/evaluator/index.html#module-src.evaluation.evaluator">src.evaluation.evaluator</a>
+</li>
+          <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#module-src.evaluation.simulation_data_extractor">src.evaluation.simulation_data_extractor</a>
+</li>
+          <li><a href="autoapi/src/simulate/index.html#module-src.simulate">src.simulate</a>
+</li>
+          <li><a href="autoapi/src/simulation/index.html#module-src.simulation">src.simulation</a>
+</li>
+          <li><a href="autoapi/src/simulation/data_processor/index.html#module-src.simulation.data_processor">src.simulation.data_processor</a>
+</li>
+          <li><a href="autoapi/src/simulation/delay_calculator/index.html#module-src.simulation.delay_calculator">src.simulation.delay_calculator</a>
+</li>
+          <li><a href="autoapi/src/simulation/distributions/index.html#module-src.simulation.distributions">src.simulation.distributions</a>
+</li>
+          <li><a href="autoapi/src/simulation/eeg_analyzer/index.html#module-src.simulation.eeg_analyzer">src.simulation.eeg_analyzer</a>
+</li>
+          <li><a href="autoapi/src/simulation/global_simulation/index.html#module-src.simulation.global_simulation">src.simulation.global_simulation</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#module-src.simulation.simulation_info">src.simulation.simulation_info</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulator/index.html#module-src.simulation.simulator">src.simulation.simulator</a>
+</li>
+          <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#module-src.simulation.stationary_model_developer">src.simulation.stationary_model_developer</a>
+</li>
+          <li><a href="autoapi/src/utils/index.html#module-src.utils">src.utils</a>
+</li>
+          <li><a href="autoapi/src/utils/hidden_prints/index.html#module-src.utils.hidden_prints">src.utils.hidden_prints</a>
+</li>
+          <li><a href="autoapi/src/utils/paths/index.html#module-src.utils.paths">src.utils.paths</a>
+</li>
+          <li><a href="autoapi/src/utils/plotting_setup/index.html#module-src.utils.plotting_setup">src.utils.plotting_setup</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV.mu">mu (src.simulation.distributions.InverseGEV attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum.mu">(src.simulation.distributions.InverseGEVSum attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel.nodes">nodes (src.config.connectivity_model.ConnectivityModel attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.nodes">(src.config.model_config.ModelConfig attribute)</a>
+</li>
+          <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor.nodes">(src.evaluation.simulation_data_extractor.SimulationDataExtractor attribute)</a>
+</li>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.nodes">(src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor">NodesProcessor (class in src.config.nodes_processor)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.noise_color">noise_color (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.notation">notation() (in module src.utils.plotting_setup)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.nr_lags">nr_lags (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel.nr_nodes">nr_nodes (src.config.connectivity_model.ConnectivityModel attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.nr_nodes">(src.config.model_config.ModelConfig attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.output_path">output_path (src.utils.paths.Paths attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser.parse_args">parse_args() (src.config.parser.Parser method)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/areas_terminology_parser/index.html#src.data_prep.areas_terminology_parser.AreasTerminologyParser.parse_into_dict">parse_into_dict() (src.data_prep.areas_terminology_parser.AreasTerminologyParser static method)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser">Parser (class in src.config.parser)</a>
+</li>
+        <li><a href="autoapi/src/config/parser/index.html#src.config.parser.Parser.parser">parser (src.config.parser.Parser attribute)</a>
+</li>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths">Paths (class in src.utils.paths)</a>
+</li>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.paths">paths (in module src.utils.paths)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.plot">plot() (src.config.model_config.ModelConfig method)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.PLOT_COLORS">PLOT_COLORS (in module src.utils.plotting_setup)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper.plot_connectivity">plot_connectivity() (src.simulation.stationary_model_developer.StationaryModelDeveloper method)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.PLOT_FORMAT">PLOT_FORMAT (in module src.utils.plotting_setup)</a>
+</li>
+        <li><a href="autoapi/src/simulation/eeg_analyzer/index.html#src.simulation.eeg_analyzer.EEGAnalyzer.plot_power">plot_power() (src.simulation.eeg_analyzer.EEGAnalyzer static method)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.PLOT_SIZE">PLOT_SIZE (in module src.utils.plotting_setup)</a>
+</li>
+        <li><a href="autoapi/src/utils/paths/index.html#src.utils.paths.Paths.plots_path">plots_path (src.utils.paths.Paths attribute)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/labels/index.html#src.data_prep.labels.populate_labels_julich">populate_labels_julich() (in module src.data_prep.labels)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.power">power (src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        <li><a href="autoapi/src/data_prep/data_preparator/index.html#src.data_prep.data_preparator.DataPreparator.prep_and_save">prep_and_save() (src.data_prep.data_preparator.DataPreparator method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.relay_station">relay_station (src.config.model_config.ModelConfig attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/config/nodes_processor/index.html#src.config.nodes_processor.NodesProcessor.relay_station">(src.config.nodes_processor.NodesProcessor attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/global_simulation/index.html#src.simulation.global_simulation.GlobalSimulation.run">run() (src.simulation.global_simulation.GlobalSimulation method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.sample_rate">sample_rate (src.config.model_config.ModelConfig attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.sample_rate">(src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor.sample_rates">sample_rates (src.evaluation.simulation_data_extractor.SimulationDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.save_simulation_info">save_simulation_info() (src.simulation.simulation_info.SimulationInfo method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/data_processor/index.html#src.simulation.data_processor.DataProcessor.segment_data">segment_data() (src.simulation.data_processor.DataProcessor static method)</a>
+</li>
+        <li><a href="autoapi/src/config/connectivity_model/index.html#src.config.connectivity_model.ConnectivityModel.set_connectivity">set_connectivity() (src.config.connectivity_model.ConnectivityModel method)</a>
+</li>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV.sigma">sigma (src.simulation.distributions.InverseGEV attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum.sigma">(src.simulation.distributions.InverseGEVSum attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulate/index.html#src.simulate.simulate">simulate() (in module src.simulate)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator.simulate">(src.simulation.simulator.Simulator method)</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo.simulation_data">simulation_data (src.simulation.simulation_info.SimulationInfo attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/evaluator/index.html#src.evaluation.evaluator.Evaluator.simulation_data_extractor">simulation_data_extractor (src.evaluation.evaluator.Evaluator attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulation_names">simulation_names (src.evaluation.simulation_data_extractor.SimulationDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor">SimulationDataExtractor (class in src.evaluation.simulation_data_extractor)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulation_info/index.html#src.simulation.simulation_info.SimulationInfo">SimulationInfo (class in src.simulation.simulation_info)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_data_per_node">simulations_data_per_node (src.evaluation.simulation_data_extractor.SimulationDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_power_per_node">simulations_power_per_node (src.evaluation.simulation_data_extractor.SimulationDataExtractor attribute)</a>
+</li>
+        <li><a href="autoapi/src/simulation/simulator/index.html#src.simulation.simulator.Simulator">Simulator (class in src.simulation.simulator)</a>
+</li>
+        <li>
+    src
+
+        <ul>
+          <li><a href="autoapi/src/index.html#module-src">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.config
+
+        <ul>
+          <li><a href="autoapi/src/config/index.html#module-src.config">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.config.configs
+
+        <ul>
+          <li><a href="autoapi/src/config/configs/index.html#module-src.config.configs">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.config.connectivity_model
+
+        <ul>
+          <li><a href="autoapi/src/config/connectivity_model/index.html#module-src.config.connectivity_model">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.config.model_config
+
+        <ul>
+          <li><a href="autoapi/src/config/model_config/index.html#module-src.config.model_config">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.config.nodes_processor
+
+        <ul>
+          <li><a href="autoapi/src/config/nodes_processor/index.html#module-src.config.nodes_processor">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.config.parser
+
+        <ul>
+          <li><a href="autoapi/src/config/parser/index.html#module-src.config.parser">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.data_prep
+
+        <ul>
+          <li><a href="autoapi/src/data_prep/index.html#module-src.data_prep">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.data_prep.areas_terminology_parser
+
+        <ul>
+          <li><a href="autoapi/src/data_prep/areas_terminology_parser/index.html#module-src.data_prep.areas_terminology_parser">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.data_prep.data_preparator
+
+        <ul>
+          <li><a href="autoapi/src/data_prep/data_preparator/index.html#module-src.data_prep.data_preparator">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.data_prep.labels
+
+        <ul>
+          <li><a href="autoapi/src/data_prep/labels/index.html#module-src.data_prep.labels">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.evaluate
+
+        <ul>
+          <li><a href="autoapi/src/evaluate/index.html#module-src.evaluate">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    src.evaluation
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/index.html#module-src.evaluation">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.evaluation.alphawaves_data_extractor
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#module-src.evaluation.alphawaves_data_extractor">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.evaluation.coherence_computer
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/coherence_computer/index.html#module-src.evaluation.coherence_computer">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.evaluation.evaluator
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/evaluator/index.html#module-src.evaluation.evaluator">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.evaluation.simulation_data_extractor
+
+        <ul>
+          <li><a href="autoapi/src/evaluation/simulation_data_extractor/index.html#module-src.evaluation.simulation_data_extractor">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulate
+
+        <ul>
+          <li><a href="autoapi/src/simulate/index.html#module-src.simulate">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation
+
+        <ul>
+          <li><a href="autoapi/src/simulation/index.html#module-src.simulation">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.data_processor
+
+        <ul>
+          <li><a href="autoapi/src/simulation/data_processor/index.html#module-src.simulation.data_processor">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.delay_calculator
+
+        <ul>
+          <li><a href="autoapi/src/simulation/delay_calculator/index.html#module-src.simulation.delay_calculator">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.distributions
+
+        <ul>
+          <li><a href="autoapi/src/simulation/distributions/index.html#module-src.simulation.distributions">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.eeg_analyzer
+
+        <ul>
+          <li><a href="autoapi/src/simulation/eeg_analyzer/index.html#module-src.simulation.eeg_analyzer">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.global_simulation
+
+        <ul>
+          <li><a href="autoapi/src/simulation/global_simulation/index.html#module-src.simulation.global_simulation">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.simulation_info
+
+        <ul>
+          <li><a href="autoapi/src/simulation/simulation_info/index.html#module-src.simulation.simulation_info">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.simulator
+
+        <ul>
+          <li><a href="autoapi/src/simulation/simulator/index.html#module-src.simulation.simulator">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.simulation.stationary_model_developer
+
+        <ul>
+          <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#module-src.simulation.stationary_model_developer">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.utils
+
+        <ul>
+          <li><a href="autoapi/src/utils/index.html#module-src.utils">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.utils.hidden_prints
+
+        <ul>
+          <li><a href="autoapi/src/utils/hidden_prints/index.html#module-src.utils.hidden_prints">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.utils.paths
+
+        <ul>
+          <li><a href="autoapi/src/utils/paths/index.html#module-src.utils.paths">module</a>
+</li>
+        </ul></li>
+        <li>
+    src.utils.plotting_setup
+
+        <ul>
+          <li><a href="autoapi/src/utils/plotting_setup/index.html#module-src.utils.plotting_setup">module</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/src/simulation/stationary_model_developer/index.html#src.simulation.stationary_model_developer.StationaryModelDeveloper">StationaryModelDeveloper (class in src.simulation.stationary_model_developer)</a>
+</li>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.std_noise">std_noise (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/evaluation/alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.subjects">subjects (src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.t_burnit">t_burnit (src.config.model_config.ModelConfig attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/config/model_config/index.html#src.config.model_config.ModelConfig.t_secs">t_secs (src.config.model_config.ModelConfig attribute)</a>
+</li>
+        <li><a href="autoapi/src/utils/plotting_setup/index.html#src.utils.plotting_setup.to_rgba">to_rgba (in module src.utils.plotting_setup)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="X" class="genindex-section">
+  <h2>X</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEV.xi">xi (src.simulation.distributions.InverseGEV attribute)</a>
+
+        <ul>
+          <li><a href="autoapi/src/simulation/distributions/index.html#src.simulation.distributions.InverseGEVSum.xi">(src.simulation.distributions.InverseGEVSum attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Mariia Steeghs-Turchina
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/thatmariia/macro-eeg-model" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

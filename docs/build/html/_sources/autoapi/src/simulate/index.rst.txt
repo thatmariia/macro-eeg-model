@@ -1,0 +1,26 @@
+src.simulate
+============
+
+.. py:module:: src.simulate
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.simulate.simulate
+
+
+Module Contents
+---------------
+
+.. py:function:: simulate()
+
+   The main function to run the simulation process.
+
+   It retrieves the simulation configuration using :py:func:`src.config.configs.get_simulate_config`,
+   initializes the :py:class:`src.simulation.global_simulation.GlobalSimulation` class,
+   and executes the simulation using :py:meth:`src.simulation.global_simulation.GlobalSimulation.run`.
+
+

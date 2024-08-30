@@ -1,0 +1,122 @@
+src.simulation.simulation_info
+==============================
+
+.. py:module:: src.simulation.simulation_info
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.simulation_info.SimulationInfo
+
+
+Module Contents
+---------------
+
+.. py:class:: SimulationInfo(output_dir, nodes=None, distances=None, connectivity_weights=None, sample_rate=None, lag_connectivity_weights=None, simulation_data=None, frequencies=None, power=None)
+
+   A class responsible for storing and retrieving information about a simulation.
+   It handles saving and loading the data related to a simulation, such as nodes, distances, connectivity weights, and results.
+
+   .. attribute:: nodes
+
+      The array of nodes used in the simulation.
+
+      :type: numpy.ndarray
+
+   .. attribute:: distances
+
+      The distance matrix between nodes used in the simulation.
+
+      :type: numpy.ndarray
+
+   .. attribute:: connectivity_weights
+
+      The connectivity weights matrix between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: sample_rate
+
+      The sample rate of the simulation in Hz.
+
+      :type: int
+
+   .. attribute:: lag_connectivity_weights
+
+      The lagged connectivity weights matrix used in the VAR model.
+
+      :type: numpy.ndarray
+
+   .. attribute:: simulation_data
+
+      The simulated EEG data.
+
+      :type: numpy.ndarray
+
+   .. attribute:: frequencies
+
+      The array of frequencies corresponding to the power spectrum.
+
+      :type: numpy.ndarray
+
+   .. attribute:: power
+
+      The power spectrum calculated from the simulation data.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _output_dir
+
+      The directory path where simulation results are saved.
+
+      :type: pathlib.Path
+
+
+   .. py:method:: __init__(output_dir, nodes=None, distances=None, connectivity_weights=None, sample_rate=None, lag_connectivity_weights=None, simulation_data=None, frequencies=None, power=None)
+
+      Initializes the SimulationInfo class with the provided simulation parameters and data.
+
+      :param output_dir: The path to the output directory where simulation results are saved.
+      :type output_dir: pathlib.Path
+      :param nodes: The array of nodes used in the simulation.
+      :type nodes: numpy.ndarray, optional
+      :param distances: The distance matrix between nodes used in the simulation.
+      :type distances: numpy.ndarray, optional
+      :param connectivity_weights: The connectivity weights matrix between nodes.
+      :type connectivity_weights: numpy.ndarray, optional
+      :param sample_rate: The sample rate of the simulation in Hz.
+      :type sample_rate: int, optional
+      :param lag_connectivity_weights: The lagged connectivity weights matrix used in the VAR model.
+      :type lag_connectivity_weights: numpy.ndarray, optional
+      :param simulation_data: The simulated EEG data.
+      :type simulation_data: numpy.ndarray, optional
+      :param frequencies: The array of frequencies corresponding to the power spectrum.
+      :type frequencies: numpy.ndarray, optional
+      :param power: The power spectrum calculated from the simulation data.
+      :type power: numpy.ndarray, optional
+
+      :raises AssertionError: If the output directory does not exist.
+
+
+
+   .. py:method:: save_simulation_info()
+
+      Saves the simulation data to the output directory as .npy files.
+      The data includes nodes, distances, connectivity weights,
+      sample rate, lag connectivity weights, simulation data,
+      frequencies, and power spectrum.
+
+
+
+   .. py:method:: load_simulation_info()
+
+      Loads all the relevant data of the simulation from the output directory
+      and assigns them to the corresponding attributes of the class.
+
+      :raises FileNotFoundError: If any of the required files are not found in the output directory.
+
+
+

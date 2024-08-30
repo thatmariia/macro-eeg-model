@@ -1,0 +1,94 @@
+src.evaluation.coherence_computer
+=================================
+
+.. py:module:: src.evaluation.coherence_computer
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.evaluation.coherence_computer.CoherenceComputer
+
+
+Module Contents
+---------------
+
+.. py:class:: CoherenceComputer(fs, window_type='hann')
+
+   A class responsible for computing the coherence between signals.
+
+   .. attribute:: fs
+
+      The sampling frequency of the signals.
+
+      :type: int
+
+   .. attribute:: _window_type
+
+      The type of window used for smoothing signals before coherence computation.
+
+      :type: str
+
+
+   .. py:method:: __init__(fs, window_type='hann')
+
+      Initializes the CoherenceComputer with the given sampling frequency and window type.
+
+      :param fs: The sampling frequency of the signals.
+      :type fs: int
+      :param window_type: The type of window to apply for smoothing the signals before coherence computation (default is 'hann').
+      :type window_type: str, optional
+
+
+
+   .. py:method:: compute_coherence_matched(sig1, sig2, smooth_signals=True)
+
+      Computes the coherence between two signals using :py:meth:`_compute_coherence`,
+      with an option to smooth the signals before computation using :py:meth:`_smooth_signal`.
+
+      :param sig1: The first signal array.
+      :type sig1: numpy.ndarray
+      :param sig2: The second signal array.
+      :type sig2: numpy.ndarray
+      :param smooth_signals: If True, applies a smoothing window to the signals before computing coherence (default is True).
+      :type smooth_signals: bool, optional
+
+      :returns: A tuple containing:
+                - positive_freqs (numpy.ndarray): The array of positive frequency values.
+                - positive_coherence (numpy.ndarray): The coherence values corresponding to the positive frequencies.
+      :rtype: tuple
+
+      :raises AssertionError: If the two signals do not have the same shape.
+
+
+
+   .. py:method:: _compute_coherence(sig1, sig2)
+
+      Computes the coherence between two signals using their cross-spectrum and power spectra.
+
+      :param sig1: The first signal array with shape (nr_epochs, n_samples).
+      :type sig1: numpy.ndarray
+      :param sig2: The second signal array with the same shape as `sig1`.
+      :type sig2: numpy.ndarray
+
+      :returns: A tuple containing:
+                - positive_freqs (numpy.ndarray): The array of positive frequency values.
+                - positive_coherence (numpy.ndarray): The coherence values corresponding to the positive frequencies.
+      :rtype: tuple
+
+
+
+   .. py:method:: _smooth_signal(signal)
+
+      Applies a smoothing window to a signal.
+
+      :param signal: The input signal array to be smoothed.
+      :type signal: numpy.ndarray
+
+      :returns: The smoothed signal.
+      :rtype: numpy.ndarray
+
+
+

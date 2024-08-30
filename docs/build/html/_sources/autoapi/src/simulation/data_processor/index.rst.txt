@@ -1,0 +1,64 @@
+src.simulation.data_processor
+=============================
+
+.. py:module:: src.simulation.data_processor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.data_processor.DataProcessor
+
+
+Module Contents
+---------------
+
+.. py:class:: DataProcessor
+
+   A class responsible for processing EEG data by filtering and segmenting it.
+
+
+   .. py:method:: filter_data(data, sample_rate, pass_frequency, stop_frequency)
+      :staticmethod:
+
+
+      Filters the data using a high-pass Butterworth filter
+      based on the specified passband and stopband frequencies.
+
+      :param data: The input data to be filtered (a 2D array where rows represent time points and columns represent channels/nodes).
+      :type data: numpy.ndarray
+      :param sample_rate: The sample rate of the data in Hz.
+      :type sample_rate: int
+      :param pass_frequency: The passband edge frequency in Hz.
+      :type pass_frequency: float
+      :param stop_frequency: The stopband edge frequency in Hz.
+      :type stop_frequency: float
+
+      :returns: The filtered data with the same shape as the input data.
+      :rtype: numpy.ndarray
+
+      :raises AssertionError: If the frequency values are invalid.
+
+
+
+   .. py:method:: segment_data(data, sample_rate, nr_nodes)
+      :staticmethod:
+
+
+      Segments the data into epochs of 1 second each, evenly dividing the data based on the sample rate.
+
+      :param data: The input data to be segmented (a 2D array where rows represent time points and columns represent channels/nodes).
+      :type data: numpy.ndarray
+      :param sample_rate: The sample rate of the data in Hz.
+      :type sample_rate: int
+      :param nr_nodes: The number of nodes (channels) in the data.
+      :type nr_nodes: int
+
+      :returns: A 3D array where each slice along the third dimension represents a 1-second epoch of the data.
+                The shape of the array is (t_samples, nr_nodes, nr_epochs), where t_samples is the number of samples per second.
+      :rtype: numpy.ndarray
+
+
+

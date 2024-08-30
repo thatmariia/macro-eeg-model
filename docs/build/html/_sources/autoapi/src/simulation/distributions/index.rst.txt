@@ -1,0 +1,266 @@
+src.simulation.distributions
+============================
+
+.. py:module:: src.simulation.distributions
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.distributions.LagDistributions
+   src.simulation.distributions.DistributionFactory
+   src.simulation.distributions.InverseGEV
+   src.simulation.distributions.InverseGEVSum
+
+
+Module Contents
+---------------
+
+.. py:class:: LagDistributions
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   An enumeration for different types of lag distributions.
+
+   .. attribute:: INVERSE_GEV
+
+      Represents an inverse generalized extreme value (GEV) distribution.
+
+      :type: str
+
+   .. attribute:: INVERSE_GEV_SUM
+
+      Represents the sum of two inverse GEV distributions.
+
+      :type: str
+
+
+.. py:class:: DistributionFactory
+
+   A factory class responsible for creating different types of distributions based on the provided type.
+
+
+   .. py:method:: get_distribution(distribution_type, **kwargs)
+      :staticmethod:
+
+
+      Creates and returns a distribution object based on the specified type.
+
+      :param distribution_type: The type of distribution to create (e.g., INVERSE_GEV, INVERSE_GEV_SUM).
+      :type distribution_type: LagDistributions
+      :param kwargs: The parameters required to initialize the distribution.
+      :type kwargs: dict
+
+      :returns: An instance of a distribution class (e.g., :py:class:`InverseGEV`, :py:class:`InverseGEVSum`).
+      :rtype: rv_continuous
+
+      :raises ValueError: If an unknown distribution type is provided.
+
+
+
+.. py:class:: InverseGEV(lmbd, mu, sigma, xi, *args, **kwargs)
+
+   Bases: :py:obj:`scipy.stats.rv_continuous`
+
+
+   A class representing the inverse generalized extreme value (GEV) distribution.
+
+   This class extends `scipy.stats.rv_continuous` to model the inverse GEV distribution.
+
+   .. attribute:: lmbd
+
+      A scaling parameter applied to the distribution.
+
+      :type: float
+
+   .. attribute:: mu
+
+      The location parameter of the GEV distribution.
+
+      :type: float
+
+   .. attribute:: sigma
+
+      The scale parameter of the GEV distribution.
+
+      :type: float
+
+   .. attribute:: xi
+
+      The shape parameter of the GEV distribution.
+
+      :type: float
+
+
+   .. py:method:: __init__(lmbd, mu, sigma, xi, *args, **kwargs)
+
+      Initializes the InverseGEV distribution with the specified parameters.
+
+      :param lmbd: A scaling parameter applied to the distribution.
+      :type lmbd: float
+      :param mu: The location parameter of the GEV distribution.
+      :type mu: float
+      :param sigma: The scale parameter of the GEV distribution.
+      :type sigma: float
+      :param xi: The shape parameter of the GEV distribution.
+      :type xi: float
+
+
+
+   .. py:method:: _argcheck(*args)
+
+      Validates the distribution parameters.
+
+      :returns: True if the parameters are valid, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: _cdf(x, *args)
+
+      Calculates the cumulative distribution function (CDF) for the inverse GEV.
+
+      :param x: The quantiles at which to evaluate the CDF.
+      :type x: array_like
+
+      :returns: The CDF evaluated at the given quantiles.
+      :rtype: array_like
+
+
+
+   .. py:method:: _pdf(x, *args)
+
+      Calculates the probability density function (PDF) for the inverse GEV.
+
+      :param x: The quantiles at which to evaluate the PDF.
+      :type x: array_like
+
+      :returns: The PDF evaluated at the given quantiles.
+      :rtype: array_like
+
+
+
+   .. py:method:: _ppf(q, *args)
+
+      Calculates the percent point function (PPF), also known as the quantile function, for the inverse GEV.
+
+      :param q: The quantiles for which to evaluate the PPF.
+      :type q: array_like
+
+      :returns: The PPF evaluated at the given quantiles.
+      :rtype: array_like
+
+
+
+   .. py:method:: _rvs(*args, size=None, random_state=None)
+
+      Generates random variates from the inverse GEV distribution.
+
+      :param size: The number of random variates to generate.
+      :type size: int or tuple of ints, optional
+      :param random_state: A random state instance for reproducibility.
+      :type random_state: np.random.RandomState, optional
+
+      :returns: The generated random variates.
+      :rtype: array_like
+
+
+
+.. py:class:: InverseGEVSum(lmbd1, lmbd2, mu, sigma, xi, *args, **kwargs)
+
+   Bases: :py:obj:`scipy.stats.rv_continuous`
+
+
+   A class representing the sum of two inverse GEV distributions.
+
+   This class extends `scipy.stats.rv_continuous` to model the sum of two inverse GEV distributions.
+   The sum is approximated using a kernel density estimate (KDE) of the sum of samples from the two distributions.
+
+   .. attribute:: lmbd1
+
+      A scaling parameter for the first inverse GEV distribution.
+
+      :type: float
+
+   .. attribute:: lmbd2
+
+      A scaling parameter for the second inverse GEV distribution.
+
+      :type: float
+
+   .. attribute:: mu
+
+      The location parameter of the GEV distributions.
+
+      :type: float
+
+   .. attribute:: sigma
+
+      The scale parameter of the GEV distributions.
+
+      :type: float
+
+   .. attribute:: xi
+
+      The shape parameter of the GEV distributions.
+
+      :type: float
+
+   .. attribute:: _kde
+
+      The kernel density estimate of the sum of the two inverse GEV distributions.
+
+      :type: KernelDensity
+
+
+   .. py:method:: __init__(lmbd1, lmbd2, mu, sigma, xi, *args, **kwargs)
+
+      Initializes the InverseGEVSum distribution with the specified parameters.
+
+      :param lmbd1: A scaling parameter for the first inverse GEV distribution.
+      :type lmbd1: float
+      :param lmbd2: A scaling parameter for the second inverse GEV distribution.
+      :type lmbd2: float
+      :param mu: The location parameter of the GEV distributions.
+      :type mu: float
+      :param sigma: The scale parameter of the GEV distributions.
+      :type sigma: float
+      :param xi: The shape parameter of the GEV distributions.
+      :type xi: float
+
+
+
+   .. py:method:: _get_kde()
+
+      Generates a kernel density estimate (KDE) for the sum of two inverse GEV distributions.
+
+      :returns: A KDE fitted to the sum of samples from the two inverse GEV distributions.
+      :rtype: KernelDensity
+
+
+
+   .. py:method:: _argcheck(*args)
+
+      Validates the distribution parameters.
+
+      :returns: True if the parameters are valid, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: _pdf(x, *args)
+
+      Evaluates the kernel density estimate (KDE) at the given quantiles to
+      approximate the probability density function (PDF) for the sum of inverse GEVs.
+
+      :param x: The quantiles at which to evaluate the PDF.
+      :type x: array_like
+
+      :returns: The PDF evaluated at the given quantiles.
+      :rtype: array_like
+
+
+

@@ -1,0 +1,128 @@
+src.evaluation.simulation_data_extractor
+========================================
+
+.. py:module:: src.evaluation.simulation_data_extractor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.evaluation.simulation_data_extractor.SimulationDataExtractor
+
+
+Module Contents
+---------------
+
+.. py:class:: SimulationDataExtractor
+
+   The SimulationDataExtractor class is responsible for extracting and processing simulation data.
+   It organizes the data by nodes and simulations, allowing for easy access to both raw and processed data.
+
+   .. attribute:: nodes
+
+      An array of node names used in the simulations.
+
+      :type: numpy.ndarray
+
+   .. attribute:: simulation_names
+
+      A list of simulation names.
+
+      :type: list
+
+   .. attribute:: sample_rates
+
+      A dictionary mapping simulation names to their corresponding sample rates.
+
+      :type: dict
+
+   .. attribute:: simulations_data_per_node
+
+      A dictionary organizing the processed simulation data by node.
+
+      :type: dict
+
+   .. attribute:: simulations_power_per_node
+
+      A dictionary organizing the processed power spectra by node.
+
+      :type: dict
+
+
+   .. py:method:: __init__()
+
+      Initializes the SimulationDataExtractor by loading and processing the simulation data
+      using methods from this class.
+
+
+
+   .. py:method:: _get_simulations_data_per_node(processed_simulations_data)
+
+      Organizes the processed simulation data by node and then simulation name.
+
+      :param processed_simulations_data: The dictionary containing processed simulation data organized by simulation name and then node.
+      :type processed_simulations_data: dict
+
+      :returns: A dictionary organizing the simulation data by node and then simulation name.
+      :rtype: dict
+
+
+
+   .. py:method:: _get_simulations_power_per_node(processed_simulations_power)
+
+      Organizes the processed power spectra by node and then simulation name.
+
+      :param processed_simulations_power: The dictionary containing processed power spectra organized by simulation name and then node.
+      :type processed_simulations_power: dict
+
+      :returns: A dictionary organizing the power spectra by node and then simulation name.
+      :rtype: dict
+
+
+
+   .. py:method:: _get_processed_simulations_power(simulations_info)
+      :staticmethod:
+
+
+      Processes and organizes the power spectra data by simulation name and then node.
+
+      :param simulations_info: A dictionary containing simulation information objects.
+      :type simulations_info: dict
+
+      :returns: A dictionary organizing the processed power spectra data by simulation name and then node.
+      :rtype: dict
+
+
+
+   .. py:method:: _get_processed_simulations_data(simulations_info)
+      :staticmethod:
+
+
+      Processes and organizes the raw simulation data by simulation name and then node.
+
+      :param simulations_info: A dictionary containing simulation information objects.
+      :type simulations_info: dict
+
+      :returns: A dictionary organizing the processed simulation data by simulation name and then node.
+      :rtype: dict
+
+
+
+   .. py:method:: _get_simulations_info()
+
+      Loads simulation information from saved files in the directories within the
+      output path (see :py:class:`src.utils.paths.Paths`) using
+      :py:meth:`src.simulation.simulation_info.SimulationInfo.load_simulation_info`.
+      and checks for consistency in node names.
+
+      :returns: A tuple containing:
+                - simulations_info (dict): A dictionary of SimulationInfo objects keyed by simulation name.
+                - sample_rates (dict): A dictionary of sample rates keyed by simulation name.
+      :rtype: tuple
+
+      :raises AssertionError: If the nodes in any simulation do not match the expected node names.
+
+
+

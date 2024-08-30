@@ -1,0 +1,202 @@
+src.config.parser
+=================
+
+.. py:module:: src.config.parser
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.config.parser.Parser
+
+
+Module Contents
+---------------
+
+.. py:class:: Parser(parser)
+
+   The Parser class is responsible for parsing the command line arguments and setting
+   default values.
+
+   .. attribute:: parser
+
+      The argument parser instance used to parse command line arguments.
+
+      :type: argparse.ArgumentParser
+
+   .. attribute:: _default_model_name
+
+      The default name of the model.
+
+      :type: str
+
+   .. attribute:: _default_nodes
+
+      The default brain areas where the nodes are placed.
+
+      :type: str
+
+   .. attribute:: _default_relay_station
+
+      The default brain area to use as a relay station.
+
+      :type: str
+
+   .. attribute:: _default_custom_connectivity
+
+      Indicates whether to use custom connectivity by default.
+
+      :type: bool
+
+   .. attribute:: _default_t_lags
+
+      The default lagged time in milliseconds.
+
+      :type: int
+
+   .. attribute:: _default_sample_rate
+
+      The default sample rate in Hz.
+
+      :type: int
+
+   .. attribute:: _default_t_secs
+
+      The default simulation time in seconds.
+
+      :type: int
+
+   .. attribute:: _default_t_burnit
+
+      The default number of seconds (burn-in) to delete for model convergence.
+
+      :type: int
+
+   .. attribute:: _default_noise_color
+
+      The default color of the noise.
+
+      :type: str
+
+   .. attribute:: _default_std_noise
+
+      The default standard deviation of the noise.
+
+      :type: int
+
+   .. attribute:: _default_dist_shape
+
+      The default shape parameter for the lag distributions.
+
+      :type: float
+
+   .. attribute:: _default_dist_scale
+
+      The default scale parameter for the lag distributions.
+
+      :type: float
+
+   .. attribute:: _default_dist_location
+
+      The default location parameter for the lag distributions.
+
+      :type: float
+
+   .. attribute:: _default_dist_trunc_percent
+
+      The default truncation percentile for the lag distributions.
+
+      :type: float
+
+
+   .. py:method:: __init__(parser)
+
+      Initializes the Parser with an argparse parser and loads the default
+      values from `model_params.yml` configuration file in the configs data path
+      (see :py:class:`src.utils.paths.Paths`)
+
+      :param parser: The argument parser instance used to parse command line arguments.
+      :type parser: argparse.ArgumentParser
+
+
+
+   .. py:method:: _load_yaml(file_path)
+      :staticmethod:
+
+
+      Loads a YAML file from the specified path.
+
+      :param file_path: The path to the YAML file to load.
+      :type file_path: str or pathlib.Path
+
+      :returns: The contents of the YAML file as a dictionary.
+      :rtype: dict
+
+
+
+   .. py:method:: parse_args()
+
+      Parses known arguments from the command line, validates them, and returns them
+      as an argparse Namespace object.
+
+      :returns: The parsed command line arguments.
+      :rtype: argparse.Namespace
+
+
+
+   .. py:method:: _add_arguments()
+
+      Adds the command line arguments to the parser and sets their default values
+      based on the loaded YAML configuration.
+
+
+
+   .. py:method:: _validate_args(args)
+      :staticmethod:
+
+
+      Validates the parsed command line arguments.
+
+      :param args: The parsed command line arguments.
+      :type args: argparse.Namespace
+
+      :raises ValueError: If the parsed arguments are invalid.
+
+
+
+   .. py:method:: _parse_relay_station(relay_station_value: str)
+      :staticmethod:
+
+
+      Parses the relay station argument from the command line.
+      If the provided value is "none", it returns None; otherwise, it returns the string value.
+
+      :param relay_station_value: The relay station value provided from the command line.
+      :type relay_station_value: str
+
+      :returns: The parsed relay station value, or None if "none" is provided.
+      :rtype: str or None
+
+
+
+   .. py:method:: _parse_nodes(nodes_str)
+      :staticmethod:
+
+
+      Parses a string into a list of nodes.
+
+      This method converts a semicolon-separated string of node names into a list of strings.
+      For example: "node1; node2; node3" -> ["node1", "node2", "node3"].
+
+      :param nodes_str: The semicolon-separated string of node names.
+      :type nodes_str: str
+
+      :returns: A list of node names.
+      :rtype: list
+
+      :raises argparse.ArgumentTypeError: If the input string cannot be parsed into a valid list of nodes.
+
+
+

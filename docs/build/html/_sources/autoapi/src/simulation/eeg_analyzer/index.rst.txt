@@ -1,0 +1,62 @@
+src.simulation.eeg_analyzer
+===========================
+
+.. py:module:: src.simulation.eeg_analyzer
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.eeg_analyzer.EEGAnalyzer
+
+
+Module Contents
+---------------
+
+.. py:class:: EEGAnalyzer
+
+   The EEGAnalyzer class is responsible computing the power spectrum of EEG data.
+
+
+   .. py:method:: calculate_power(data, sample_rate)
+      :staticmethod:
+
+
+      Applies the Fast Fourier Transform (FFT) to the EEG data to calculate the power spectrum.
+      It returns the frequencies and the average power spectrum across epochs/samples per second.
+
+      :param data: The EEG data to be analyzed (a 3D array with dimensions (time, nodes, epochs)).
+      :type data: numpy.ndarray
+      :param sample_rate: The sample rate of the EEG data in Hz.
+      :type sample_rate: int
+
+      :returns: A tuple containing:
+                - frequencies (numpy.ndarray): The array of frequencies corresponding to the power spectrum.
+                - power (numpy.ndarray): The calculated power spectrum for each frequency and node.
+      :rtype: tuple
+
+      :raises ValueError: If the user-defined frequencies are outside the valid range determined by the Nyquist frequency.
+
+
+
+   .. py:method:: plot_power(frequencies, power, nodes, plots_dir)
+      :staticmethod:
+
+
+      Visualizes the power spectrum of the EEG data (for each node/channel) as a line plot.
+
+      :param frequencies: The array of frequencies corresponding to the power spectrum.
+      :type frequencies: numpy.ndarray
+      :param power: The calculated power spectrum for each frequency and node.
+      :type power: numpy.ndarray
+      :param nodes: The list of node/channel names corresponding to the data.
+      :type nodes: list[str]
+      :param plots_dir: The directory where the plots are saved.
+      :type plots_dir: pathlib.Path
+
+      :raises AssertionError: If the plots directory does not exist.
+
+
+

@@ -1,0 +1,38 @@
+src.config.configs
+==================
+
+.. py:module:: src.config.configs
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.config.configs.get_simulate_config
+   src.config.configs.get_parsed_args
+
+
+Module Contents
+---------------
+
+.. py:function:: get_simulate_config()
+
+   First parses command line arguments using :py:func:`get_parsed_args`, then
+   creates an instance of the :py:class:`src.config.model_config.ModelConfig`
+   class based on the parsed arguments.
+
+   :returns: A tuple containing:
+             - config (ModelConfig): The configuration object for the simulation.
+             - model_name (str): The name of the model as specified in the command line arguments.
+   :rtype: tuple
+
+
+.. py:function:: get_parsed_args()
+
+   Parses command line arguments using :py:meth:`src.config.parser.Parser.parse_args`.
+
+   :returns: The parsed command line arguments as an `argparse.Namespace` object.
+   :rtype: argparse.Namespace
+
+

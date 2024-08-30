@@ -1,0 +1,24 @@
+src.data_prep
+=============
+
+.. py:module:: src.data_prep
+
+.. autoapi-nested-parse::
+
+   data_prep
+   ---------
+   This package contains the Julich brain data preparation scripts for the simulation.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/data_prep/areas_terminology_parser/index
+   /autoapi/src/data_prep/data_preparator/index
+   /autoapi/src/data_prep/labels/index
+
+

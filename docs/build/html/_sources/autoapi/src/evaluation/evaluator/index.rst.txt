@@ -1,0 +1,291 @@
+src.evaluation.evaluator
+========================
+
+.. py:module:: src.evaluation.evaluator
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.evaluation.evaluator.Evaluator
+
+
+Module Contents
+---------------
+
+.. py:class:: Evaluator
+
+   A class responsible for evaluating simulated EEG data against real EEG data from the AlphaWaves dataset.
+   It computes and compares metrics such as coherence and power spectra across different brain regions (nodes).
+
+   .. attribute:: frequencies
+
+      The frequency range for evaluating the data ([0, 30] Hz).
+
+      :type: list
+
+   .. attribute:: event
+
+      The event type for which the real data is extracted (eyes closed condition).
+
+      :type: str
+
+   .. attribute:: alpha_waves_data_extractor
+
+      An instance of the :py:class:`src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor` class
+      used to extract and process real EEG data.
+
+      :type: AlphaWavesDataExtractor
+
+   .. attribute:: simulation_data_extractor
+
+      An instance of the :py:class:`src.evaluation.simulation_data_extractor.SimulationDataExtractor` class
+      used to extract and process simulated EEG data.
+
+      :type: SimulationDataExtractor
+
+   .. attribute:: _real_avg_time_series
+
+      A dictionary storing the average time series data for each brain region in the real data.
+
+      :type: dict
+
+   .. attribute:: _real_frequencies
+
+      The frequency values associated with the real power spectrum.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _real_powers
+
+      A dictionary storing the power spectrum data for each brain region in the real data.
+
+      :type: dict
+
+
+   .. py:method:: __init__()
+
+      Initializes the Evaluator class, setting up the frequency range, event type, and loading real and simulated data.
+
+
+
+   .. py:method:: evaluate(plot_overview=True)
+
+      Evaluates and compares the coherence and power metrics between simulated and real data
+      using :py:meth:`_evaluate_metric`.
+
+      :param plot_overview: If True, generates overview plots for the evaluated metrics;
+                            if False, generates individual plots for (pairs of) brain regions.
+                            (default is True).
+      :type plot_overview: bool, optional
+
+
+
+   .. py:method:: _extract_real_data()
+
+      Extracts the average time series and power spectrum
+      for each brain region (node) across all subjects from the AlphaWaves dataset using
+      :py:meth:`src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.get_time_series_per_subject_collection_event`.
+
+
+
+   .. py:method:: _evaluate_metric(evaluation_func, desc, plot_overview, rows, cols, save_file_name)
+
+      A helper function to evaluate a specific metric (e.g., coherence or power) across nodes or node pairs.
+
+      :param evaluation_func: The function to evaluate the metric
+                              (:py:meth:`_evaluate_coherence_node_pair` or :py:meth:`_evaluate_power_node`).
+      :type evaluation_func: function
+      :param desc: The description for the tqdm progress bar.
+      :type desc: str
+      :param plot_overview: If True, generates overview plots for the evaluated metrics;
+                            if False, generates individual plots for (pairs of) brain regions.
+      :type plot_overview: bool
+      :param rows: The number of rows in the overview plot.
+      :type rows: int
+      :param cols: The number of columns in the overview plot.
+      :type cols: int
+      :param save_file_name: The file name for saving the overview plot.
+      :type save_file_name: str
+
+
+
+   .. py:method:: _get_nodes(pairwise=False)
+
+      Generates nodes or node pairs for evaluation.
+
+      :param pairwise: If True, generates pairs of nodes (for coherence evaluation),
+                       otherwise generates individual nodes (for power evaluation)
+                       (default is False).
+      :type pairwise: bool, optional
+
+      :Yields: *tuple* -- A tuple containing one or two nodes, depending on the value of `pairwise`.
+
+
+
+   .. py:method:: _evaluate_power_node(node, fig=None, ax=None, show_legend=True)
+
+      Evaluates (using extracted real data :py:meth:`_get_simulated_power` for simulated data)
+      and plots (using :py:meth:`_plot_metric`) the power spectrum for a given node.
+
+      :param node: The name of the brain region to evaluate.
+      :type node: str
+      :param fig: The figure object for plotting (default is None).
+      :type fig: matplotlib.figure.Figure, optional
+      :param ax: The axis object for plotting (default is None).
+      :type ax: matplotlib.axes.Axes, optional
+      :param show_legend: If True, shows the legend on the plot (default is True).
+      :type show_legend: bool, optional
+
+
+
+   .. py:method:: _evaluate_coherence_node_pair(node1, node2, fig=None, ax=None, show_legend=True)
+
+      Evaluates (using :py:meth:`_get_real_coherences_per_subject` for real data and
+      :py:meth:`_get_simulated_coherences` for simulated data)
+      and plots (using :py:meth:`_plot_metric`)
+      the coherence between a pair of nodes.
+
+      :param node1: The name of the first brain region (node).
+      :type node1: str
+      :param node2: The name of the second brain region (node).
+      :type node2: str
+      :param fig: The figure object for plotting (default is None).
+      :type fig: matplotlib.figure.Figure, optional
+      :param ax: The axis object for plotting (default is None).
+      :type ax: matplotlib.axes.Axes, optional
+      :param show_legend: If True, shows the legend on the plot (default is True).
+      :type show_legend: bool, optional
+
+
+
+   .. py:method:: _get_simulated_power(node)
+
+      Retrieves the simulated power spectrum for a given node.
+
+      :param node: The name of the brain region for which to retrieve the simulated power spectrum.
+      :type node: str
+
+      :returns: A tuple containing:
+                - frequencies (numpy.ndarray): The array of frequencies.
+                - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.
+      :rtype: tuple
+
+
+
+   .. py:method:: _get_simulated_coherences(node1, node2)
+
+      Computes the simulated coherence between a pair of nodes for each simulation using
+      :py:meth:`src.simulation.coherence_computer.CoherenceComputer.compute_coherence_matched` .
+
+      :param node1: The name of the first brain region.
+      :type node1: str
+      :param node2: The name of the second brain region.
+      :type node2: str
+
+      :returns: A tuple containing:
+                - frequencies (numpy.ndarray): The array of frequencies for coherence.
+                - coherences (dict): A dictionary of simulated coherence values, keyed by simulation name.
+      :rtype: tuple
+
+
+
+   .. py:method:: _get_real_coherences_per_subject(node1, node2)
+
+      Computes the coherence between a pair of nodes across all subjects in the real dataset
+      using :py:meth:`src.simulation.coherence_computer.CoherenceComputer.compute_coherence_matched`.
+
+      :param node1: The name of the first brain region.
+      :type node1: str
+      :param node2: The name of the second brain region.
+      :type node2: str
+
+      :returns: A tuple containing:
+                - frequencies (numpy.ndarray): The array of frequencies for coherence.
+                - coherences (numpy.ndarray): An array of coherence values across all subjects.
+      :rtype: tuple
+
+
+
+   .. py:method:: _plot_metric(title, real_frequencies, real_data, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None)
+
+      Plots a comparison of a metric (e.g., coherence or power) between real and simulated data
+      using :py:meth:`_plot_real_data` and :py:meth:`_plot_simulated_data`.
+
+      :param title: The title of the plot.
+      :type title: str
+      :param real_frequencies: The array of frequencies for the real data.
+      :type real_frequencies: numpy.ndarray
+      :param real_data: The real data (e.g., power or coherence) to plot.
+      :type real_data: numpy.ndarray
+      :param sim_frequencies: The array of frequencies for the simulated data.
+      :type sim_frequencies: numpy.ndarray
+      :param sim_data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
+      :type sim_data: dict
+      :param fig: The figure object for plotting (default is None).
+      :type fig: matplotlib.figure.Figure, optional
+      :param ax: The axis object for plotting (default is None).
+      :type ax: matplotlib.axes.Axes, optional
+      :param show_legend: If True, shows the legend on the plot (default is True).
+      :type show_legend: bool, optional
+      :param y_label: The label for the y-axis (default is None).
+      :type y_label: str, optional
+      :param xlim: The x-axis limits for the plot (default is None).
+      :type xlim: list, optional
+      :param ylim: The y-axis limits for the plot (default is None).
+      :type ylim: list, optional
+      :param file_label: The file name label for saving the plot (default is None).
+      :type file_label: str, optional
+
+
+
+   .. py:method:: _plot_real_data(ax, frequencies, data)
+      :staticmethod:
+
+
+      Plots the real EEG data on a given axis.
+
+      :param ax: The axis object for plotting.
+      :type ax: matplotlib.axes.Axes
+      :param frequencies: The array of frequencies for the real data.
+      :type frequencies: numpy.ndarray
+      :param data: The real data (e.g., power or coherence) to plot.
+      :type data: numpy.ndarray
+
+
+
+   .. py:method:: _plot_simulated_data(ax, frequencies, data)
+      :staticmethod:
+
+
+      Plots the simulated EEG data on a given axis.
+
+      :param ax: The axis object for plotting.
+      :type ax: matplotlib.axes.Axes
+      :param frequencies: The array of frequencies for the simulated data.
+      :type frequencies: numpy.ndarray
+      :param data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
+      :type data: dict
+
+
+
+   .. py:method:: _get_ax(ax, cols, i)
+      :staticmethod:
+
+
+      Helper function to get the appropriate subplot axis.
+
+      :param ax: The array of axis objects for subplots.
+      :type ax: numpy.ndarray
+      :param cols: The number of columns in the subplot grid.
+      :type cols: int
+      :param i: The index of the current plot.
+      :type i: int
+
+      :returns: The appropriate axis object for the current subplot.
+      :rtype: matplotlib.axes.Axes
+
+
+

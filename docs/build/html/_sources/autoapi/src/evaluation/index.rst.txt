@@ -1,0 +1,26 @@
+src.evaluation
+==============
+
+.. py:module:: src.evaluation
+
+.. autoapi-nested-parse::
+
+   evaluation
+   -----------
+   This package contains the (power and coherence) evaluation functions to
+   compare simulated EEG data against real EEG data.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/evaluation/alphawaves_data_extractor/index
+   /autoapi/src/evaluation/coherence_computer/index
+   /autoapi/src/evaluation/evaluator/index
+   /autoapi/src/evaluation/simulation_data_extractor/index
+
+

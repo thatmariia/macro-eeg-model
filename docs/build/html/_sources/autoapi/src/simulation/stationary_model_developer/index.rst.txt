@@ -1,0 +1,175 @@
+src.simulation.stationary_model_developer
+=========================================
+
+.. py:module:: src.simulation.stationary_model_developer
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.simulation.stationary_model_developer.StationaryModelDeveloper
+
+
+Module Contents
+---------------
+
+.. py:class:: StationaryModelDeveloper(nr_lags, nr_nodes, nodes, distances, connectivity_weights, sample_rate, delay_calculator)
+
+   A class to develop a stationary vector autoregression (VAR) model from given parameters.
+
+   .. attribute:: _nr_lags
+
+      The number of lags (p) in the VAR(p) model.
+
+      :type: int
+
+   .. attribute:: _nr_nodes
+
+      The number of nodes in the model.
+
+      :type: int
+
+   .. attribute:: _nodes
+
+      The list of node names.
+
+      :type: list[str]
+
+   .. attribute:: _distances
+
+      A matrix containing the distances between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _connectivity_weights
+
+      The initial connectivity weights between nodes.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _sample_rate
+
+      The sample rate used for the model.
+
+      :type: int
+
+   .. attribute:: _delay_calculator
+
+      An instance of the :py:class:`src.simulation.delay_calculator.DelayCalculator` class used to calculate delay distributions.
+
+      :type: DelayCalculator
+
+   .. attribute:: _tempx
+
+      The array of lag indices.
+
+      :type: numpy.ndarray
+
+   .. attribute:: _delays_x
+
+      The array of delay values based on the sample rate.
+
+      :type: numpy.ndarray
+
+
+   .. py:method:: __init__(nr_lags, nr_nodes, nodes, distances, connectivity_weights, sample_rate, delay_calculator)
+
+      Initializes the StationaryModelDeveloper with the provided parameters.
+
+      :param nr_lags: The number of lags (p) in the VAR(p) model.
+      :type nr_lags: int
+      :param nr_nodes: The number of nodes in the model.
+      :type nr_nodes: int
+      :param nodes: The list of node names.
+      :type nodes: list[str]
+      :param distances: A matrix containing the distances between nodes.
+      :type distances: numpy.ndarray
+      :param connectivity_weights: The initial connectivity weights between nodes.
+      :type connectivity_weights: numpy.ndarray
+      :param sample_rate: The sample rate used for the model.
+      :type sample_rate: int
+      :param delay_calculator: An instance of the :py:class:`src.simulation.delay_calculator.DelayCalculator` class used to calculate delay distributions.
+      :type delay_calculator: DelayCalculator
+
+
+
+   .. py:method:: develop(verbose=False)
+
+      Develops a stationary VAR(p) model.
+
+      It calculates the lag connectivity weights using :py:meth:`_calculate_lag_connectivity_weights`,
+      and adjusts the overall connectivity weights using :py:meth:`_adjust_connectivity_weights`
+      until the model becomes stationary (check with :py:meth:`_is_stationary`).
+
+      :param verbose: If True, displays progress information during the model development (default is False).
+      :type verbose: bool, optional
+
+      :returns: The lag connectivity weights matrix for the stationary model.
+      :rtype: numpy.ndarray
+
+
+
+   .. py:method:: _adjust_connectivity_weights()
+
+      Adjusts the connectivity weights by scaling them down (preserving the relative weights).
+
+
+
+   .. py:method:: _is_stationary(lag_connectivity_weights)
+
+      Determines whether the model is stationary.
+
+      It constructs an augmented matrix from the lag connectivity weights and checks
+      if all eigenvalues are within the unit circle.
+
+      :param lag_connectivity_weights: The matrix of lag connectivity weights.
+      :type lag_connectivity_weights: numpy.ndarray
+
+      :returns: True if the model is stationary (i.e., all eigenvalues are within the unit circle), False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: _calculate_lag_connectivity_weights()
+
+      Computes the connectivity weights for each lag between all pairs of nodes
+      using :py:meth:`_get_lag_distribution`.
+
+      :returns: The matrix of lag connectivity weights.
+      :rtype: numpy.ndarray
+
+
+
+   .. py:method:: _get_lag_distribution(node1, node2)
+
+      Calculates the lag distribution (using :py:attr:_delay_calculator and
+      :py:meth:src.simulation.delay_calculator.DelayCalculator.get_delays_distribution)
+      between two nodes based on their delays and connectivity weights.
+      If the nodes are the same, the distribution is set to zero.
+
+      :param node1: The index of the first node.
+      :type node1: int
+      :param node2: The index of the second node.
+      :type node2: int
+
+      :returns: The lag distribution values, or 0 if the nodes are the same.
+      :rtype: numpy.ndarray or int
+
+
+
+   .. py:method:: plot_connectivity(lag_connectivity_weights, plots_dir)
+
+      Visualizes the lag connectivity weights between nodes as a line plot,
+      showing the relative strength of connections over different delays.
+
+      :param lag_connectivity_weights: The matrix of lag connectivity weights to be plotted.
+      :type lag_connectivity_weights: numpy.ndarray
+      :param plots_dir: The directory where the plots are saved.
+      :type plots_dir: pathlib.Path
+
+      :raises AssertionError: If the plots directory does not exist.
+
+
+

@@ -1,0 +1,29 @@
+src.simulation
+==============
+
+.. py:module:: src.simulation
+
+.. autoapi-nested-parse::
+
+   simulation
+   -----------
+   This package contains the simulation scripts for the model simulation.
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/simulation/data_processor/index
+   /autoapi/src/simulation/delay_calculator/index
+   /autoapi/src/simulation/distributions/index
+   /autoapi/src/simulation/eeg_analyzer/index
+   /autoapi/src/simulation/global_simulation/index
+   /autoapi/src/simulation/simulation_info/index
+   /autoapi/src/simulation/simulator/index
+   /autoapi/src/simulation/stationary_model_developer/index
+
+

@@ -1,0 +1,139 @@
+src.config.nodes_processor
+==========================
+
+.. py:module:: src.config.nodes_processor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.config.nodes_processor.NodesProcessor
+
+
+Module Contents
+---------------
+
+.. py:class:: NodesProcessor(given_nodes, relay_station)
+
+   A class to process given brain regions into their corresponding indices in
+   the Julich brain parcellation by finding the final generation children of
+   the given nodes.
+
+   .. attribute:: given_nodes
+
+      List of nodes to be processed.
+
+      :type: list
+
+   .. attribute:: relay_station
+
+      The relay station node, if any, that connects different brain regions.
+
+      :type: str
+
+   .. attribute:: _areas_dict
+
+      A dictionary mapping brain areas to their hierarchical structure
+      using :py:meth:`src.data_prep.areas_terminology_parser.AreasTerminologyParser.parse_into_dict`.
+
+      :type: dict
+
+
+   .. py:method:: __init__(given_nodes, relay_station)
+
+      Initializes the NodesProcessor with the provided nodes, relay station, and whether to separate
+      left and right brain nodes.
+
+      :param given_nodes: List of nodes to be processed.
+      :type given_nodes: list
+      :param relay_station: The relay station node, if any.
+      :type relay_station: str
+
+
+
+   .. py:method:: get_nodes_indices()
+
+      Processes the nodes and the relay station, if any, and retrieves their
+      corresponding indices using :py:meth:`_process_nodes`.
+
+      :returns: A tuple containing relay nodes, relay nodes indices, interaction nodes, and interaction nodes indices.
+      :rtype: tuple
+
+
+
+   .. py:method:: _process_nodes(nodes)
+
+      Processes a list of nodes and retrieves their corresponding indices
+      using :py:meth:`_get_nodes_and_indices`.
+
+      :param nodes: List of nodes to be processed.
+      :type nodes: list
+
+      :returns: A tuple containing the processed nodes and their indices.
+      :rtype: tuple
+
+
+
+   .. py:method:: _get_nodes_and_indices(node)
+
+      Retrieves the final generation nodes and their corresponding indices for a given brain region (node).
+      Uses :py:meth:`_initialize_nodes_and_indices` to set up initial structures,
+      :py:meth:`_find_final_generation_children` to locate the final generation nodes,
+      and :py:meth:`_populate_nodes_indices` to assign indices based on the Julich brain parcellation.
+
+      :param node: The name of the brain region (node) to retrieve indices for.
+      :type node: str
+
+      :returns: A tuple containing:
+                - nodes: list of nodes corresponding to the brain region.
+                - nodes_indices: dictionary mapping each node to its corresponding indices.
+      :rtype: tuple
+
+
+
+   .. py:method:: _initialize_nodes_and_indices(node)
+
+      Initializes the nodes and their corresponding indices, considering left and right brain separation.
+
+      :param node: The node to initialize.
+      :type node: str
+
+      :returns: A tuple containing the initialized nodes and their indices.
+      :rtype: tuple
+
+
+
+   .. py:method:: _find_final_generation_children(dictionary, target, found=False)
+
+      Recursively finds the final generation children of a target node in the areas dictionary.
+
+      :param dictionary: The dictionary containing hierarchical brain area mappings (initially :py:attr:`_areas_dict`).
+      :type dictionary: dict
+      :param target: The target node to find children for.
+      :type target: str
+      :param found: Whether the target node has been found (default is False).
+      :type found: bool, optional
+
+      :returns: A list of final generation children nodes.
+      :rtype: list
+
+
+
+   .. py:method:: _populate_nodes_indices(nodes_indices, children, node)
+
+      Populates the nodes indices with the corresponding Julich labels.
+
+      :param nodes_indices: The dictionary to populate with node indices.
+      :type nodes_indices: dict
+      :param children: The list of child nodes to process.
+      :type children: list
+      :param node: The original node being processed.
+      :type node: str
+
+      :returns: The populated nodes indices.
+      :rtype: dict
+
+
+

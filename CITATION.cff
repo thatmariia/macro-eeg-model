@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Steeghs-Turchina"
+  given-names: "Mariia"
+  orcid: "https://orcid.org/0000-0002-0852-4752"
+- family-names: "Srinivasan"
+  given-names: "Ramesh"
+- family-names: "Nunez"
+  given-names: "Paul L."
+- family-names: "Nunez"
+  given-names: "Michael"
+  orcid: "https://orcid.org/0000-0002-9965-6282"
+title: "Macro EEG model"
+version: 0.1
+doi: 10.5281/zenodo.13594677
+date-released: 2024-08-30
+url: "https://github.com/thatmariia/macro-eeg-model"

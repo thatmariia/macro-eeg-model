@@ -1,0 +1,34 @@
+src.utils.hidden_prints
+=======================
+
+.. py:module:: src.utils.hidden_prints
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.utils.hidden_prints.HiddenPrints
+
+
+Module Contents
+---------------
+
+.. py:class:: HiddenPrints
+
+   A class for a context manager to suppress stdout output.
+
+
+   .. py:method:: __enter__()
+
+      Suppresses stdout output.
+
+
+
+   .. py:method:: __exit__(exc_type, exc_val, exc_tb)
+
+      Restores stdout output.
+
+
+
