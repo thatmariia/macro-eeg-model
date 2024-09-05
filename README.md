@@ -11,12 +11,22 @@ cd macro-eeg-model
 
 #### Open the documentation:
 
-On MacOS/Linux:
+* On macOS:
 ```sh
 open docs/build/html/index.html
 ```
 
-On Windows:
+* On Linux:
+```sh
+firefox docs/build/html/index.html
+```
+(replace `firefox` with `google-chrome` or another browser if necessary).
+If running on Ubuntu, you may simply run 
+```sh
+xdg-open docs/build/html/index.html
+```
+
+* On Windows:
 ```sh
 start docs/build/html/index.html
 ```

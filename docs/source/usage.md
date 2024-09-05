@@ -1,22 +1,9 @@
 # Usage
 
-## Preparation
-
-Before running the code, make sure you have installed Python 3.10 or higher
-(the project is initially developed with 3.10 and tested with that version).
-
-Install the packages with pip: 
-```sh
-pip install -e .
-```
-This will install the project and its dependencies in editable mode, 
-allowing you to make changes to the source code and have them reflected immediately.
-You only need to do this once, unless you change the dependencies 
-in `requirements.txt` or the contents of `setup.py`.
-
 ## Running the code
 
 The project provides two command line tools: one to run the simulations and another to evaluate them.
+The commands can be run directly from the command line, without needing to import any Python modules.
 
 ### Running simulation
 
@@ -32,7 +19,7 @@ and the generated plots are saved in the `plots/<model_name>` folder.
 
 To run the evaluation, use this command:
 ```sh
-py_evaluate [options]
+py_evaluate
 ```
 
 After running the evaluation, the resulting plots are saved in the `plots` folder.

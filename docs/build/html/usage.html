@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Data Access" href="data_access.html" /><link rel="prev" title="Documentation" href="documentation.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Reproducing results" href="reproducing.html" /><link rel="prev" title="Preparation" href="preparation.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
         <title>Usage - macro-eeg-model 1.0 documentation</title>
@@ -202,7 +202,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preparation.html">Preparation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducing.html">Reproducing results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_access.html">Data Access</a></li>
 <li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -295,22 +297,10 @@
         <article role="main" id="furo-main-content">
           <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h1>
-<section id="preparation">
-<h2>Preparation<a class="headerlink" href="#preparation" title="Link to this heading">¶</a></h2>
-<p>Before running the code, make sure you have installed Python 3.10 or higher
-(the project is initially developed with 3.10 and tested with that version).</p>
-<p>Install the packages with pip:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-</pre></div>
-</div>
-<p>This will install the project and its dependencies in editable mode,
-allowing you to make changes to the source code and have them reflected immediately.
-You only need to do this once, unless you change the dependencies
-in <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> or the contents of <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>.</p>
-</section>
 <section id="running-the-code">
 <h2>Running the code<a class="headerlink" href="#running-the-code" title="Link to this heading">¶</a></h2>
-<p>The project provides two command line tools: one to run the simulations and another to evaluate them.</p>
+<p>The project provides two command line tools: one to run the simulations and another to evaluate them.
+The commands can be run directly from the command line, without needing to import any Python modules.</p>
 <section id="running-simulation">
 <h3>Running simulation<a class="headerlink" href="#running-simulation" title="Link to this heading">¶</a></h3>
 <p>To run a simulation, use this command:</p>
@@ -323,7 +313,7 @@ and the generated plots are saved in the <code class="docutils literal notransla
 <section id="running-evaluation">
 <h3>Running evaluation<a class="headerlink" href="#running-evaluation" title="Link to this heading">¶</a></h3>
 <p>To run the evaluation, use this command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>py_evaluate<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>py_evaluate
 </pre></div>
 </div>
 <p>After running the evaluation, the resulting plots are saved in the <code class="docutils literal notranslate"><span class="pre">plots</span></code> folder.</p>
@@ -427,23 +417,23 @@ Use either a symmetrical of an upper triangular matrix (it will be converted to 
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="data_access.html">
+          <a class="next-page" href="reproducing.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Data Access</div>
+                <div class="title">Reproducing results</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="documentation.html">
+          <a class="prev-page" href="preparation.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Documentation</div>
+                <div class="title">Preparation</div>
                 
               </div>
             </a>
@@ -485,7 +475,6 @@ Use either a symmetrical of an upper triangular matrix (it will be converted to 
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Usage</a><ul>
-<li><a class="reference internal" href="#preparation">Preparation</a></li>
 <li><a class="reference internal" href="#running-the-code">Running the code</a><ul>
 <li><a class="reference internal" href="#running-simulation">Running simulation</a></li>
 <li><a class="reference internal" href="#running-evaluation">Running evaluation</a></li>

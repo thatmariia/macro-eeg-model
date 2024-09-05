@@ -1,0 +1,7 @@
+#!/bin/bash
+
+py_simulate --model_name "Simulation #1 (white)" --nodes "frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus" --relay "none" --custom_connectivity True --sample_rate 1000 --t_lags 300 --t_secs 500 --t_burnit 10 --noise_color "white" --std_noise 1950 --dist_shape -0.25 --dist_scale 0.09 --dist_location 0.25 --dist_trunc_percent 0.0
+py_simulate --model_name "Simulation #1 (pink)" --nodes "frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus" --relay "none" --custom_connectivity True --sample_rate 1000 --t_lags 300 --t_secs 500 --t_burnit 10 --noise_color "pink" --std_noise 27000 --dist_shape -0.25 --dist_scale 0.09 --dist_location 0.25 --dist_trunc_percent 0.0
+py_simulate --model_name "Simulation #2 (white)" --nodes "frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus" --relay "thalamus" --custom_connectivity False --sample_rate 1000 --t_lags 300 --t_secs 500 --t_burnit 10 --noise_color "white" --std_noise 1950 --dist_shape -0.21 --dist_scale 0.16 --dist_location 0.43 --dist_trunc_percent 0.0
+py_simulate --model_name "Simulation #2 (pink)" --nodes "frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus" --relay "thalamus" --custom_connectivity False --sample_rate 1000 --t_lags 300 --t_secs 500 --t_burnit 10 --noise_color "pink" --std_noise 27000 --dist_shape -0.21 --dist_scale 0.16 --dist_location 0.43 --dist_trunc_percent 0.0
+py_evaluate
