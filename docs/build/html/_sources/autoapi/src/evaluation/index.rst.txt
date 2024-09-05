@@ -18,7 +18,6 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   /autoapi/src/evaluation/alphawaves_data_extractor/index
    /autoapi/src/evaluation/coherence_computer/index
    /autoapi/src/evaluation/evaluator/index
    /autoapi/src/evaluation/simulation_data_extractor/index

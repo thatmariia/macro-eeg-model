@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="src.evaluation.simulation_data_extractor" href="../simulation_data_extractor/index.html" /><link rel="prev" title="src.evaluation.coherence_computer" href="../coherence_computer/index.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>src.evaluation.evaluator - macro-eeg-model 0.1 documentation</title>
+        <title>src.evaluation.evaluator - macro-eeg-model 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">macro-eeg-model 0.1 documentation</div></a>
+      <a href="../../../../index.html"><div class="brand">macro-eeg-model 1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -192,7 +192,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
   
   
-  <span class="sidebar-brand-text">macro-eeg-model 0.1 documentation</span>
+  <span class="sidebar-brand-text">macro-eeg-model 1.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -222,7 +222,6 @@
 </ul>
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../index.html">src.evaluation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of src.evaluation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="../alphawaves_data_extractor/index.html">src.evaluation.alphawaves_data_extractor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../coherence_computer/index.html">src.evaluation.coherence_computer</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">src.evaluation.evaluator</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../simulation_data_extractor/index.html">src.evaluation.simulation_data_extractor</a></li>
@@ -240,7 +239,6 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../utils/index.html">src.utils</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of src.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/hidden_prints/index.html">src.utils.hidden_prints</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/paths/index.html">src.utils.paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/plotting_setup/index.html">src.utils.plotting_setup</a></li>
 </ul>
@@ -303,7 +301,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#src.evaluation.evaluator.Evaluator" title="src.evaluation.evaluator.Evaluator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Evaluator</span></code></a></p></td>
-<td><p>A class responsible for evaluating simulated EEG data against real EEG data from the AlphaWaves dataset.</p></td>
+<td><p>A class responsible for evaluating simulated EEG data .</p></td>
 </tr>
 </tbody>
 </table>
@@ -314,8 +312,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.evaluation.evaluator.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator" title="Link to this definition">¶</a></dt>
-<dd><p>A class responsible for evaluating simulated EEG data against real EEG data from the AlphaWaves dataset.
-It computes and compares metrics such as coherence and power spectra across different brain regions (nodes).</p>
+<dd><p>A class responsible for evaluating simulated EEG data .
+It computes metrics such as coherence and power spectra across different brain regions (nodes).</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator.frequencies">
 <span class="sig-name descname"><span class="pre">frequencies</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator.frequencies" title="Link to this definition">¶</a></dt>
@@ -323,29 +321,6 @@ It computes and compares metrics such as coherence and power spectra across diff
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator.event">
-<span class="sig-name descname"><span class="pre">event</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator.event" title="Link to this definition">¶</a></dt>
-<dd><p>The event type for which the real data is extracted (eyes closed condition).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator.alpha_waves_data_extractor">
-<span class="sig-name descname"><span class="pre">alpha_waves_data_extractor</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator.alpha_waves_data_extractor" title="Link to this definition">¶</a></dt>
-<dd><p>An instance of the <a class="reference internal" href="../alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor" title="src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor</span></code></a> class
-used to extract and process real EEG data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor" title="src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor">AlphaWavesDataExtractor</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -362,49 +337,16 @@ used to extract and process simulated EEG data.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._real_avg_time_series">
-<span class="sig-name descname"><span class="pre">_real_avg_time_series</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._real_avg_time_series" title="Link to this definition">¶</a></dt>
-<dd><p>A dictionary storing the average time series data for each brain region in the real data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._real_frequencies">
-<span class="sig-name descname"><span class="pre">_real_frequencies</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._real_frequencies" title="Link to this definition">¶</a></dt>
-<dd><p>The frequency values associated with the real power spectrum.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._real_powers">
-<span class="sig-name descname"><span class="pre">_real_powers</span></span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._real_powers" title="Link to this definition">¶</a></dt>
-<dd><p>A dictionary storing the power spectrum data for each brain region in the real data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator.__init__" title="Link to this definition">¶</a></dt>
-<dd><p>Initializes the Evaluator class, setting up the frequency range, event type, and loading real and simulated data.</p>
+<dd><p>Initializes the Evaluator class, setting up the frequency range and loading real and simulated data.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator.evaluate">
 <span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_overview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator.evaluate" title="Link to this definition">¶</a></dt>
-<dd><p>Evaluates and compares the coherence and power metrics between simulated and real data
+<dd><p>Evaluates and compares the coherence and power metrics
 using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_metric" title="src.evaluation.evaluator.Evaluator._evaluate_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_evaluate_metric()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -413,14 +355,6 @@ if False, generates individual plots for (pairs of) brain regions.
 (default is True).</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._extract_real_data">
-<span class="sig-name descname"><span class="pre">_extract_real_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._extract_real_data" title="Link to this definition">¶</a></dt>
-<dd><p>Extracts the average time series and power spectrum
-for each brain region (node) across all subjects from the AlphaWaves dataset using
-<a class="reference internal" href="../alphawaves_data_extractor/index.html#src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.get_time_series_per_subject_collection_event" title="src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.get_time_series_per_subject_collection_event"><code class="xref py py-meth docutils literal notranslate"><span class="pre">src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.get_time_series_per_subject_collection_event()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -462,7 +396,7 @@ otherwise generates individual nodes (for power evaluation)
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._evaluate_power_node">
 <span class="sig-name descname"><span class="pre">_evaluate_power_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._evaluate_power_node" title="Link to this definition">¶</a></dt>
-<dd><p>Evaluates (using extracted real data <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_power" title="src.evaluation.evaluator.Evaluator._get_simulated_power"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_simulated_power()</span></code></a> for simulated data)
+<dd><p>Evaluates (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_power" title="src.evaluation.evaluator.Evaluator._get_simulated_power"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_simulated_power()</span></code></a>)
 and plots (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="src.evaluation.evaluator.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>) the power spectrum for a given node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -479,8 +413,7 @@ and plots (using <a class="reference internal" href="#src.evaluation.evaluator.E
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._evaluate_coherence_node_pair">
 <span class="sig-name descname"><span class="pre">_evaluate_coherence_node_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._evaluate_coherence_node_pair" title="Link to this definition">¶</a></dt>
-<dd><p>Evaluates (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_real_coherences_per_subject" title="src.evaluation.evaluator.Evaluator._get_real_coherences_per_subject"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_real_coherences_per_subject()</span></code></a> for real data and
-<a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_coherences" title="src.evaluation.evaluator.Evaluator._get_simulated_coherences"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_simulated_coherences()</span></code></a> for simulated data)
+<dd><p>Evaluates (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_coherences" title="src.evaluation.evaluator.Evaluator._get_simulated_coherences"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_simulated_coherences()</span></code></a>)
 and plots (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="src.evaluation.evaluator.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>)
 the coherence between a pair of nodes.</p>
 <dl class="field-list simple">
@@ -539,39 +472,14 @@ the coherence between a pair of nodes.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._get_real_coherences_per_subject">
-<span class="sig-name descname"><span class="pre">_get_real_coherences_per_subject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._get_real_coherences_per_subject" title="Link to this definition">¶</a></dt>
-<dd><p>Computes the coherence between a pair of nodes across all subjects in the real dataset
-using <code class="xref py py-meth docutils literal notranslate"><span class="pre">src.simulation.coherence_computer.CoherenceComputer.compute_coherence_matched()</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>node1</strong> (<em>str</em>) – The name of the first brain region.</p></li>
-<li><p><strong>node2</strong> (<em>str</em>) – The name of the second brain region.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing:
-- frequencies (numpy.ndarray): The array of frequencies for coherence.
-- coherences (numpy.ndarray): An array of coherence values across all subjects.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._plot_metric">
-<span class="sig-name descname"><span class="pre">_plot_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="Link to this definition">¶</a></dt>
-<dd><p>Plots a comparison of a metric (e.g., coherence or power) between real and simulated data
-using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_real_data" title="src.evaluation.evaluator.Evaluator._plot_real_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_real_data()</span></code></a> and <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_simulated_data" title="src.evaluation.evaluator.Evaluator._plot_simulated_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_simulated_data()</span></code></a>.</p>
+<span class="sig-name descname"><span class="pre">_plot_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="Link to this definition">¶</a></dt>
+<dd><p>Plots a metric (e.g., coherence or power) of data
+using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_simulated_data" title="src.evaluation.evaluator.Evaluator._plot_simulated_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_simulated_data()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>title</strong> (<em>str</em>) – The title of the plot.</p></li>
-<li><p><strong>real_frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies for the real data.</p></li>
-<li><p><strong>real_data</strong> (<em>numpy.ndarray</em>) – The real data (e.g., power or coherence) to plot.</p></li>
 <li><p><strong>sim_frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies for the simulated data.</p></li>
 <li><p><strong>sim_data</strong> (<em>dict</em>) – The simulated data (e.g., power or coherence) to plot, keyed by simulation name.</p></li>
 <li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em><em>, </em><em>optional</em>) – The figure object for plotting (default is None).</p></li>
@@ -581,21 +489,6 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 <li><p><strong>xlim</strong> (<em>list</em><em>, </em><em>optional</em>) – The x-axis limits for the plot (default is None).</p></li>
 <li><p><strong>ylim</strong> (<em>list</em><em>, </em><em>optional</em>) – The y-axis limits for the plot (default is None).</p></li>
 <li><p><strong>file_label</strong> (<em>str</em><em>, </em><em>optional</em>) – The file name label for saving the plot (default is None).</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._plot_real_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_plot_real_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_real_data" title="Link to this definition">¶</a></dt>
-<dd><p>Plots the real EEG data on a given axis.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axis object for plotting.</p></li>
-<li><p><strong>frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies for the real data.</p></li>
-<li><p><strong>data</strong> (<em>numpy.ndarray</em>) – The real data (e.g., power or coherence) to plot.</p></li>
 </ul>
 </dd>
 </dl>
@@ -709,24 +602,16 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator"><code class="docutils literal notranslate"><span class="pre">Evaluator</span></code></a><ul>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.frequencies"><code class="docutils literal notranslate"><span class="pre">Evaluator.frequencies</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.event"><code class="docutils literal notranslate"><span class="pre">Evaluator.event</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.alpha_waves_data_extractor"><code class="docutils literal notranslate"><span class="pre">Evaluator.alpha_waves_data_extractor</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.simulation_data_extractor"><code class="docutils literal notranslate"><span class="pre">Evaluator.simulation_data_extractor</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._real_avg_time_series"><code class="docutils literal notranslate"><span class="pre">Evaluator._real_avg_time_series</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._real_frequencies"><code class="docutils literal notranslate"><span class="pre">Evaluator._real_frequencies</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._real_powers"><code class="docutils literal notranslate"><span class="pre">Evaluator._real_powers</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.__init__"><code class="docutils literal notranslate"><span class="pre">Evaluator.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._extract_real_data"><code class="docutils literal notranslate"><span class="pre">Evaluator._extract_real_data()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_metric()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_nodes"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_nodes()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_power_node"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_power_node()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_coherence_node_pair"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_coherence_node_pair()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_power"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_power()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_coherences"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_coherences()</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_real_coherences_per_subject"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_real_coherences_per_subject()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_metric()</span></code></a></li>
-<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_real_data"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_real_data()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_simulated_data"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_simulated_data()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_ax"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_ax()</span></code></a></li>
 </ul>
@@ -744,7 +629,7 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
       
     </aside>
   </div>
-</div><script src="../../../../_static/documentation_options.js?v=2709fde1"></script>
+</div><script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
     <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/furo.js?v=5fa4622c"></script>

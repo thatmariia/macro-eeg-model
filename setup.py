@@ -10,7 +10,7 @@ def parse_requirements(filename):
 
 setup(
     name="macro-eeg-model",
-    version="0.1",
+    version="1.0",
     description="Modeling EEG with axon propagation delays",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

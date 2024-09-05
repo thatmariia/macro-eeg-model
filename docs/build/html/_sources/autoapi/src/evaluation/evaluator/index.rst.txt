@@ -17,27 +17,14 @@ Module Contents
 
 .. py:class:: Evaluator
 
-   A class responsible for evaluating simulated EEG data against real EEG data from the AlphaWaves dataset.
-   It computes and compares metrics such as coherence and power spectra across different brain regions (nodes).
+   A class responsible for evaluating simulated EEG data .
+   It computes metrics such as coherence and power spectra across different brain regions (nodes).
 
    .. attribute:: frequencies
 
       The frequency range for evaluating the data ([0, 30] Hz).
 
       :type: list
-
-   .. attribute:: event
-
-      The event type for which the real data is extracted (eyes closed condition).
-
-      :type: str
-
-   .. attribute:: alpha_waves_data_extractor
-
-      An instance of the :py:class:`src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor` class
-      used to extract and process real EEG data.
-
-      :type: AlphaWavesDataExtractor
 
    .. attribute:: simulation_data_extractor
 
@@ -46,48 +33,22 @@ Module Contents
 
       :type: SimulationDataExtractor
 
-   .. attribute:: _real_avg_time_series
-
-      A dictionary storing the average time series data for each brain region in the real data.
-
-      :type: dict
-
-   .. attribute:: _real_frequencies
-
-      The frequency values associated with the real power spectrum.
-
-      :type: numpy.ndarray
-
-   .. attribute:: _real_powers
-
-      A dictionary storing the power spectrum data for each brain region in the real data.
-
-      :type: dict
-
 
    .. py:method:: __init__()
 
-      Initializes the Evaluator class, setting up the frequency range, event type, and loading real and simulated data.
+      Initializes the Evaluator class, setting up the frequency range and loading real and simulated data.
 
 
 
    .. py:method:: evaluate(plot_overview=True)
 
-      Evaluates and compares the coherence and power metrics between simulated and real data
+      Evaluates and compares the coherence and power metrics
       using :py:meth:`_evaluate_metric`.
 
       :param plot_overview: If True, generates overview plots for the evaluated metrics;
                             if False, generates individual plots for (pairs of) brain regions.
                             (default is True).
       :type plot_overview: bool, optional
-
-
-
-   .. py:method:: _extract_real_data()
-
-      Extracts the average time series and power spectrum
-      for each brain region (node) across all subjects from the AlphaWaves dataset using
-      :py:meth:`src.evaluation.alphawaves_data_extractor.AlphaWavesDataExtractor.get_time_series_per_subject_collection_event`.
 
 
 
@@ -127,7 +88,7 @@ Module Contents
 
    .. py:method:: _evaluate_power_node(node, fig=None, ax=None, show_legend=True)
 
-      Evaluates (using extracted real data :py:meth:`_get_simulated_power` for simulated data)
+      Evaluates (using :py:meth:`_get_simulated_power`)
       and plots (using :py:meth:`_plot_metric`) the power spectrum for a given node.
 
       :param node: The name of the brain region to evaluate.
@@ -143,8 +104,7 @@ Module Contents
 
    .. py:method:: _evaluate_coherence_node_pair(node1, node2, fig=None, ax=None, show_legend=True)
 
-      Evaluates (using :py:meth:`_get_real_coherences_per_subject` for real data and
-      :py:meth:`_get_simulated_coherences` for simulated data)
+      Evaluates (using :py:meth:`_get_simulated_coherences`)
       and plots (using :py:meth:`_plot_metric`)
       the coherence between a pair of nodes.
 
@@ -192,34 +152,13 @@ Module Contents
 
 
 
-   .. py:method:: _get_real_coherences_per_subject(node1, node2)
+   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None)
 
-      Computes the coherence between a pair of nodes across all subjects in the real dataset
-      using :py:meth:`src.simulation.coherence_computer.CoherenceComputer.compute_coherence_matched`.
-
-      :param node1: The name of the first brain region.
-      :type node1: str
-      :param node2: The name of the second brain region.
-      :type node2: str
-
-      :returns: A tuple containing:
-                - frequencies (numpy.ndarray): The array of frequencies for coherence.
-                - coherences (numpy.ndarray): An array of coherence values across all subjects.
-      :rtype: tuple
-
-
-
-   .. py:method:: _plot_metric(title, real_frequencies, real_data, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None)
-
-      Plots a comparison of a metric (e.g., coherence or power) between real and simulated data
-      using :py:meth:`_plot_real_data` and :py:meth:`_plot_simulated_data`.
+      Plots a metric (e.g., coherence or power) of data
+      using :py:meth:`_plot_simulated_data`.
 
       :param title: The title of the plot.
       :type title: str
-      :param real_frequencies: The array of frequencies for the real data.
-      :type real_frequencies: numpy.ndarray
-      :param real_data: The real data (e.g., power or coherence) to plot.
-      :type real_data: numpy.ndarray
       :param sim_frequencies: The array of frequencies for the simulated data.
       :type sim_frequencies: numpy.ndarray
       :param sim_data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
@@ -238,21 +177,6 @@ Module Contents
       :type ylim: list, optional
       :param file_label: The file name label for saving the plot (default is None).
       :type file_label: str, optional
-
-
-
-   .. py:method:: _plot_real_data(ax, frequencies, data)
-      :staticmethod:
-
-
-      Plots the real EEG data on a given axis.
-
-      :param ax: The axis object for plotting.
-      :type ax: matplotlib.axes.Axes
-      :param frequencies: The array of frequencies for the real data.
-      :type frequencies: numpy.ndarray
-      :param data: The real data (e.g., power or coherence) to plot.
-      :type data: numpy.ndarray
 
 
 
