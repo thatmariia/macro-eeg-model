@@ -1,6 +1,10 @@
 # macro-eeg-model
 ### Macroscopic EEG modeling with axon propagation delays
 
+The code simulates scalp-recorded EEG dynamics by implementing a linear macroscopic network model based on long-range axon delays. 
+It uses a linear vector autoregressive framework with a few parameters to replicate features of real EEG data, 
+such as resting-state alpha power and coherence.
+
 ## Getting started
 
 #### Clone the repository and navigate to the root folder:
