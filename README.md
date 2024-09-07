@@ -39,6 +39,12 @@ The documentation provides all further details on how to
 install required packages, run the code, and access the results.
 Additionally, it contains the API reference.
 
+## Associated preprint
+
+The code is associated with the preprint 
+["Macroscopic EEG modeling with axon propagation delays"](https://doi.org/10.31234/osf.io/thn7k)
+by Mariia Steeghs-Turchina, Ramesh Srinivasan, Paul L. Nunez, and Michael Nunez.
+
 ## Citation
 
 If you use this software in your work, please cite it using the following metadata.

@@ -5,6 +5,7 @@ Macro EEG model documentation
 =============================
 
 This is the documentation for codebase of the macroscopic EEG modeling with axon propagation delays.
+It is associated with the preprint mentioned in `Associated preprint`.
 
 It includes the instructions on how to generate and open this very documentation (see `Documentation`) and
 how to prepare the environment for the codebase (see `Preparation`).
@@ -27,6 +28,7 @@ If you use this code in your work, you can find how to cite it in `Citation`.
    usage
    reproducing
    data_access
+   preprint
    citation
 
 
