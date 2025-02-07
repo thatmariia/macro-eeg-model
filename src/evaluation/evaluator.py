@@ -49,8 +49,19 @@ class Evaluator:
             (default is True).
         """
 
-        self._evaluate_metric(self._evaluate_coherence_node_pair, "Evaluating coherence", plot_overview, 3, 2,"Coherences_summary")
-        self._evaluate_metric(self._evaluate_power_node, "Evaluating power", plot_overview, 2, 2, "Powers_summary")
+        nr_nodes = len(self.simulation_data_extractor.surface_nodes)
+
+        nr_pairwise_plots = nr_nodes * (nr_nodes - 1) // 2
+        nr_rows = (nr_pairwise_plots + 1) // 2
+        nr_cols = 2 if nr_pairwise_plots > 1 else 1
+
+        self._evaluate_metric(self._evaluate_coherence_node_pair, "Evaluating coherence", plot_overview, nr_rows, nr_cols,"Coherences_summary")
+
+        nr_nodes = len(self.simulation_data_extractor.nodes)
+        nr_rows = (nr_nodes + 1) // 2
+        nr_cols = 2 if nr_nodes > 1 else 1
+
+        self._evaluate_metric(self._evaluate_power_node, "Evaluating power", plot_overview, nr_rows, nr_cols, "Powers_summary")
 
         print(f"The evaluation plots have been saved in the 'plots' directory.")
 
@@ -85,13 +96,12 @@ class Evaluator:
             )
 
         with tqdm(desc=desc, unit=" iter", ascii=True, leave=False, file=sys.stdout) as pbar:
-            for plot_id, nodes in enumerate(
-                    self._get_nodes(pairwise=evaluation_func == self._evaluate_coherence_node_pair)
-            ):
+            node_combos = self._get_nodes(pairwise=evaluation_func == self._evaluate_coherence_node_pair)
+            for plot_id, nodes in enumerate(node_combos):
                 pbar.update(1)
                 sys.stdout.flush()
                 evaluation_func(
-                    *nodes, fig=fig, ax=self._get_ax(ax, cols, plot_id), show_legend=(plot_id == rows * cols - 1)
+                    *nodes, fig=fig, ax=self._get_ax(ax, rows, cols, plot_id), show_legend=(plot_id == len(node_combos) - 1)
                 )
 
         if plot_overview:
@@ -110,20 +120,25 @@ class Evaluator:
             otherwise generates individual nodes (for power evaluation)
             (default is False).
 
-        Yields
+        Returns
         ------
         tuple
             A tuple containing one or two nodes, depending on the value of `pairwise`.
         """
 
-        nodes = list(self.simulation_data_extractor.nodes[:-1])
+        nodes_to_return = []
         if pairwise:
+            nodes = list(self.simulation_data_extractor.surface_nodes)
             for i, node1 in enumerate(nodes):
                 for node2 in nodes[i + 1:]:
-                    yield node1, node2
+                    nodes_to_return.append((node1, node2))
+                    # yield node1, node2
         else:
+            nodes = list(self.simulation_data_extractor.nodes)
             for node in nodes:
-                yield (node,)
+                nodes_to_return.append((node,))
+                # yield (node,)
+        return nodes_to_return
 
     def _evaluate_power_node(self, node, fig=None, ax=None, show_legend=True):
         """
@@ -315,7 +330,7 @@ class Evaluator:
             ax.plot(frequencies, d, label=name, color=COLORS[i], alpha=1.0)
 
     @staticmethod
-    def _get_ax(ax, cols, i):
+    def _get_ax(ax, rows, cols, i):
         """
         Helper function to get the appropriate subplot axis.
 
@@ -323,6 +338,8 @@ class Evaluator:
         ----------
         ax : numpy.ndarray
             The array of axis objects for subplots.
+        rows : int
+            The number of rows in the subplot grid.
         cols : int
             The number of columns in the subplot grid.
         i : int
@@ -333,6 +350,11 @@ class Evaluator:
         matplotlib.axes.Axes
             The appropriate axis object for the current subplot.
         """
+
+        if cols == 1:
+            if rows == 1:
+                return ax
+            return ax[i]
 
         if ax is None:
             return None

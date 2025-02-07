@@ -32,7 +32,8 @@ class SimulationDataExtractor:
         using methods from this class.
         """
 
-        self.nodes = np.array(["frontal lobe", "parietal lobe", "occiptal lobe", "temporal lobe", "thalamus"])
+        self.nodes = None
+        self.surface_nodes = None
 
         simulations_info, self.sample_rates = self._get_simulations_info()
         self.simulation_names = list(simulations_info.keys())
@@ -62,7 +63,7 @@ class SimulationDataExtractor:
                 simulation_name: processed_simulations_data[simulation_name][node] for simulation_name in
                 processed_simulations_data.keys()
             }
-            for node in self.nodes[:-1]
+            for node in self.surface_nodes
         }
 
         return simulations_data_per_node
@@ -87,13 +88,12 @@ class SimulationDataExtractor:
                 simulation_name: processed_simulations_power[simulation_name][node] for simulation_name in
                 processed_simulations_power.keys()
             }
-            for node in self.nodes[:-1]
+            for node in self.nodes
         }
 
         return simulations_power_per_node
 
-    @staticmethod
-    def _get_processed_simulations_power(simulations_info):
+    def _get_processed_simulations_power(self, simulations_info):
         """
         Processes and organizes the power spectra data by simulation name and then node.
 
@@ -119,14 +119,12 @@ class SimulationDataExtractor:
 
             processed_simulations_power[simulation_name] = {
                 node: (np.array(simulations_frequencies), np.array(simulations_power[i]))
-                for i, node in enumerate(simulation_info.nodes[:-1])
+                for i, node in enumerate(self.nodes)
             }
 
         return processed_simulations_power
 
-
-    @staticmethod
-    def _get_processed_simulations_data(simulations_info):
+    def _get_processed_simulations_data(self, simulations_info):
         """
         Processes and organizes the raw simulation data by simulation name and then node.
 
@@ -152,9 +150,6 @@ class SimulationDataExtractor:
             data = data_processor.segment_data(simulation_data, sample_rate=sample_rate, nr_nodes=nr_nodes)
 
             # data has shape (nr samples, nr nodes, nr epochs)
-            # remove last node (relay station)
-            data = data[:, :-1, :]
-
             # reshape data to (nr nodes, nr epochs, nr samples)
             data = np.transpose(data, (1, 2, 0))
 
@@ -163,7 +158,7 @@ class SimulationDataExtractor:
             data = np.reshape(data, (data.shape[0], data.shape[1] // nr_secs, nr_secs * sample_rate))
 
             processed_simulations_data[simulation_name] = {
-                node: np.array(data[i]) for i, node in enumerate(simulation_info.nodes[:-1])
+                node: np.array(data[i]) for i, node in enumerate(self.surface_nodes)
             }
 
         return processed_simulations_data
@@ -197,6 +192,10 @@ class SimulationDataExtractor:
                 simulation_info = SimulationInfo(output_dir=output_simulation_dir)
                 simulation_info.load_simulation_info()
 
+                if self.nodes is None:
+                    self.nodes = simulation_info.nodes
+                    self.surface_nodes = self._get_surface_nodes(self.nodes)
+
                 assert all(simulation_info.nodes == self.nodes), \
                     f"Nodes do not match for simulation {folder.name}. Expected {self.nodes}, got {simulation_info.nodes}"
 
@@ -204,3 +203,23 @@ class SimulationDataExtractor:
                 sample_rates[folder.name] = simulation_info.sample_rate
 
         return simulations_info, sample_rates
+
+    @staticmethod
+    def _get_surface_nodes(nodes):
+        """
+        Returns the surface nodes from the given list of nodes.
+        Currently, the surface nodes are all nodes except the thalamus.
+
+        Parameters
+        ----------
+        nodes : list
+            A list of node names.
+
+        Returns
+        -------
+        list
+            A list of surface node names.
+        """
+
+        surface_nodes = [node for node in nodes if node != "thalamus"]
+        return surface_nodes
