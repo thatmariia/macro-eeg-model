@@ -48,6 +48,7 @@ class CoherenceComputer:
         -------
         tuple
             A tuple containing:
+
             - positive_freqs (numpy.ndarray): The array of positive frequency values.
             - positive_coherence (numpy.ndarray): The coherence values corresponding to the positive frequencies.
 
@@ -85,6 +86,7 @@ class CoherenceComputer:
         -------
         tuple
             A tuple containing:
+
             - positive_freqs (numpy.ndarray): The array of positive frequency values.
             - positive_coherence (numpy.ndarray): The coherence values corresponding to the positive frequencies.
         """

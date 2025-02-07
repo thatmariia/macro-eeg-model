@@ -56,6 +56,7 @@ Module Contents
       :type smooth_signals: bool, optional
 
       :returns: A tuple containing:
+
                 - positive_freqs (numpy.ndarray): The array of positive frequency values.
                 - positive_coherence (numpy.ndarray): The coherence values corresponding to the positive frequencies.
       :rtype: tuple
@@ -74,6 +75,7 @@ Module Contents
       :type sig2: numpy.ndarray
 
       :returns: A tuple containing:
+
                 - positive_freqs (numpy.ndarray): The array of positive frequency values.
                 - positive_coherence (numpy.ndarray): The coherence values corresponding to the positive frequencies.
       :rtype: tuple

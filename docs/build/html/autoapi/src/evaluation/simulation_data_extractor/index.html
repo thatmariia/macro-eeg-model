@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="src.simulation" href="../../simulation/index.html" /><link rel="prev" title="src.evaluation.evaluator" href="../evaluator/index.html" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="src.simulation" href="../../simulation/index.html" /><link rel="prev" title="src.evaluation.peak_tester" href="../peak_tester/index.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
         <title>src.evaluation.simulation_data_extractor - macro-eeg-model 1.0 documentation</title>
@@ -227,6 +227,7 @@
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../index.html">src.evaluation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of src.evaluation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../coherence_computer/index.html">src.evaluation.coherence_computer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../evaluator/index.html">src.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../peak_tester/index.html">src.evaluation.peak_tester</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">src.evaluation.simulation_data_extractor</a></li>
 </ul>
 </li>
@@ -372,6 +373,17 @@ It organizes the data by nodes and simulations, allowing for easy access to both
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_epoched_power_per_node">
+<span class="sig-name descname"><span class="pre">simulations_epoched_power_per_node</span></span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_epoched_power_per_node" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary organizing the processed epoched power spectra by node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.__init__" title="Link to this definition">¶</a></dt>
@@ -389,6 +401,43 @@ using methods from this class.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary organizing the simulation data by node and then simulation name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_epoched_power_per_node">
+<span class="sig-name descname"><span class="pre">_get_simulations_epoched_power_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_epoched_power</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_epoched_power_per_node" title="Link to this definition">¶</a></dt>
+<dd><p>Organizes the processed epoched power spectra by node and then simulation name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>processed_simulations_epoched_power</strong> (<em>dict</em>) – The dictionary containing processed epoched power spectra organized by simulation name and then node.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary organizing the epoched power spectra by node and then simulation name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_epoched_power">
+<span class="sig-name descname"><span class="pre">_get_processed_simulations_epoched_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_epoched_power" title="Link to this definition">¶</a></dt>
+<dd><p>Processes and organizes the epoched power spectra data by simulation name and then node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulations_info</strong> (<em>dict</em>) – A dictionary containing simulation information objects.</p></li>
+<li><p><strong>epoch_len</strong> (<em>int</em><em>, </em><em>optional</em>) – The length of each epoch in milliseconds (default is 1000).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary organizing the processed epoched power spectra data by simulation name and then node.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -415,7 +464,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_power">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_processed_simulations_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_power" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_get_processed_simulations_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_power" title="Link to this definition">¶</a></dt>
 <dd><p>Processes and organizes the power spectra data by simulation name and then node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -432,7 +481,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_processed_simulations_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_data" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_get_processed_simulations_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_data" title="Link to this definition">¶</a></dt>
 <dd><p>Processes and organizes the raw simulation data by simulation name and then node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -456,15 +505,36 @@ output path (see <a class="reference internal" href="../../utils/paths/index.htm
 and checks for consistency in node names.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple containing:
-- simulations_info (dict): A dictionary of SimulationInfo objects keyed by simulation name.
-- sample_rates (dict): A dictionary of sample rates keyed by simulation name.</p>
+<dd class="field-odd"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>simulations_info (dict): A dictionary of SimulationInfo objects keyed by simulation name.</p></li>
+<li><p>sample_rates (dict): A dictionary of sample rates keyed by simulation name.</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>tuple</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>AssertionError</strong> – If the nodes in any simulation do not match the expected node names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_surface_nodes">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_surface_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_surface_nodes" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the surface nodes from the given list of nodes.
+Currently, the surface nodes are all nodes except the thalamus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nodes</strong> (<em>list</em>) – A list of node names.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of surface node names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -488,14 +558,14 @@ and checks for consistency in node names.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../evaluator/index.html">
+          <a class="prev-page" href="../peak_tester/index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">src.evaluation.evaluator</div>
+                <div class="title">src.evaluation.peak_tester</div>
                 
               </div>
             </a>
@@ -545,12 +615,16 @@ and checks for consistency in node names.</p>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.sample_rates"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor.sample_rates</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_data_per_node"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor.simulations_data_per_node</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_power_per_node"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor.simulations_power_per_node</span></code></a></li>
+<li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.simulations_epoched_power_per_node"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor.simulations_epoched_power_per_node</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_data_per_node"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_simulations_data_per_node()</span></code></a></li>
+<li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_epoched_power_per_node"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_simulations_epoched_power_per_node()</span></code></a></li>
+<li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_epoched_power"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_processed_simulations_epoched_power()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_power_per_node"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_simulations_power_per_node()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_power"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_processed_simulations_power()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_data"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_processed_simulations_data()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_info"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_simulations_info()</span></code></a></li>
+<li><a class="reference internal" href="#src.evaluation.simulation_data_extractor.SimulationDataExtractor._get_surface_nodes"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor._get_surface_nodes()</span></code></a></li>
 </ul>
 </li>
 </ul>

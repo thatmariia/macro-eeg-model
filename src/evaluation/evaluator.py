@@ -144,6 +144,22 @@ class Evaluator:
         return nodes_to_return
 
     def _evaluate_peaks(self, node, fig=None, ax=None, show_legend=True):
+        """
+        Evaluates the presence of alpha peaks (using :py:meth:`_get_peaks`)
+        and plots (using :py:meth:`_plot_metric`) detrended power spectrum for a given node.
+
+        Parameters
+        ----------
+        node : str
+            The name of the brain region to evaluate.
+        fig : matplotlib.figure.Figure, optional
+            The figure object for plotting (default is None).
+        ax : matplotlib.axes.Axes, optional
+            The axis object for plotting (default is None).
+        show_legend : bool, optional
+            If True, shows the legend on the plot (default is True).
+        """
+
         frequencies, powers, p_values, test_names = self._get_peaks(node)
 
         yes_peak = "Y"
@@ -160,27 +176,6 @@ class Evaluator:
             y_label="Peaks", xlim=[self.frequencies[0], self.frequencies[1]], ylim=[0, 2e7], file_label=f"peaks_{node}",
             label_addons=label_addons
         )
-
-    def _get_peaks(self, node):
-        frequencies = None
-        powers = {}
-        p_values = {}
-        test_names = {}
-
-        for key in self.simulation_data_extractor.simulation_names:
-            epoched_powers = self.simulation_data_extractor.simulations_epoched_power_per_node[node][key]
-            frequencies = self.simulation_data_extractor.simulations_info[key].frequencies
-            peak_tester = PeakTester(
-                frequencies=frequencies,
-                peaks_range=[8, 13],
-                others_range=[13, 20]
-            )
-            frequencies, detrended_powers, p_value, test_name = peak_tester.compute_test_result(key, epoched_powers)
-            powers[key] = detrended_powers
-            p_values[key] = p_value
-            test_names[key] = test_name
-
-        return frequencies, powers, p_values, test_names
 
     def _evaluate_power_node(self, node, fig=None, ax=None, show_legend=True):
         """
@@ -238,6 +233,46 @@ class Evaluator:
             y_label="Coherence", xlim=[1, self.frequencies[1]], ylim=[0, 0.6], file_label=f"coherence_{node1}_{node2}"
         )
 
+    def _get_peaks(self, node):
+        """
+        Computes the peaks in the power spectrum for a given node using :py:class:`PeakTester`.
+
+        Parameters
+        ----------
+        node : str
+            The name of the brain region for which to compute the peaks.
+
+        Returns
+        -------
+        tuple
+            A tuple containing:
+
+            - frequencies (numpy.ndarray): The array of frequencies.
+            - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.
+            - p_values (dict): A dictionary of p-values for the peak test, keyed by simulation name.
+            - test_names (dict): A dictionary of test names for the peak test, keyed by simulation name.
+        """
+
+        frequencies = None
+        powers = {}
+        p_values = {}
+        test_names = {}
+
+        for key in self.simulation_data_extractor.simulation_names:
+            epoched_powers = self.simulation_data_extractor.simulations_epoched_power_per_node[node][key]
+            frequencies = self.simulation_data_extractor.simulations_info[key].frequencies
+            peak_tester = PeakTester(
+                frequencies=frequencies,
+                peaks_range=[8, 13],
+                others_range=[13, 20]
+            )
+            frequencies, detrended_powers, p_value, test_name = peak_tester.compute_test_result(key, epoched_powers)
+            powers[key] = detrended_powers
+            p_values[key] = p_value
+            test_names[key] = test_name
+
+        return frequencies, powers, p_values, test_names
+
     def _get_simulated_power(self, node):
         """
         Retrieves the simulated power spectrum for a given node.
@@ -251,6 +286,7 @@ class Evaluator:
         -------
         tuple
             A tuple containing:
+
             - frequencies (numpy.ndarray): The array of frequencies.
             - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.
         """
@@ -275,6 +311,7 @@ class Evaluator:
         -------
         tuple
             A tuple containing:
+
             - frequencies (numpy.ndarray): The array of frequencies for coherence.
             - coherences (dict): A dictionary of simulated coherence values, keyed by simulation name.
         """

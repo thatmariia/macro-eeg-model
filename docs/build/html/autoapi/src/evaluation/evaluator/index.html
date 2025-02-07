@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="src.evaluation.simulation_data_extractor" href="../simulation_data_extractor/index.html" /><link rel="prev" title="src.evaluation.coherence_computer" href="../coherence_computer/index.html" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="src.evaluation.peak_tester" href="../peak_tester/index.html" /><link rel="prev" title="src.evaluation.coherence_computer" href="../coherence_computer/index.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
         <title>src.evaluation.evaluator - macro-eeg-model 1.0 documentation</title>
@@ -227,6 +227,7 @@
 <li class="toctree-l3 current has-children"><a class="reference internal" href="../index.html">src.evaluation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of src.evaluation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="../coherence_computer/index.html">src.evaluation.coherence_computer</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">src.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../peak_tester/index.html">src.evaluation.peak_tester</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../simulation_data_extractor/index.html">src.evaluation.simulation_data_extractor</a></li>
 </ul>
 </li>
@@ -390,8 +391,28 @@ if False, generates individual plots for (pairs of) brain regions.</p></li>
 otherwise generates individual nodes (for power evaluation)
 (default is False).</p>
 </dd>
-<dt class="field-even">Yields<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>tuple</em> – A tuple containing one or two nodes, depending on the value of <cite>pairwise</cite>.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing one or two nodes, depending on the value of <cite>pairwise</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._evaluate_peaks">
+<span class="sig-name descname"><span class="pre">_evaluate_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._evaluate_peaks" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluates the presence of alpha peaks (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_peaks" title="src.evaluation.evaluator.Evaluator._get_peaks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_peaks()</span></code></a>)
+and plots (using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="src.evaluation.evaluator.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>) detrended power spectrum for a given node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>str</em>) – The name of the brain region to evaluate.</p></li>
+<li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em><em>, </em><em>optional</em>) – The figure object for plotting (default is None).</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – The axis object for plotting (default is None).</p></li>
+<li><p><strong>show_legend</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, shows the legend on the plot (default is True).</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -433,6 +454,30 @@ the coherence between a pair of nodes.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._get_peaks">
+<span class="sig-name descname"><span class="pre">_get_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._get_peaks" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the peaks in the power spectrum for a given node using <code class="xref py py-class docutils literal notranslate"><span class="pre">PeakTester</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the brain region for which to compute the peaks.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>frequencies (numpy.ndarray): The array of frequencies.</p></li>
+<li><p>powers (dict): A dictionary of simulated power spectra, keyed by simulation name.</p></li>
+<li><p>p_values (dict): A dictionary of p-values for the peak test, keyed by simulation name.</p></li>
+<li><p>test_names (dict): A dictionary of test names for the peak test, keyed by simulation name.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._get_simulated_power">
 <span class="sig-name descname"><span class="pre">_get_simulated_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._get_simulated_power" title="Link to this definition">¶</a></dt>
 <dd><p>Retrieves the simulated power spectrum for a given node.</p>
@@ -441,9 +486,12 @@ the coherence between a pair of nodes.</p>
 <dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the brain region for which to retrieve the simulated power spectrum.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing:
-- frequencies (numpy.ndarray): The array of frequencies.
-- powers (dict): A dictionary of simulated power spectra, keyed by simulation name.</p>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>frequencies (numpy.ndarray): The array of frequencies.</p></li>
+<li><p>powers (dict): A dictionary of simulated power spectra, keyed by simulation name.</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple</p>
@@ -464,9 +512,12 @@ the coherence between a pair of nodes.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing:
-- frequencies (numpy.ndarray): The array of frequencies for coherence.
-- coherences (dict): A dictionary of simulated coherence values, keyed by simulation name.</p>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>frequencies (numpy.ndarray): The array of frequencies for coherence.</p></li>
+<li><p>coherences (dict): A dictionary of simulated coherence values, keyed by simulation name.</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple</p>
@@ -476,7 +527,7 @@ the coherence between a pair of nodes.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._plot_metric">
-<span class="sig-name descname"><span class="pre">_plot_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_plot_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_addons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_metric" title="Link to this definition">¶</a></dt>
 <dd><p>Plots a metric (e.g., coherence or power) of data
 using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_simulated_data" title="src.evaluation.evaluator.Evaluator._plot_simulated_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_simulated_data()</span></code></a>.</p>
 <dl class="field-list simple">
@@ -492,6 +543,7 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 <li><p><strong>xlim</strong> (<em>list</em><em>, </em><em>optional</em>) – The x-axis limits for the plot (default is None).</p></li>
 <li><p><strong>ylim</strong> (<em>list</em><em>, </em><em>optional</em>) – The y-axis limits for the plot (default is None).</p></li>
 <li><p><strong>file_label</strong> (<em>str</em><em>, </em><em>optional</em>) – The file name label for saving the plot (default is None).</p></li>
+<li><p><strong>label_addons</strong> (<em>dict</em><em>, </em><em>optional</em>) – The dictionary of label addons to append to the name of the data (default is None).</p></li>
 </ul>
 </dd>
 </dl>
@@ -499,7 +551,7 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._plot_simulated_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_plot_simulated_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_simulated_data" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_plot_simulated_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_addons</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._plot_simulated_data" title="Link to this definition">¶</a></dt>
 <dd><p>Plots the simulated EEG data on a given axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -507,6 +559,7 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 <li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axis object for plotting.</p></li>
 <li><p><strong>frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies for the simulated data.</p></li>
 <li><p><strong>data</strong> (<em>dict</em>) – The simulated data (e.g., power or coherence) to plot, keyed by simulation name.</p></li>
+<li><p><strong>label_addons</strong> (<em>dict</em>) – The dictionary of label addons to append to the name of the data.</p></li>
 </ul>
 </dd>
 </dl>
@@ -514,12 +567,13 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.evaluation.evaluator.Evaluator._get_ax">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._get_ax" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.evaluation.evaluator.Evaluator._get_ax" title="Link to this definition">¶</a></dt>
 <dd><p>Helper function to get the appropriate subplot axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ax</strong> (<em>numpy.ndarray</em>) – The array of axis objects for subplots.</p></li>
+<li><p><strong>rows</strong> (<em>int</em>) – The number of rows in the subplot grid.</p></li>
 <li><p><strong>cols</strong> (<em>int</em>) – The number of columns in the subplot grid.</p></li>
 <li><p><strong>i</strong> (<em>int</em>) – The index of the current plot.</p></li>
 </ul>
@@ -543,12 +597,12 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../simulation_data_extractor/index.html">
+          <a class="next-page" href="../peak_tester/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">src.evaluation.simulation_data_extractor</div>
+                <div class="title">src.evaluation.peak_tester</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -610,8 +664,10 @@ using <a class="reference internal" href="#src.evaluation.evaluator.Evaluator._p
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_metric()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_nodes"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_nodes()</span></code></a></li>
+<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_peaks()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_power_node"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_power_node()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._evaluate_coherence_node_pair"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_coherence_node_pair()</span></code></a></li>
+<li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_peaks()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_power"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_power()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._get_simulated_coherences"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_coherences()</span></code></a></li>
 <li><a class="reference internal" href="#src.evaluation.evaluator.Evaluator._plot_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_metric()</span></code></a></li>

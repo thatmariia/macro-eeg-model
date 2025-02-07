@@ -104,6 +104,7 @@ class NodesProcessor:
         -------
         tuple
             A tuple containing:
+
             - nodes: list of nodes corresponding to the brain region.
             - nodes_indices: dictionary mapping each node to its corresponding indices.
         """

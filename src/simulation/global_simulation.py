@@ -52,6 +52,7 @@ class GlobalSimulation:
         -------
         tuple
             A tuple containing:
+
             - simulation_data (numpy.ndarray): The simulated EEG data.
             - frequencies (numpy.ndarray): The array of frequencies corresponding to the power spectrum.
             - power (numpy.ndarray): The power spectrum of the simulated EEG data.

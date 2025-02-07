@@ -24,6 +24,8 @@ class SimulationDataExtractor:
         A dictionary organizing the processed simulation data by node.
     simulations_power_per_node : dict
         A dictionary organizing the processed power spectra by node.
+    simulations_epoched_power_per_node : dict
+        A dictionary organizing the processed epoched power spectra by node.
     """
 
     def __init__(self):
@@ -248,6 +250,7 @@ class SimulationDataExtractor:
         -------
         tuple
             A tuple containing:
+
             - simulations_info (dict): A dictionary of SimulationInfo objects keyed by simulation name.
             - sample_rates (dict): A dictionary of sample rates keyed by simulation name.
 

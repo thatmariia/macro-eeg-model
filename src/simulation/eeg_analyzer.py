@@ -28,6 +28,7 @@ class EEGAnalyzer:
         -------
         tuple
             A tuple containing:
+
             - frequencies (numpy.ndarray): The array of frequencies corresponding to the power spectrum.
             - power (numpy.ndarray): The calculated power spectrum for each frequency and node.
 

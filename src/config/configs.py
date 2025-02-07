@@ -16,6 +16,7 @@ def get_simulate_config():
     -------
     tuple
         A tuple containing:
+
         - config (ModelConfig): The configuration object for the simulation.
         - model_name (str): The name of the model as specified in the command line arguments.
     """

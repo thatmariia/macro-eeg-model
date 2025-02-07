@@ -20,6 +20,7 @@ Submodules
 
    /autoapi/src/evaluation/coherence_computer/index
    /autoapi/src/evaluation/evaluator/index
+   /autoapi/src/evaluation/peak_tester/index
    /autoapi/src/evaluation/simulation_data_extractor/index
 
 

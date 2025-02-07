@@ -82,7 +82,24 @@ Module Contents
                        (default is False).
       :type pairwise: bool, optional
 
-      :Yields: *tuple* -- A tuple containing one or two nodes, depending on the value of `pairwise`.
+      :returns: A tuple containing one or two nodes, depending on the value of `pairwise`.
+      :rtype: tuple
+
+
+
+   .. py:method:: _evaluate_peaks(node, fig=None, ax=None, show_legend=True)
+
+      Evaluates the presence of alpha peaks (using :py:meth:`_get_peaks`)
+      and plots (using :py:meth:`_plot_metric`) detrended power spectrum for a given node.
+
+      :param node: The name of the brain region to evaluate.
+      :type node: str
+      :param fig: The figure object for plotting (default is None).
+      :type fig: matplotlib.figure.Figure, optional
+      :param ax: The axis object for plotting (default is None).
+      :type ax: matplotlib.axes.Axes, optional
+      :param show_legend: If True, shows the legend on the plot (default is True).
+      :type show_legend: bool, optional
 
 
 
@@ -121,6 +138,23 @@ Module Contents
 
 
 
+   .. py:method:: _get_peaks(node)
+
+      Computes the peaks in the power spectrum for a given node using :py:class:`PeakTester`.
+
+      :param node: The name of the brain region for which to compute the peaks.
+      :type node: str
+
+      :returns: A tuple containing:
+
+                - frequencies (numpy.ndarray): The array of frequencies.
+                - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.
+                - p_values (dict): A dictionary of p-values for the peak test, keyed by simulation name.
+                - test_names (dict): A dictionary of test names for the peak test, keyed by simulation name.
+      :rtype: tuple
+
+
+
    .. py:method:: _get_simulated_power(node)
 
       Retrieves the simulated power spectrum for a given node.
@@ -129,6 +163,7 @@ Module Contents
       :type node: str
 
       :returns: A tuple containing:
+
                 - frequencies (numpy.ndarray): The array of frequencies.
                 - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.
       :rtype: tuple
@@ -146,13 +181,14 @@ Module Contents
       :type node2: str
 
       :returns: A tuple containing:
+
                 - frequencies (numpy.ndarray): The array of frequencies for coherence.
                 - coherences (dict): A dictionary of simulated coherence values, keyed by simulation name.
       :rtype: tuple
 
 
 
-   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None)
+   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None)
 
       Plots a metric (e.g., coherence or power) of data
       using :py:meth:`_plot_simulated_data`.
@@ -177,10 +213,12 @@ Module Contents
       :type ylim: list, optional
       :param file_label: The file name label for saving the plot (default is None).
       :type file_label: str, optional
+      :param label_addons: The dictionary of label addons to append to the name of the data (default is None).
+      :type label_addons: dict, optional
 
 
 
-   .. py:method:: _plot_simulated_data(ax, frequencies, data)
+   .. py:method:: _plot_simulated_data(ax, frequencies, data, label_addons)
       :staticmethod:
 
 
@@ -192,10 +230,12 @@ Module Contents
       :type frequencies: numpy.ndarray
       :param data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
       :type data: dict
+      :param label_addons: The dictionary of label addons to append to the name of the data.
+      :type label_addons: dict
 
 
 
-   .. py:method:: _get_ax(ax, cols, i)
+   .. py:method:: _get_ax(ax, rows, cols, i)
       :staticmethod:
 
 
@@ -203,6 +243,8 @@ Module Contents
 
       :param ax: The array of axis objects for subplots.
       :type ax: numpy.ndarray
+      :param rows: The number of rows in the subplot grid.
+      :type rows: int
       :param cols: The number of columns in the subplot grid.
       :type cols: int
       :param i: The index of the current plot.
