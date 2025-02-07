@@ -10,6 +10,7 @@ from tqdm import tqdm
 # local imports
 from evaluation.simulation_data_extractor import SimulationDataExtractor
 from evaluation.coherence_computer import CoherenceComputer
+from evaluation.peak_tester import PeakTester
 from utils.plotting_setup import PLOT_SIZE, COLORS, notation, PLOT_FORMAT
 from utils.paths import paths
 
@@ -62,6 +63,8 @@ class Evaluator:
         nr_cols = 2 if nr_nodes > 1 else 1
 
         self._evaluate_metric(self._evaluate_power_node, "Evaluating power", plot_overview, nr_rows, nr_cols, "Powers_summary")
+
+        self._evaluate_metric(self._evaluate_peaks, "Evaluating peaks", plot_overview, nr_rows, nr_cols,"Peaks_summary")
 
         print(f"The evaluation plots have been saved in the 'plots' directory.")
 
@@ -139,6 +142,45 @@ class Evaluator:
                 nodes_to_return.append((node,))
                 # yield (node,)
         return nodes_to_return
+
+    def _evaluate_peaks(self, node, fig=None, ax=None, show_legend=True):
+        frequencies, powers, p_values, test_names = self._get_peaks(node)
+
+        yes_peak = "Y"
+        no_peak = "N"
+        label_addons = {
+            key: f": {test_names[key]}, p={p_values[key]:.3f}, {yes_peak if p_values[key] < 0.05 else no_peak}"
+            for key in p_values
+        }
+
+        self._plot_metric(
+            f"{notation(node)}",
+            frequencies, powers,
+            fig=fig, ax=ax, show_legend=True,
+            y_label="Peaks", xlim=[self.frequencies[0], self.frequencies[1]], ylim=[0, 2e7], file_label=f"peaks_{node}",
+            label_addons=label_addons
+        )
+
+    def _get_peaks(self, node):
+        frequencies = None
+        powers = {}
+        p_values = {}
+        test_names = {}
+
+        for key in self.simulation_data_extractor.simulation_names:
+            epoched_powers = self.simulation_data_extractor.simulations_epoched_power_per_node[node][key]
+            frequencies = self.simulation_data_extractor.simulations_info[key].frequencies
+            peak_tester = PeakTester(
+                frequencies=frequencies,
+                peaks_range=[8, 13],
+                others_range=[13, 20]
+            )
+            frequencies, detrended_powers, p_value, test_name = peak_tester.compute_test_result(key, epoched_powers)
+            powers[key] = detrended_powers
+            p_values[key] = p_value
+            test_names[key] = test_name
+
+        return frequencies, powers, p_values, test_names
 
     def _evaluate_power_node(self, node, fig=None, ax=None, show_legend=True):
         """
@@ -260,7 +302,7 @@ class Evaluator:
             self,
             title,
             sim_frequencies, sim_data,
-            fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None
+            fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None
     ):
         """
         Plots a metric (e.g., coherence or power) of data
@@ -288,13 +330,17 @@ class Evaluator:
             The y-axis limits for the plot (default is None).
         file_label : str, optional
             The file name label for saving the plot (default is None).
+        label_addons : dict, optional
+            The dictionary of label addons to append to the name of the data (default is None).
         """
 
         independent = fig is None or ax is None
         if independent:
             fig, ax = plt.subplots(figsize=(PLOT_SIZE * 2, PLOT_SIZE))
 
-        self._plot_simulated_data(ax, sim_frequencies, sim_data)
+        if label_addons is None:
+            label_addons = {key: "" for key in sim_data}
+        self._plot_simulated_data(ax, sim_frequencies, sim_data, label_addons)
 
         ax.set_title(title)
         ax.set_xlim(xlim)
@@ -312,7 +358,7 @@ class Evaluator:
             fig.savefig(path)
 
     @staticmethod
-    def _plot_simulated_data(ax, frequencies, data):
+    def _plot_simulated_data(ax, frequencies, data, label_addons):
         """
         Plots the simulated EEG data on a given axis.
 
@@ -324,10 +370,12 @@ class Evaluator:
             The array of frequencies for the simulated data.
         data : dict
             The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
+        label_addons : dict
+            The dictionary of label addons to append to the name of the data.
         """
 
         for i, (name, d) in enumerate(data.items()):
-            ax.plot(frequencies, d, label=name, color=COLORS[i], alpha=1.0)
+            ax.plot(frequencies, d, label=f"{name}{label_addons[name]}", color=COLORS[i], alpha=1.0)
 
     @staticmethod
     def _get_ax(ax, rows, cols, i):

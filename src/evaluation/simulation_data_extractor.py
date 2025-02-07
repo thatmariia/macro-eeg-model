@@ -35,13 +35,15 @@ class SimulationDataExtractor:
         self.nodes = None
         self.surface_nodes = None
 
-        simulations_info, self.sample_rates = self._get_simulations_info()
-        self.simulation_names = list(simulations_info.keys())
+        self.simulations_info, self.sample_rates = self._get_simulations_info()
+        self.simulation_names = list(self.simulations_info.keys())
         self.simulation_names.sort()
-        processed_simulations_data = self._get_processed_simulations_data(simulations_info)
+        processed_simulations_data = self._get_processed_simulations_data(self.simulations_info)
         self.simulations_data_per_node = self._get_simulations_data_per_node(processed_simulations_data)
-        processed_simulations_power = self._get_processed_simulations_power(simulations_info)
+        processed_simulations_power = self._get_processed_simulations_power(self.simulations_info)
         self.simulations_power_per_node = self._get_simulations_power_per_node(processed_simulations_power)
+        processed_simulations_epoched_power = self._get_processed_simulations_epoched_power(self.simulations_info)
+        self.simulations_epoched_power_per_node = self._get_simulations_epoched_power_per_node(processed_simulations_epoched_power)
 
     def _get_simulations_data_per_node(self, processed_simulations_data):
         """
@@ -67,6 +69,78 @@ class SimulationDataExtractor:
         }
 
         return simulations_data_per_node
+
+    def _get_simulations_epoched_power_per_node(self, processed_simulations_epoched_power):
+        """
+        Organizes the processed epoched power spectra by node and then simulation name.
+
+        Parameters
+        ----------
+        processed_simulations_epoched_power : dict
+            The dictionary containing processed epoched power spectra organized by simulation name and then node.
+
+        Returns
+        -------
+        dict
+            A dictionary organizing the epoched power spectra by node and then simulation name.
+        """
+
+        simulations_epoched_power_per_node = {
+            node: {
+                simulation_name: processed_simulations_epoched_power[simulation_name][node] for simulation_name in
+                processed_simulations_epoched_power.keys()
+            }
+            for node in self.nodes
+        }
+        return simulations_epoched_power_per_node
+
+
+    def _get_processed_simulations_epoched_power(self, simulations_info, epoch_len=1000):
+        """
+        Processes and organizes the epoched power spectra data by simulation name and then node.
+
+        Parameters
+        ----------
+        simulations_info : dict
+            A dictionary containing simulation information objects.
+        epoch_len : int, optional
+            The length of each epoch in milliseconds (default is 1000).
+
+        Returns
+        -------
+        dict
+            A dictionary organizing the processed epoched power spectra data by simulation name and then node.
+        """
+
+        processed_simulations_epoched_power = {}
+
+        for simulation_name, simulation_info in simulations_info.items():
+            simulations_frequencies = simulation_info.frequencies
+            simulation_data = simulation_info.simulation_data
+            epoched_powers = []
+
+            for i, node in enumerate(self.nodes):
+                node_simulation_data = simulation_data[:, i]
+
+                # segment data into epochs
+                nr_epochs = len(node_simulation_data) // epoch_len
+                node_epoched_data = np.reshape(node_simulation_data[:nr_epochs * epoch_len], (nr_epochs, epoch_len))
+
+                # calculate power spectra for each epoch
+                node_epoched_power = np.zeros((nr_epochs, node_epoched_data.shape[1]))
+                for j in range(nr_epochs):
+                    epoch_data = node_epoched_data[j]
+                    fourier = np.fft.fft(epoch_data) / len(epoch_data)
+                    node_epoched_power[j] = np.abs(fourier) ** 2
+
+                epoched_powers.append(node_epoched_power)
+
+            processed_simulations_epoched_power[simulation_name] = {
+                node: np.array(epoched_powers[i])
+                for i, node in enumerate(self.nodes)
+            }
+
+        return processed_simulations_epoched_power
 
     def _get_simulations_power_per_node(self, processed_simulations_power):
         """
