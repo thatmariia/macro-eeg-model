@@ -137,7 +137,9 @@ class PeakTester:
 
         # Get a "white noise-like" version
         trend = power_law(non_zero_freqs, alpha_fit, C_fit)
-        flattened_powers = non_zero_powers - trend + np.mean(non_zero_powers)  #/ trend
+        flattened_powers = non_zero_powers / (1 / non_zero_freqs)  # trend + np.mean(non_zero_powers)  #/ trend
+        scale_factor = np.sqrt(np.sum(non_zero_powers ** 2) / np.sum(flattened_powers ** 2))
+        flattened_powers *= scale_factor
 
         return non_zero_freqs, flattened_powers
 

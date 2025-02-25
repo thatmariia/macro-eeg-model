@@ -439,7 +439,9 @@
 
         <span class="c1"># Get a &quot;white noise-like&quot; version</span>
         <span class="n">trend</span> <span class="o">=</span> <span class="n">power_law</span><span class="p">(</span><span class="n">non_zero_freqs</span><span class="p">,</span> <span class="n">alpha_fit</span><span class="p">,</span> <span class="n">C_fit</span><span class="p">)</span>
-        <span class="n">flattened_powers</span> <span class="o">=</span> <span class="n">non_zero_powers</span> <span class="o">-</span> <span class="n">trend</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">non_zero_powers</span><span class="p">)</span>  <span class="c1">#/ trend</span>
+        <span class="n">flattened_powers</span> <span class="o">=</span> <span class="n">non_zero_powers</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">non_zero_freqs</span><span class="p">)</span>  <span class="c1"># trend + np.mean(non_zero_powers)  #/ trend</span>
+        <span class="n">scale_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">non_zero_powers</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">flattened_powers</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">flattened_powers</span> <span class="o">*=</span> <span class="n">scale_factor</span>
 
         <span class="k">return</span> <span class="n">non_zero_freqs</span><span class="p">,</span> <span class="n">flattened_powers</span></div>
 
