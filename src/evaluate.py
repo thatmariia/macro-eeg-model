@@ -1,5 +1,5 @@
 # local imports
-from evaluation.evaluator import Evaluator
+from macro_eeg_model import Evaluator
 
 
 def evaluate():
