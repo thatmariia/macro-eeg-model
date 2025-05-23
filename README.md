@@ -13,27 +13,10 @@ git clone https://github.com/thatmariia/macro-eeg-model.git
 cd macro-eeg-model
 ```
 
-#### Open the documentation:
+#### Open the documentation: 
+[![GitHub Pages](https://img.shields.io/badge/view-docs-blue?logo=github)](https://thatmariia.github.io/macro-eeg-model)
 
-* On macOS:
-```sh
-open docs/build/html/index.html
-```
-
-* On Linux:
-```sh
-firefox docs/build/html/index.html
-```
-(replace `firefox` with `google-chrome` or another browser if necessary).
-If running on Ubuntu, you may simply run 
-```sh
-xdg-open docs/build/html/index.html
-```
-
-* On Windows:
-```sh
-start docs/build/html/index.html
-```
+Documentation is available at [thatmariia.github.io/macro-eeg-model](https://thatmariia.github.io/macro-eeg-model)
 
 The documentation provides all further details on how to
 install required packages, run the code, and access the results.

@@ -1,20 +1,26 @@
-# Preparation
+# Installation
 
 Before running the code, make sure you have installed Python 3.10 or higher
-(the project is initially developed with 3.10 and tested with that version).
+(the project is initially developed with 3.12 and tested with that version).
 
-Create a new conda environment and activate it:
+If you don't have Poetry installed, you can install it by following the instructions on
+https://python-poetry.org/docs/#installation
+or by running the following command:
 
 ```sh
-conda create -n macro-eeg-model python=3.10
-conda activate macro-eeg-model
+pipx install poetry
 ```
 
-Install the packages with pip: 
+Clone the repository and enter the project directory
+
 ```sh
-pip install -e .
+git clone https://github.com/thatmariia/macro-eeg-model.git
+cd macro-eeg-model
 ```
-This will install the project and its dependencies in editable mode, 
-allowing you to make changes to the source code and have them reflected immediately.
-You only need to do this once, unless you change the dependencies 
-in `requirements.txt` or the contents of `setup.py`.
+
+Create and activate the virtual environment
+
+```sh
+poetry install
+```
+This installs all dependencies in a virtual environment managed by Poetry.

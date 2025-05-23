@@ -1,6 +1,6 @@
 # local imports
-from config.configs import get_simulate_config
-from simulation.global_simulation import GlobalSimulation
+from macro_eeg_model import get_simulate_config
+from macro_eeg_model import GlobalSimulation
 
 
 def simulate():

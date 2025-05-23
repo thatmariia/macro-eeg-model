@@ -9,7 +9,7 @@ The commands can be run directly from the command line, without needing to impor
 
 To run a simulation, use this command:
 ```sh
-py_simulate [options]
+poetry run py_simulate [options]
 ```
 
 After running the simulation, the resulting data is saved in the `output/<model_name>` folder, 
@@ -19,7 +19,7 @@ and the generated plots are saved in the `plots/<model_name>` folder.
 
 To run the evaluation, use this command:
 ```sh
-py_evaluate
+poetry run py_evaluate
 ```
 
 After running the evaluation, the resulting plots are saved in the `plots` folder.
