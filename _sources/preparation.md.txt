@@ -11,13 +11,14 @@ or by running the following command:
 pipx install poetry
 ```
 
-### Clone the repository and enter the project directory
+Clone the repository and enter the project directory
+
 ```sh
 git clone https://github.com/thatmariia/macro-eeg-model.git
 cd macro-eeg-model
 ```
 
-### Create and activate the virtual environment
+Create and activate the virtual environment
 
 ```sh
 poetry install
