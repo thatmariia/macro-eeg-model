@@ -450,24 +450,6 @@ unicode = ["unicodedata2 (>=15.1.0) ; python_version <= \"3.12\""]
 woff = ["brotli (>=1.0.1) ; platform_python_implementation == \"CPython\"", "brotlicffi (>=0.8.0) ; platform_python_implementation != \"CPython\"", "zopfli (>=0.1.4)"]
 
 [[package]]
-name = "furo"
-version = "2024.8.6"
-description = "A clean customisable Sphinx documentation theme."
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "furo-2024.8.6-py3-none-any.whl", hash = "sha256:6cd97c58b47813d3619e63e9081169880fbe331f0ca883c871ff1f3f11814f5c"},
-    {file = "furo-2024.8.6.tar.gz", hash = "sha256:b63e4cee8abfc3136d3bc03a3d45a76a850bada4d6374d24c1716b0e01394a01"},
-]
-
-[package.dependencies]
-beautifulsoup4 = "*"
-pygments = ">=2.7"
-sphinx = ">=6.0,<9.0"
-sphinx-basic-ng = ">=1.0.0.beta2"
-
-[[package]]
 name = "idna"
 version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1465,24 +1447,6 @@ sphinx = ">=6.1.0"
 docs = ["furo", "sphinx", "sphinx-design"]
 
 [[package]]
-name = "sphinx-basic-ng"
-version = "1.0.0b2"
-description = "A modern skeleton for Sphinx themes."
-optional = false
-python-versions = ">=3.7"
-groups = ["main"]
-files = [
-    {file = "sphinx_basic_ng-1.0.0b2-py3-none-any.whl", hash = "sha256:eb09aedbabfb650607e9b4b68c9d240b90b1e1be221d6ad71d61c52e29f7932b"},
-    {file = "sphinx_basic_ng-1.0.0b2.tar.gz", hash = "sha256:9ec55a47c90c8c002b5960c57492ec3021f5193cb26cebc2dc4ea226848651c9"},
-]
-
-[package.dependencies]
-sphinx = ">=4.0"
-
-[package.extras]
-docs = ["furo", "ipython", "myst-parser", "sphinx-copybutton", "sphinx-inline-tabs"]
-
-[[package]]
 name = "sphinx-book-theme"
 version = "1.1.4"
 description = "A clean book theme for scientific explanations and documentation with Sphinx"
@@ -1762,4 +1726,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "7d7a7d4f37ab440fffd7b2af07182174e6c25185f1600e9a8393930ce76ac596"
+content-hash = "fbb48f36f497165911f6cd53085a373e7705309234fbf75bf4120f4c46198b79"

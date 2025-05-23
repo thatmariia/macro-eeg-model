@@ -11,7 +11,6 @@ requires-python = ">=3.10"
 dependencies = [
     "sphinx (==8.0.*)",
     "myst-parser (==4.0.*)",
-    "furo (==2024.8.*)",
     "sphinx-book-theme (==1.1.*)",
     "sphinx-autoapi (==3.2.*)",
     "sphinx-collapse (==0.1.*)",
