@@ -377,6 +377,8 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    parser : argparse.ArgumentParser</span>
 <span class="sd">        The argument parser instance used to parse command line arguments.</span>
+<span class="sd">    _default_n: int</span>
+<span class="sd">        The default number of simulations to run.</span>
 <span class="sd">    _default_model_name : str</span>
 <span class="sd">        The default name of the model.</span>
 <span class="sd">    _default_nodes : str</span>
@@ -426,6 +428,8 @@ document.write(`
         <span class="n">provided_model_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_yaml</span><span class="p">(</span><span class="n">paths</span><span class="o">.</span><span class="n">configs_path</span> <span class="o">/</span> <span class="s2">&quot;model_params.yml&quot;</span><span class="p">)</span>
 
         <span class="c1"># model params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_n</span> <span class="o">=</span> <span class="n">provided_model_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_model_name</span> <span class="o">=</span> <span class="n">provided_model_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model_name&quot;</span><span class="p">,</span> <span class="s2">&quot;Simulated macro EEG model&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_nodes</span> <span class="o">=</span> <span class="n">provided_model_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nodes&quot;</span><span class="p">,</span> <span class="s2">&quot;frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus&quot;</span><span class="p">)</span>
@@ -497,6 +501,12 @@ document.write(`
 <span class="sd">        based on the loaded YAML configuration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--n&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_default_n</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;number of simulations to run&quot;</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;--model_name&quot;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
@@ -600,6 +610,9 @@ document.write(`
 <span class="sd">        ValueError</span>
 <span class="sd">            If the parsed arguments are invalid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of simulations must be at least 1&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">relay_station</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">relay_station</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The relay station must be one of the nodes&quot;</span><span class="p">)</span>

@@ -358,6 +358,7 @@ document.write(`
 <span></span><span class="c1"># local imports</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">macro_eeg_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_simulate_config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">macro_eeg_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">GlobalSimulation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 
 
 <div class="viewcode-block" id="simulate">
@@ -371,13 +372,27 @@ document.write(`
 <span class="sd">    and executes the simulation using :py:meth:`src.simulation.global_simulation.GlobalSimulation.run`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">config</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">=</span> <span class="n">get_simulate_config</span><span class="p">()</span>
+    <span class="n">config</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_simulate_config</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
-    <span class="n">global_simulation</span> <span class="o">=</span> <span class="n">GlobalSimulation</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">global_simulation</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-        <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">make_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">simulation_name</span><span class="o">=</span><span class="n">model_name</span>
-    <span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_simulation</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">make_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs a single simulation using the provided configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">global_simulation</span> <span class="o">=</span> <span class="n">GlobalSimulation</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">global_simulation</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">make_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">simulation_name</span><span class="o">=</span><span class="n">name</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running single simulation: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">run_simulation</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running batch simulation: </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> iterations...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running simulation </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+            <span class="n">single_model_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">run_simulation</span><span class="p">(</span><span class="n">single_model_name</span><span class="p">,</span> <span class="n">make_plots</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 

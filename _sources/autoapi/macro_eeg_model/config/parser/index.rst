@@ -26,6 +26,12 @@ Module Contents
 
       :type: argparse.ArgumentParser
 
+   .. attribute:: _default_n
+
+      The default number of simulations to run.
+
+      :type: int
+
    .. attribute:: _default_model_name
 
       The default name of the model.

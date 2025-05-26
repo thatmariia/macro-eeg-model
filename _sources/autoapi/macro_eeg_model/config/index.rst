@@ -57,6 +57,7 @@ Package Contents
 
              - config (ModelConfig): The configuration object for the simulation.
              - model_name (str): The name of the model as specified in the command line arguments.
+             - n (int): The number of simulations to run, as specified in the command line arguments.
    :rtype: tuple
 
 
@@ -541,6 +542,12 @@ Package Contents
       The argument parser instance used to parse command line arguments.
 
       :type: argparse.ArgumentParser
+
+   .. attribute:: _default_n
+
+      The default number of simulations to run.
+
+      :type: int
 
    .. attribute:: _default_model_name
 
