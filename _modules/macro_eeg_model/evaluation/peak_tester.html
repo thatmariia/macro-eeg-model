@@ -502,7 +502,7 @@ document.write(`
             <span class="k">return</span> <span class="n">C</span> <span class="o">*</span> <span class="n">f</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="c1"># Fit the power spectrum to a power-law trend</span>
-        <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">power_law</span><span class="p">,</span> <span class="n">non_zero_freqs</span><span class="p">,</span> <span class="n">non_zero_powers</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">power_law</span><span class="p">,</span> <span class="n">non_zero_freqs</span><span class="p">,</span> <span class="n">non_zero_powers</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">maxfev</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
         <span class="n">alpha_fit</span><span class="p">,</span> <span class="n">C_fit</span> <span class="o">=</span> <span class="n">popt</span>
 
         <span class="c1"># Get a &quot;white noise-like&quot; version</span>
