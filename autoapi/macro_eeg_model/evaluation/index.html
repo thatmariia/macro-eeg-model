@@ -181,6 +181,8 @@
 <li class="toctree-l3 current active has-children"><a class="current reference internal" href="#">macro_eeg_model.evaluation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="coherence_computer/index.html">macro_eeg_model.evaluation.coherence_computer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="evaluator/index.html">macro_eeg_model.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fooof_tester/index.html">macro_eeg_model.evaluation.fooof_tester</a></li>
+<li class="toctree-l4"><a class="reference internal" href="peak_tester/index.html">macro_eeg_model.evaluation.peak_tester</a></li>
 <li class="toctree-l4"><a class="reference internal" href="simulation_data_extractor/index.html">macro_eeg_model.evaluation.simulation_data_extractor</a></li>
 </ul>
 </details></li>
@@ -419,14 +421,30 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_metric()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_nodes"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_nodes()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_peaks()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_fooof"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_fooof()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_power_node"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_power_node()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_coherence_node_pair"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_coherence_node_pair()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_fooof_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_fooof_peaks()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_peaks()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_power"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_power()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_coherences"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_coherences()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._plot_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_metric()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._plot_simulated_data"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_simulated_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_ax"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_ax()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester"><code class="docutils literal notranslate"><span class="pre">PeakTester</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.frequencies"><code class="docutils literal notranslate"><span class="pre">PeakTester.frequencies</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.peaks_range"><code class="docutils literal notranslate"><span class="pre">PeakTester.peaks_range</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.others_range"><code class="docutils literal notranslate"><span class="pre">PeakTester.others_range</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.powers"><code class="docutils literal notranslate"><span class="pre">PeakTester.powers</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.peak_values"><code class="docutils literal notranslate"><span class="pre">PeakTester.peak_values</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.other_values"><code class="docutils literal notranslate"><span class="pre">PeakTester.other_values</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.__init__"><code class="docutils literal notranslate"><span class="pre">PeakTester.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.compute_test_result"><code class="docutils literal notranslate"><span class="pre">PeakTester.compute_test_result()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester._separate_peaks"><code class="docutils literal notranslate"><span class="pre">PeakTester._separate_peaks()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester._detrend_data"><code class="docutils literal notranslate"><span class="pre">PeakTester._detrend_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester._choose_and_run_test"><code class="docutils literal notranslate"><span class="pre">PeakTester._choose_and_run_test()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.SimulationDataExtractor"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor</span></code></a><ul class="nav section-nav flex-column">
@@ -470,6 +488,8 @@ compare simulated EEG data against real EEG data.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="coherence_computer/index.html">macro_eeg_model.evaluation.coherence_computer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluator/index.html">macro_eeg_model.evaluation.evaluator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fooof_tester/index.html">macro_eeg_model.evaluation.fooof_tester</a></li>
+<li class="toctree-l1"><a class="reference internal" href="peak_tester/index.html">macro_eeg_model.evaluation.peak_tester</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simulation_data_extractor/index.html">macro_eeg_model.evaluation.simulation_data_extractor</a></li>
 </ul>
 </div>
@@ -484,7 +504,10 @@ compare simulated EEG data against real EEG data.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator" title="macro_eeg_model.evaluation.Evaluator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Evaluator</span></code></a></p></td>
 <td><p>A class responsible for evaluating simulated EEG data .</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#macro_eeg_model.evaluation.SimulationDataExtractor" title="macro_eeg_model.evaluation.SimulationDataExtractor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimulationDataExtractor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#macro_eeg_model.evaluation.PeakTester" title="macro_eeg_model.evaluation.PeakTester"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PeakTester</span></code></a></p></td>
+<td><p>A class responsible for testing the significance of peak power values compared to other frequency ranges.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#macro_eeg_model.evaluation.SimulationDataExtractor" title="macro_eeg_model.evaluation.SimulationDataExtractor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimulationDataExtractor</span></code></a></p></td>
 <td><p>The SimulationDataExtractor class is responsible for extracting and processing simulation data.</p></td>
 </tr>
 </tbody>
@@ -495,7 +518,7 @@ compare simulated EEG data against real EEG data.</p>
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.CoherenceComputer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">CoherenceComputer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hann'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">CoherenceComputer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hann'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/coherence_computer.html#CoherenceComputer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer" title="Link to this definition">#</a></dt>
 <dd><p>A class responsible for computing the coherence between signals.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.CoherenceComputer.fs">
@@ -521,7 +544,7 @@ compare simulated EEG data against real EEG data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.CoherenceComputer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hann'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hann'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/coherence_computer.html#CoherenceComputer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer.__init__" title="Link to this definition">#</a></dt>
 <dd><p>Initializes the CoherenceComputer with the given sampling frequency and window type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -535,7 +558,7 @@ compare simulated EEG data against real EEG data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.CoherenceComputer.compute_coherence_matched">
-<span class="sig-name descname"><span class="pre">compute_coherence_matched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_signals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer.compute_coherence_matched" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_coherence_matched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_signals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/coherence_computer.html#CoherenceComputer.compute_coherence_matched"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer.compute_coherence_matched" title="Link to this definition">#</a></dt>
 <dd><p>Computes the coherence between two signals using <a class="reference internal" href="#macro_eeg_model.evaluation.CoherenceComputer._compute_coherence" title="macro_eeg_model.evaluation.CoherenceComputer._compute_coherence"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_compute_coherence()</span></code></a>,
 with an option to smooth the signals before computation using <a class="reference internal" href="#macro_eeg_model.evaluation.CoherenceComputer._smooth_signal" title="macro_eeg_model.evaluation.CoherenceComputer._smooth_signal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_smooth_signal()</span></code></a>.</p>
 <dl class="field-list simple">
@@ -565,7 +588,7 @@ with an option to smooth the signals before computation using <a class="referenc
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.CoherenceComputer._compute_coherence">
-<span class="sig-name descname"><span class="pre">_compute_coherence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer._compute_coherence" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_compute_coherence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/coherence_computer.html#CoherenceComputer._compute_coherence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer._compute_coherence" title="Link to this definition">#</a></dt>
 <dd><p>Computes the coherence between two signals using their cross-spectrum and power spectra.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -590,7 +613,7 @@ with an option to smooth the signals before computation using <a class="referenc
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.CoherenceComputer._smooth_signal">
-<span class="sig-name descname"><span class="pre">_smooth_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer._smooth_signal" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_smooth_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/coherence_computer.html#CoherenceComputer._smooth_signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.CoherenceComputer._smooth_signal" title="Link to this definition">#</a></dt>
 <dd><p>Applies a smoothing window to a signal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -609,7 +632,7 @@ with an option to smooth the signals before computation using <a class="referenc
 
 <dl class="py class">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator" title="Link to this definition">#</a></dt>
 <dd><p>A class responsible for evaluating simulated EEG data .
 It computes metrics such as coherence and power spectra across different brain regions (nodes).</p>
 <dl class="py attribute">
@@ -637,13 +660,13 @@ used to extract and process simulated EEG data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator.__init__" title="Link to this definition">#</a></dt>
 <dd><p>Initializes the Evaluator class, setting up the frequency range and loading real and simulated data.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_overview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator.evaluate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_overview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator.evaluate" title="Link to this definition">#</a></dt>
 <dd><p>Evaluates and compares the coherence and power metrics
 using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._evaluate_metric" title="macro_eeg_model.evaluation.Evaluator._evaluate_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_evaluate_metric()</span></code></a>.</p>
 <dl class="field-list simple">
@@ -657,7 +680,7 @@ if False, generates individual plots for (pairs of) brain regions.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._evaluate_metric">
-<span class="sig-name descname"><span class="pre">_evaluate_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluation_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_overview</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_metric" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_evaluate_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluation_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_overview</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._evaluate_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_metric" title="Link to this definition">#</a></dt>
 <dd><p>A helper function to evaluate a specific metric (e.g., coherence or power) across nodes or node pairs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -677,7 +700,7 @@ if False, generates individual plots for (pairs of) brain regions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._get_nodes">
-<span class="sig-name descname"><span class="pre">_get_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairwise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_nodes" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairwise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_nodes" title="Link to this definition">#</a></dt>
 <dd><p>Generates nodes or node pairs for evaluation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -696,7 +719,7 @@ otherwise generates individual nodes (for power evaluation)
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._evaluate_peaks">
-<span class="sig-name descname"><span class="pre">_evaluate_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_peaks" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_evaluate_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._evaluate_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_peaks" title="Link to this definition">#</a></dt>
 <dd><p>Evaluates the presence of alpha peaks (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._get_peaks" title="macro_eeg_model.evaluation.Evaluator._get_peaks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_peaks()</span></code></a>)
 and plots (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._plot_metric" title="macro_eeg_model.evaluation.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>) detrended power spectrum for a given node.</p>
 <dl class="field-list simple">
@@ -712,8 +735,25 @@ and plots (using <a class="reference internal" href="#macro_eeg_model.evaluation
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._evaluate_fooof">
+<span class="sig-name descname"><span class="pre">_evaluate_fooof</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._evaluate_fooof"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_fooof" title="Link to this definition">#</a></dt>
+<dd><p>Evaluates the presence of peaks (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._get_fooof_peaks" title="macro_eeg_model.evaluation.Evaluator._get_fooof_peaks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_fooof_peaks()</span></code></a>)
+and plots (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._plot_metric" title="macro_eeg_model.evaluation.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>) the peaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>str</em>) – The name of the brain region to evaluate.</p></li>
+<li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em><em>, </em><em>optional</em>) – The figure object for plotting (default is None).</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – The axis object for plotting (default is None).</p></li>
+<li><p><strong>show_legend</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, shows the legend on the plot (default is True).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._evaluate_power_node">
-<span class="sig-name descname"><span class="pre">_evaluate_power_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_power_node" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_evaluate_power_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._evaluate_power_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_power_node" title="Link to this definition">#</a></dt>
 <dd><p>Evaluates (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_power" title="macro_eeg_model.evaluation.Evaluator._get_simulated_power"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_simulated_power()</span></code></a>)
 and plots (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._plot_metric" title="macro_eeg_model.evaluation.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>) the power spectrum for a given node.</p>
 <dl class="field-list simple">
@@ -730,7 +770,7 @@ and plots (using <a class="reference internal" href="#macro_eeg_model.evaluation
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._evaluate_coherence_node_pair">
-<span class="sig-name descname"><span class="pre">_evaluate_coherence_node_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_coherence_node_pair" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_evaluate_coherence_node_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._evaluate_coherence_node_pair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._evaluate_coherence_node_pair" title="Link to this definition">#</a></dt>
 <dd><p>Evaluates (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_coherences" title="macro_eeg_model.evaluation.Evaluator._get_simulated_coherences"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_get_simulated_coherences()</span></code></a>)
 and plots (using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._plot_metric" title="macro_eeg_model.evaluation.Evaluator._plot_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_metric()</span></code></a>)
 the coherence between a pair of nodes.</p>
@@ -748,9 +788,31 @@ the coherence between a pair of nodes.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._get_fooof_peaks">
+<span class="sig-name descname"><span class="pre">_get_fooof_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._get_fooof_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_fooof_peaks" title="Link to this definition">#</a></dt>
+<dd><p>Computes the peaks in the power spectrum for a given node using <code class="xref py py-class docutils literal notranslate"><span class="pre">FooofTester</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the brain region for which to compute the peaks.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>frequencies (numpy.ndarray): The array of frequencies.</p></li>
+<li><p>all_binary_peaks (dict): A dictionary of binary peaks for each simulation, keyed by simulation name.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._get_peaks">
-<span class="sig-name descname"><span class="pre">_get_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_peaks" title="Link to this definition">#</a></dt>
-<dd><p>Computes the peaks in the power spectrum for a given node using <code class="xref py py-class docutils literal notranslate"><span class="pre">PeakTester</span></code>.</p>
+<span class="sig-name descname"><span class="pre">_get_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._get_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_peaks" title="Link to this definition">#</a></dt>
+<dd><p>Computes the peaks in the power spectrum for a given node using <a class="reference internal" href="#macro_eeg_model.evaluation.PeakTester" title="macro_eeg_model.evaluation.PeakTester"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeakTester</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the brain region for which to compute the peaks.</p>
@@ -773,7 +835,7 @@ the coherence between a pair of nodes.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._get_simulated_power">
-<span class="sig-name descname"><span class="pre">_get_simulated_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_power" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_simulated_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._get_simulated_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_power" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the simulated power spectrum for a given node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -795,7 +857,7 @@ the coherence between a pair of nodes.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._get_simulated_coherences">
-<span class="sig-name descname"><span class="pre">_get_simulated_coherences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_coherences" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_simulated_coherences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._get_simulated_coherences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_coherences" title="Link to this definition">#</a></dt>
 <dd><p>Computes the simulated coherence between a pair of nodes for each simulation using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">src.simulation.coherence_computer.CoherenceComputer.compute_coherence_matched()</span></code> .</p>
 <dl class="field-list simple">
@@ -821,7 +883,7 @@ the coherence between a pair of nodes.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._plot_metric">
-<span class="sig-name descname"><span class="pre">_plot_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_addons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._plot_metric" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_plot_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'line'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_addons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._plot_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._plot_metric" title="Link to this definition">#</a></dt>
 <dd><p>Plots a metric (e.g., coherence or power) of data
 using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator._plot_simulated_data" title="macro_eeg_model.evaluation.Evaluator._plot_simulated_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_plot_simulated_data()</span></code></a>.</p>
 <dl class="field-list simple">
@@ -830,6 +892,7 @@ using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator.
 <li><p><strong>title</strong> (<em>str</em>) – The title of the plot.</p></li>
 <li><p><strong>sim_frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies for the simulated data.</p></li>
 <li><p><strong>sim_data</strong> (<em>dict</em>) – The simulated data (e.g., power or coherence) to plot, keyed by simulation name.</p></li>
+<li><p><strong>plot_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The type of plot to create (default is “line”). Currently, “line” and “scatter” are supported.</p></li>
 <li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em><em>, </em><em>optional</em>) – The figure object for plotting (default is None).</p></li>
 <li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – The axis object for plotting (default is None).</p></li>
 <li><p><strong>show_legend</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, shows the legend on the plot (default is True).</p></li>
@@ -845,7 +908,7 @@ using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._plot_simulated_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_plot_simulated_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_addons</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._plot_simulated_data" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_plot_simulated_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_addons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'line'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._plot_simulated_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._plot_simulated_data" title="Link to this definition">#</a></dt>
 <dd><p>Plots the simulated EEG data on a given axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -854,6 +917,7 @@ using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator.
 <li><p><strong>frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies for the simulated data.</p></li>
 <li><p><strong>data</strong> (<em>dict</em>) – The simulated data (e.g., power or coherence) to plot, keyed by simulation name.</p></li>
 <li><p><strong>label_addons</strong> (<em>dict</em>) – The dictionary of label addons to append to the name of the data.</p></li>
+<li><p><strong>plot_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The type of plot to create (default is “line”). Currently, “line” and “scatter” are supported.</p></li>
 </ul>
 </dd>
 </dl>
@@ -861,7 +925,7 @@ using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.Evaluator._get_ax">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_ax" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/evaluator.html#Evaluator._get_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.Evaluator._get_ax" title="Link to this definition">#</a></dt>
 <dd><p>Helper function to get the appropriate subplot axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -884,8 +948,181 @@ using <a class="reference internal" href="#macro_eeg_model.evaluation.Evaluator.
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">PeakTester</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peaks_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others_range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/peak_tester.html#PeakTester"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester" title="Link to this definition">#</a></dt>
+<dd><p>A class responsible for testing the significance of peak power values compared to other frequency ranges.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.frequencies">
+<span class="sig-name descname"><span class="pre">frequencies</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.frequencies" title="Link to this definition">#</a></dt>
+<dd><p>The array of frequencies corresponding to the power spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.peaks_range">
+<span class="sig-name descname"><span class="pre">peaks_range</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.peaks_range" title="Link to this definition">#</a></dt>
+<dd><p>The range of frequencies where peaks are expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.others_range">
+<span class="sig-name descname"><span class="pre">others_range</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.others_range" title="Link to this definition">#</a></dt>
+<dd><p>The range of frequencies where other values are expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.powers">
+<span class="sig-name descname"><span class="pre">powers</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.powers" title="Link to this definition">#</a></dt>
+<dd><p>The epoched power spectrum of the simulated EEG data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.peak_values">
+<span class="sig-name descname"><span class="pre">peak_values</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.peak_values" title="Link to this definition">#</a></dt>
+<dd><p>The mean power values in the peak range for each epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.other_values">
+<span class="sig-name descname"><span class="pre">other_values</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.other_values" title="Link to this definition">#</a></dt>
+<dd><p>The mean power values in the other range for each epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peaks_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others_range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/peak_tester.html#PeakTester.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initializes the PeakTester class with the provided frequency ranges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frequencies</strong> (<em>numpy.ndarray</em>) – The array of frequencies corresponding to the power spectrum.</p></li>
+<li><p><strong>peaks_range</strong> (<em>tuple</em>) – The range of frequencies where peaks are expected.</p></li>
+<li><p><strong>others_range</strong> (<em>tuple</em>) – The range of frequencies where other values are expected.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester.compute_test_result">
+<span class="sig-name descname"><span class="pre">compute_test_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulation_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoched_powers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/peak_tester.html#PeakTester.compute_test_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester.compute_test_result" title="Link to this definition">#</a></dt>
+<dd><p>Computes the statistical test result for the peak power values compared to other frequency ranges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulation_name</strong> (<em>str</em>) – The name of the simulation. (should include “pink” if the data was simulated with pink noise)</p></li>
+<li><p><strong>epoched_powers</strong> (<em>list</em>) – The epoched power spectrum of the simulated EEG data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>frequencies (numpy.ndarray): The array of frequencies corresponding to the power spectrum.</p></li>
+<li><p>mean_power (numpy.ndarray): The mean power spectrum across epochs of the simulated EEG data.</p></li>
+<li><p>p_value (float): The calculated p-value.</p></li>
+<li><p>test_name (str): The name of the statistical test used.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester._separate_peaks">
+<span class="sig-name descname"><span class="pre">_separate_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">power</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/peak_tester.html#PeakTester._separate_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester._separate_peaks" title="Link to this definition">#</a></dt>
+<dd><p>Separates the power values in the peak and other frequency ranges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>power</strong> (<em>numpy.ndarray</em>) – The power spectrum of the simulated EEG data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester._detrend_data">
+<span class="sig-name descname"><span class="pre">_detrend_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">powers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_pink</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/peak_tester.html#PeakTester._detrend_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester._detrend_data" title="Link to this definition">#</a></dt>
+<dd><p>Detrend the pink noise in the power spectrum by fitting a power-law trend and removing it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>powers</strong> (<em>numpy.ndarray</em>) – The power spectrum of the simulated EEG data.</p></li>
+<li><p><strong>is_pink</strong> (<em>bool</em>) – A flag indicating whether the data was simulated with pink noise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>non_zero_freqs (numpy.ndarray): The array of non-zero frequencies.</p></li>
+<li><p>flattened_powers (numpy.ndarray): The corresponding detrended power spectrum</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="macro_eeg_model.evaluation.PeakTester._choose_and_run_test">
+<span class="sig-name descname"><span class="pre">_choose_and_run_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paired</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/peak_tester.html#PeakTester._choose_and_run_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.PeakTester._choose_and_run_test" title="Link to this definition">#</a></dt>
+<dd><p>Automatically selects and runs the correct statistical test based on data characteristics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>paired</strong> (<em>bool</em>) – A flag indicating whether the data is paired or independent.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<ul class="simple">
+<li><p>t_stat (float): The calculated t-statistic.</p></li>
+<li><p>p_value (float): The calculated p-value.</p></li>
+<li><p>test_name (str): The name of the statistical test used.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">SimulationDataExtractor</span></span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">macro_eeg_model.evaluation.</span></span><span class="sig-name descname"><span class="pre">SimulationDataExtractor</span></span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor" title="Link to this definition">#</a></dt>
 <dd><p>The SimulationDataExtractor class is responsible for extracting and processing simulation data.
 It organizes the data by nodes and simulations, allowing for easy access to both raw and processed data.</p>
 <dl class="py attribute">
@@ -956,14 +1193,14 @@ It organizes the data by nodes and simulations, allowing for easy access to both
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor.__init__" title="Link to this definition">#</a></dt>
 <dd><p>Initializes the SimulationDataExtractor by loading and processing the simulation data
 using methods from this class.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_data_per_node">
-<span class="sig-name descname"><span class="pre">_get_simulations_data_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_data_per_node" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_simulations_data_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_simulations_data_per_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_data_per_node" title="Link to this definition">#</a></dt>
 <dd><p>Organizes the processed simulation data by node and then simulation name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -980,7 +1217,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_epoched_power_per_node">
-<span class="sig-name descname"><span class="pre">_get_simulations_epoched_power_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_epoched_power</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_epoched_power_per_node" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_simulations_epoched_power_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_epoched_power</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_simulations_epoched_power_per_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_epoched_power_per_node" title="Link to this definition">#</a></dt>
 <dd><p>Organizes the processed epoched power spectra by node and then simulation name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -997,7 +1234,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_epoched_power">
-<span class="sig-name descname"><span class="pre">_get_processed_simulations_epoched_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_epoched_power" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_processed_simulations_epoched_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_processed_simulations_epoched_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_epoched_power" title="Link to this definition">#</a></dt>
 <dd><p>Processes and organizes the epoched power spectra data by simulation name and then node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1017,7 +1254,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_power_per_node">
-<span class="sig-name descname"><span class="pre">_get_simulations_power_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_power</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_power_per_node" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_simulations_power_per_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processed_simulations_power</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_simulations_power_per_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_power_per_node" title="Link to this definition">#</a></dt>
 <dd><p>Organizes the processed power spectra by node and then simulation name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1034,7 +1271,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_power">
-<span class="sig-name descname"><span class="pre">_get_processed_simulations_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_power" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_processed_simulations_power</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_processed_simulations_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_power" title="Link to this definition">#</a></dt>
 <dd><p>Processes and organizes the power spectra data by simulation name and then node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1051,7 +1288,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_data">
-<span class="sig-name descname"><span class="pre">_get_processed_simulations_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_processed_simulations_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulations_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_processed_simulations_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_data" title="Link to this definition">#</a></dt>
 <dd><p>Processes and organizes the raw simulation data by simulation name and then node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1068,7 +1305,7 @@ using methods from this class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_info">
-<span class="sig-name descname"><span class="pre">_get_simulations_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_info" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_simulations_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_simulations_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_info" title="Link to this definition">#</a></dt>
 <dd><p>Loads simulation information from saved files in the directories within the
 output path (see <code class="xref py py-class docutils literal notranslate"><span class="pre">src.utils.paths.Paths</span></code>) using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">src.simulation.simulation_info.SimulationInfo.load_simulation_info()</span></code>.
@@ -1093,7 +1330,7 @@ and checks for consistency in node names.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="macro_eeg_model.evaluation.SimulationDataExtractor._get_surface_nodes">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_surface_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_surface_nodes" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_surface_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/macro_eeg_model/evaluation/simulation_data_extractor.html#SimulationDataExtractor._get_surface_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#macro_eeg_model.evaluation.SimulationDataExtractor._get_surface_nodes" title="Link to this definition">#</a></dt>
 <dd><p>Returns the surface nodes from the given list of nodes.
 Currently, the surface nodes are all nodes except the thalamus.</p>
 <dl class="field-list simple">
@@ -1179,14 +1416,30 @@ Currently, the surface nodes are all nodes except the thalamus.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_metric()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_nodes"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_nodes()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_peaks()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_fooof"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_fooof()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_power_node"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_power_node()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._evaluate_coherence_node_pair"><code class="docutils literal notranslate"><span class="pre">Evaluator._evaluate_coherence_node_pair()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_fooof_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_fooof_peaks()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_peaks"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_peaks()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_power"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_power()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_simulated_coherences"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_simulated_coherences()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._plot_metric"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_metric()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._plot_simulated_data"><code class="docutils literal notranslate"><span class="pre">Evaluator._plot_simulated_data()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.Evaluator._get_ax"><code class="docutils literal notranslate"><span class="pre">Evaluator._get_ax()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester"><code class="docutils literal notranslate"><span class="pre">PeakTester</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.frequencies"><code class="docutils literal notranslate"><span class="pre">PeakTester.frequencies</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.peaks_range"><code class="docutils literal notranslate"><span class="pre">PeakTester.peaks_range</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.others_range"><code class="docutils literal notranslate"><span class="pre">PeakTester.others_range</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.powers"><code class="docutils literal notranslate"><span class="pre">PeakTester.powers</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.peak_values"><code class="docutils literal notranslate"><span class="pre">PeakTester.peak_values</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.other_values"><code class="docutils literal notranslate"><span class="pre">PeakTester.other_values</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.__init__"><code class="docutils literal notranslate"><span class="pre">PeakTester.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester.compute_test_result"><code class="docutils literal notranslate"><span class="pre">PeakTester.compute_test_result()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester._separate_peaks"><code class="docutils literal notranslate"><span class="pre">PeakTester._separate_peaks()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester._detrend_data"><code class="docutils literal notranslate"><span class="pre">PeakTester._detrend_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.PeakTester._choose_and_run_test"><code class="docutils literal notranslate"><span class="pre">PeakTester._choose_and_run_test()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#macro_eeg_model.evaluation.SimulationDataExtractor"><code class="docutils literal notranslate"><span class="pre">SimulationDataExtractor</span></code></a><ul class="nav section-nav flex-column">

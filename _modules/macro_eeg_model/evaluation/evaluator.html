@@ -1,0 +1,998 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>macro_eeg_model.evaluation.evaluator &#8212; macro-eeg-model  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/macro_eeg_model/evaluation/evaluator';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">macro-eeg-model  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preparation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reproducing.html">Reproducing results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_access.html">Data Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprint.html">Associated preprint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citation.html">Citation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/evaluate/index.html">evaluate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/simulate/index.html">simulate</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/index.html">macro_eeg_model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/config/index.html">macro_eeg_model.config</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/config/configs/index.html">macro_eeg_model.config.configs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/config/connectivity_model/index.html">macro_eeg_model.config.connectivity_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/config/model_config/index.html">macro_eeg_model.config.model_config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/config/nodes_processor/index.html">macro_eeg_model.config.nodes_processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/config/parser/index.html">macro_eeg_model.config.parser</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/data_prep/index.html">macro_eeg_model.data_prep</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/data_prep/areas_terminology_parser/index.html">macro_eeg_model.data_prep.areas_terminology_parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/data_prep/data_preparator/index.html">macro_eeg_model.data_prep.data_preparator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/data_prep/labels/index.html">macro_eeg_model.data_prep.labels</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/index.html">macro_eeg_model.evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html">macro_eeg_model.evaluation.coherence_computer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/evaluator/index.html">macro_eeg_model.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/fooof_tester/index.html">macro_eeg_model.evaluation.fooof_tester</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/peak_tester/index.html">macro_eeg_model.evaluation.peak_tester</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html">macro_eeg_model.evaluation.simulation_data_extractor</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/index.html">macro_eeg_model.simulation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/data_processor/index.html">macro_eeg_model.simulation.data_processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/delay_calculator/index.html">macro_eeg_model.simulation.delay_calculator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/distributions/index.html">macro_eeg_model.simulation.distributions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/eeg_analyzer/index.html">macro_eeg_model.simulation.eeg_analyzer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/global_simulation/index.html">macro_eeg_model.simulation.global_simulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/simulation_info/index.html">macro_eeg_model.simulation.simulation_info</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/simulator/index.html">macro_eeg_model.simulation.simulator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/simulation/stationary_model_developer/index.html">macro_eeg_model.simulation.stationary_model_developer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/utils/index.html">macro_eeg_model.utils</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/utils/paths/index.html">macro_eeg_model.utils.paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/utils/plotting_setup/index.html">macro_eeg_model.utils.plotting_setup</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/thatmariia/macro-eeg-model" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/thatmariia/macro-eeg-model/issues/new?title=Issue%20on%20page%20%2F_modules/macro_eeg_model/evaluation/evaluator.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for macro_eeg_model.evaluation.evaluator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># standard imports</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="c1"># external imports</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.lines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># local imports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.simulation_data_extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationDataExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.coherence_computer</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoherenceComputer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.peak_tester</span><span class="w"> </span><span class="kn">import</span> <span class="n">PeakTester</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.fooof_tester</span><span class="w"> </span><span class="kn">import</span> <span class="n">FooofTester</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">macro_eeg_model.utils.plotting_setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">PLOT_SIZE</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">,</span> <span class="n">notation</span><span class="p">,</span> <span class="n">PLOT_FORMAT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">macro_eeg_model.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">paths</span>
+
+
+<div class="viewcode-block" id="Evaluator">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Evaluator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class responsible for evaluating simulated EEG data .</span>
+<span class="sd">    It computes metrics such as coherence and power spectra across different brain regions (nodes).</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    frequencies : list</span>
+<span class="sd">        The frequency range for evaluating the data ([0, 30] Hz).</span>
+<span class="sd">    simulation_data_extractor : SimulationDataExtractor</span>
+<span class="sd">        An instance of the :py:class:`src.evaluation.simulation_data_extractor.SimulationDataExtractor` class</span>
+<span class="sd">        used to extract and process simulated EEG data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Evaluator.__init__">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Evaluator class, setting up the frequency range and loading real and simulated data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span> <span class="o">=</span> <span class="n">SimulationDataExtractor</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Evaluator.evaluate">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator.evaluate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_overview</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates and compares the coherence and power metrics</span>
+<span class="sd">        using :py:meth:`_evaluate_metric`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        plot_overview : bool, optional</span>
+<span class="sd">            If True, generates overview plots for the evaluated metrics;</span>
+<span class="sd">            if False, generates individual plots for (pairs of) brain regions.</span>
+<span class="sd">            (default is True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">nr_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">surface_nodes</span><span class="p">)</span>
+
+        <span class="n">nr_pairwise_plots</span> <span class="o">=</span> <span class="n">nr_nodes</span> <span class="o">*</span> <span class="p">(</span><span class="n">nr_nodes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">nr_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_pairwise_plots</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">nr_cols</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">nr_pairwise_plots</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_coherence_node_pair</span><span class="p">,</span> <span class="s2">&quot;Evaluating coherence&quot;</span><span class="p">,</span> <span class="n">plot_overview</span><span class="p">,</span> <span class="n">nr_rows</span><span class="p">,</span> <span class="n">nr_cols</span><span class="p">,</span><span class="s2">&quot;Coherences_summary&quot;</span><span class="p">)</span>
+
+        <span class="n">nr_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="n">nr_rows</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_nodes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">nr_cols</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">nr_nodes</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_power_node</span><span class="p">,</span> <span class="s2">&quot;Evaluating power&quot;</span><span class="p">,</span> <span class="n">plot_overview</span><span class="p">,</span> <span class="n">nr_rows</span><span class="p">,</span> <span class="n">nr_cols</span><span class="p">,</span> <span class="s2">&quot;Powers_summary&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_peaks</span><span class="p">,</span> <span class="s2">&quot;Evaluating peaks&quot;</span><span class="p">,</span> <span class="n">plot_overview</span><span class="p">,</span> <span class="n">nr_rows</span><span class="p">,</span> <span class="n">nr_cols</span><span class="p">,</span><span class="s2">&quot;Peaks_summary&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_fooof</span><span class="p">,</span> <span class="s2">&quot;Evaluating fooof&quot;</span><span class="p">,</span> <span class="n">plot_overview</span><span class="p">,</span> <span class="n">nr_rows</span><span class="p">,</span> <span class="n">nr_cols</span><span class="p">,</span><span class="s2">&quot;Fooof_summary&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The evaluation plots have been saved in the &#39;plots&#39; directory.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._evaluate_metric">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._evaluate_metric">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluation_func</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">plot_overview</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">save_file_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A helper function to evaluate a specific metric (e.g., coherence or power) across nodes or node pairs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        evaluation_func : function</span>
+<span class="sd">            The function to evaluate the metric</span>
+<span class="sd">            (:py:meth:`_evaluate_coherence_node_pair` or :py:meth:`_evaluate_power_node`).</span>
+<span class="sd">        desc : str</span>
+<span class="sd">            The description for the tqdm progress bar.</span>
+<span class="sd">        plot_overview : bool</span>
+<span class="sd">            If True, generates overview plots for the evaluated metrics;</span>
+<span class="sd">            if False, generates individual plots for (pairs of) brain regions.</span>
+<span class="sd">        rows : int</span>
+<span class="sd">            The number of rows in the overview plot.</span>
+<span class="sd">        cols : int</span>
+<span class="sd">            The number of columns in the overview plot.</span>
+<span class="sd">        save_file_name : str</span>
+<span class="sd">            The file name for saving the overview plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">plot_overview</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+                <span class="n">nrows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+                <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">PLOT_SIZE</span> <span class="o">*</span> <span class="n">cols</span><span class="p">,</span> <span class="n">PLOT_SIZE</span> <span class="o">*</span> <span class="n">rows</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot; iter&quot;</span><span class="p">,</span> <span class="n">ascii</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">node_combos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_nodes</span><span class="p">(</span><span class="n">pairwise</span><span class="o">=</span><span class="n">evaluation_func</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_coherence_node_pair</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">plot_id</span><span class="p">,</span> <span class="n">nodes</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">node_combos</span><span class="p">):</span>
+                <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="n">evaluation_func</span><span class="p">(</span>
+                    <span class="o">*</span><span class="n">nodes</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_ax</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">plot_id</span><span class="p">),</span> <span class="n">show_legend</span><span class="o">=</span><span class="p">(</span><span class="n">plot_id</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_combos</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">plot_overview</span><span class="p">:</span>
+            <span class="c1"># plt.show()</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">plots_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_file_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">PLOT_FORMAT</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._get_nodes">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._get_nodes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pairwise</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates nodes or node pairs for evaluation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pairwise : bool, optional</span>
+<span class="sd">            If True, generates pairs of nodes (for coherence evaluation),</span>
+<span class="sd">            otherwise generates individual nodes (for power evaluation)</span>
+<span class="sd">            (default is False).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing one or two nodes, depending on the value of `pairwise`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">nodes_to_return</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">pairwise</span><span class="p">:</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">surface_nodes</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">node2</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+                    <span class="n">nodes_to_return</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">))</span>
+                    <span class="c1"># yield node1, node2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+                <span class="n">nodes_to_return</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">,))</span>
+                <span class="c1"># yield (node,)</span>
+        <span class="k">return</span> <span class="n">nodes_to_return</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._evaluate_peaks">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._evaluate_peaks">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_peaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates the presence of alpha peaks (using :py:meth:`_get_peaks`)</span>
+<span class="sd">        and plots (using :py:meth:`_plot_metric`) detrended power spectrum for a given node.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : str</span>
+<span class="sd">            The name of the brain region to evaluate.</span>
+<span class="sd">        fig : matplotlib.figure.Figure, optional</span>
+<span class="sd">            The figure object for plotting (default is None).</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            The axis object for plotting (default is None).</span>
+<span class="sd">        show_legend : bool, optional</span>
+<span class="sd">            If True, shows the legend on the plot (default is True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">frequencies</span><span class="p">,</span> <span class="n">powers</span><span class="p">,</span> <span class="n">p_values</span><span class="p">,</span> <span class="n">test_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_peaks</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="n">yes_peak</span> <span class="o">=</span> <span class="s2">&quot;Y&quot;</span>
+        <span class="n">no_peak</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span>
+        <span class="n">label_addons</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;: </span><span class="si">{</span><span class="n">test_names</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2">, p=</span><span class="si">{</span><span class="n">p_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">yes_peak</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">p_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">no_peak</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">p_values</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_metric</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">notation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">frequencies</span><span class="p">,</span> <span class="n">powers</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">y_label</span><span class="o">=</span><span class="s2">&quot;Peaks&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e7</span><span class="p">],</span> <span class="n">file_label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;peaks_</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">label_addons</span><span class="o">=</span><span class="n">label_addons</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._evaluate_fooof">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._evaluate_fooof">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_fooof</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates the presence of peaks (using :py:meth:`_get_fooof_peaks`)</span>
+<span class="sd">        and plots (using :py:meth:`_plot_metric`) the peaks.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : str</span>
+<span class="sd">            The name of the brain region to evaluate.</span>
+<span class="sd">        fig : matplotlib.figure.Figure, optional</span>
+<span class="sd">            The figure object for plotting (default is None).</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            The axis object for plotting (default is None).</span>
+<span class="sd">        show_legend : bool, optional</span>
+<span class="sd">            If True, shows the legend on the plot (default is True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">frequencies</span><span class="p">,</span> <span class="n">binary_peaks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_fooof_peaks</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="c1"># make all 0s in binary_peaks into np.nan</span>
+        <span class="n">sim_counter</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">upd_binary_peaks</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">binary_peaks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">scaled_values</span> <span class="o">=</span> <span class="n">sim_counter</span> <span class="o">*</span> <span class="n">values</span>
+            <span class="n">cleared_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">scaled_values</span><span class="p">]</span>
+            <span class="n">upd_binary_peaks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cleared_values</span>
+            <span class="n">sim_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_metric</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">notation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">frequencies</span><span class="p">,</span> <span class="n">upd_binary_peaks</span><span class="p">,</span>
+            <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">y_label</span><span class="o">=</span><span class="s2">&quot;Peak presence&quot;</span><span class="p">,</span> <span class="n">file_label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;fooof_</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._evaluate_power_node">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._evaluate_power_node">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_power_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates (using :py:meth:`_get_simulated_power`)</span>
+<span class="sd">        and plots (using :py:meth:`_plot_metric`) the power spectrum for a given node.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : str</span>
+<span class="sd">            The name of the brain region to evaluate.</span>
+<span class="sd">        fig : matplotlib.figure.Figure, optional</span>
+<span class="sd">            The figure object for plotting (default is None).</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            The axis object for plotting (default is None).</span>
+<span class="sd">        show_legend : bool, optional</span>
+<span class="sd">            If True, shows the legend on the plot (default is True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sim_frequencies</span><span class="p">,</span> <span class="n">sim_powers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_simulated_power</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_metric</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">notation</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">sim_frequencies</span><span class="p">,</span> <span class="n">sim_powers</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">y_label</span><span class="o">=</span><span class="s2">&quot;Power&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e7</span><span class="p">],</span> <span class="n">file_label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;power_</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._evaluate_coherence_node_pair">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._evaluate_coherence_node_pair">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_coherence_node_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluates (using :py:meth:`_get_simulated_coherences`)</span>
+<span class="sd">        and plots (using :py:meth:`_plot_metric`)</span>
+<span class="sd">        the coherence between a pair of nodes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node1 : str</span>
+<span class="sd">            The name of the first brain region (node).</span>
+<span class="sd">        node2 : str</span>
+<span class="sd">            The name of the second brain region (node).</span>
+<span class="sd">        fig : matplotlib.figure.Figure, optional</span>
+<span class="sd">            The figure object for plotting (default is None).</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            The axis object for plotting (default is None).</span>
+<span class="sd">        show_legend : bool, optional</span>
+<span class="sd">            If True, shows the legend on the plot (default is True).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># simulated data</span>
+        <span class="n">sim_frequencies_coherence</span><span class="p">,</span> <span class="n">sim_coherences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_simulated_coherences</span><span class="p">(</span><span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_metric</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">notation</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span><span class="si">}</span><span class="s2"> — </span><span class="si">{</span><span class="n">notation</span><span class="p">(</span><span class="n">node2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">sim_frequencies_coherence</span><span class="p">,</span> <span class="n">sim_coherences</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">y_label</span><span class="o">=</span><span class="s2">&quot;Coherence&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="n">file_label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;coherence_</span><span class="si">{</span><span class="n">node1</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">node2</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._get_fooof_peaks">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._get_fooof_peaks">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_fooof_peaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the peaks in the power spectrum for a given node using :py:class:`FooofTester`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : str</span>
+<span class="sd">            The name of the brain region for which to compute the peaks.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing:</span>
+
+<span class="sd">            - frequencies (numpy.ndarray): The array of frequencies.</span>
+<span class="sd">            - all_binary_peaks (dict): A dictionary of binary peaks for each simulation, keyed by simulation name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">all_binary_peaks</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulation_names</span><span class="p">:</span>
+            <span class="n">powers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_power_per_node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">frequencies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">frequencies</span>
+
+            <span class="n">fooof_tester</span> <span class="o">=</span> <span class="n">FooofTester</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="n">frequencies</span><span class="p">)</span>
+            <span class="n">binary_peaks</span> <span class="o">=</span> <span class="n">fooof_tester</span><span class="o">.</span><span class="n">get_peaks_positions</span><span class="p">(</span><span class="n">powers</span><span class="p">)</span>
+            <span class="n">all_binary_peaks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary_peaks</span>
+
+        <span class="k">return</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">all_binary_peaks</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._get_peaks">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._get_peaks">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_peaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the peaks in the power spectrum for a given node using :py:class:`PeakTester`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : str</span>
+<span class="sd">            The name of the brain region for which to compute the peaks.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing:</span>
+
+<span class="sd">            - frequencies (numpy.ndarray): The array of frequencies.</span>
+<span class="sd">            - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.</span>
+<span class="sd">            - p_values (dict): A dictionary of p-values for the peak test, keyed by simulation name.</span>
+<span class="sd">            - test_names (dict): A dictionary of test names for the peak test, keyed by simulation name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">powers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">p_values</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">test_names</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulation_names</span><span class="p">:</span>
+            <span class="n">epoched_powers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_epoched_power_per_node</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">frequencies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">frequencies</span>
+            <span class="n">peak_tester</span> <span class="o">=</span> <span class="n">PeakTester</span><span class="p">(</span>
+                <span class="n">frequencies</span><span class="o">=</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">peaks_range</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span>
+                <span class="n">others_range</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">frequencies</span><span class="p">,</span> <span class="n">detrended_powers</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">test_name</span> <span class="o">=</span> <span class="n">peak_tester</span><span class="o">.</span><span class="n">compute_test_result</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">epoched_powers</span><span class="p">)</span>
+            <span class="n">powers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">detrended_powers</span>
+            <span class="n">p_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_value</span>
+            <span class="n">test_names</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_name</span>
+
+        <span class="k">return</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">powers</span><span class="p">,</span> <span class="n">p_values</span><span class="p">,</span> <span class="n">test_names</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._get_simulated_power">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._get_simulated_power">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_simulated_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the simulated power spectrum for a given node.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node : str</span>
+<span class="sd">            The name of the brain region for which to retrieve the simulated power spectrum.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing:</span>
+
+<span class="sd">            - frequencies (numpy.ndarray): The array of frequencies.</span>
+<span class="sd">            - powers (dict): A dictionary of simulated power spectra, keyed by simulation name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">simulations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_power_per_node</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+        <span class="n">frequencies</span><span class="p">,</span> <span class="n">powers</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">simulations</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulation_names</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">frequencies</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulation_names</span><span class="p">,</span> <span class="n">powers</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._get_simulated_coherences">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._get_simulated_coherences">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_simulated_coherences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the simulated coherence between a pair of nodes for each simulation using</span>
+<span class="sd">        :py:meth:`src.simulation.coherence_computer.CoherenceComputer.compute_coherence_matched` .</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node1 : str</span>
+<span class="sd">            The name of the first brain region.</span>
+<span class="sd">        node2 : str</span>
+<span class="sd">            The name of the second brain region.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing:</span>
+
+<span class="sd">            - frequencies (numpy.ndarray): The array of frequencies for coherence.</span>
+<span class="sd">            - coherences (dict): A dictionary of simulated coherence values, keyed by simulation name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">simulations1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_data_per_node</span><span class="p">[</span><span class="n">node1</span><span class="p">]</span>
+        <span class="n">simulations2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulations_data_per_node</span><span class="p">[</span><span class="n">node2</span><span class="p">]</span>
+
+        <span class="n">freq_coh_sim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">coherences</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">simulation_names</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="n">time_series1</span> <span class="o">=</span> <span class="n">simulations1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">time_series2</span> <span class="o">=</span> <span class="n">simulations2</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+            <span class="n">sample_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_data_extractor</span><span class="o">.</span><span class="n">sample_rates</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">coherence_computer_sim</span> <span class="o">=</span> <span class="n">CoherenceComputer</span><span class="p">(</span><span class="n">fs</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+
+            <span class="n">freq_coh_sim</span><span class="p">,</span> <span class="n">coh</span> <span class="o">=</span> <span class="n">coherence_computer_sim</span><span class="o">.</span><span class="n">compute_coherence_matched</span><span class="p">(</span><span class="n">time_series1</span><span class="p">,</span> <span class="n">time_series2</span><span class="p">)</span>
+            <span class="n">coherences</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">coh</span>
+
+        <span class="k">return</span> <span class="n">freq_coh_sim</span><span class="p">,</span> <span class="n">coherences</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._plot_metric">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._plot_metric">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_plot_metric</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">title</span><span class="p">,</span>
+            <span class="n">sim_frequencies</span><span class="p">,</span> <span class="n">sim_data</span><span class="p">,</span>
+            <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span>
+            <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label_addons</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plots a metric (e.g., coherence or power) of data</span>
+<span class="sd">        using :py:meth:`_plot_simulated_data`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        title : str</span>
+<span class="sd">            The title of the plot.</span>
+<span class="sd">        sim_frequencies : numpy.ndarray</span>
+<span class="sd">            The array of frequencies for the simulated data.</span>
+<span class="sd">        sim_data : dict</span>
+<span class="sd">            The simulated data (e.g., power or coherence) to plot, keyed by simulation name.</span>
+<span class="sd">        plot_type : str, optional</span>
+<span class="sd">            The type of plot to create (default is &quot;line&quot;). Currently, &quot;line&quot; and &quot;scatter&quot; are supported.</span>
+<span class="sd">        fig : matplotlib.figure.Figure, optional</span>
+<span class="sd">            The figure object for plotting (default is None).</span>
+<span class="sd">        ax : matplotlib.axes.Axes, optional</span>
+<span class="sd">            The axis object for plotting (default is None).</span>
+<span class="sd">        show_legend : bool, optional</span>
+<span class="sd">            If True, shows the legend on the plot (default is True).</span>
+<span class="sd">        y_label : str, optional</span>
+<span class="sd">            The label for the y-axis (default is None).</span>
+<span class="sd">        xlim : list, optional</span>
+<span class="sd">            The x-axis limits for the plot (default is None).</span>
+<span class="sd">        ylim : list, optional</span>
+<span class="sd">            The y-axis limits for the plot (default is None).</span>
+<span class="sd">        file_label : str, optional</span>
+<span class="sd">            The file name label for saving the plot (default is None).</span>
+<span class="sd">        label_addons : dict, optional</span>
+<span class="sd">            The dictionary of label addons to append to the name of the data (default is None).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">independent</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">independent</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">PLOT_SIZE</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">PLOT_SIZE</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">label_addons</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">label_addons</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sim_data</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plot_simulated_data</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">sim_frequencies</span><span class="p">,</span> <span class="n">sim_data</span><span class="p">,</span> <span class="n">label_addons</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+        <span class="c1"># ax.set_ylabel(y_label)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">show_legend</span><span class="p">:</span>
+            <span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">handles</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">independent</span><span class="p">:</span>
+            <span class="c1"># plt.show()</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">plots_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_label</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">PLOT_FORMAT</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._plot_simulated_data">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._plot_simulated_data">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_plot_simulated_data</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label_addons</span><span class="p">,</span> <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plots the simulated EEG data on a given axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : matplotlib.axes.Axes</span>
+<span class="sd">            The axis object for plotting.</span>
+<span class="sd">        frequencies : numpy.ndarray</span>
+<span class="sd">            The array of frequencies for the simulated data.</span>
+<span class="sd">        data : dict</span>
+<span class="sd">            The simulated data (e.g., power or coherence) to plot, keyed by simulation name.</span>
+<span class="sd">        label_addons : dict</span>
+<span class="sd">            The dictionary of label addons to append to the name of the data.</span>
+<span class="sd">        plot_type : str, optional</span>
+<span class="sd">            The type of plot to create (default is &quot;line&quot;). Currently, &quot;line&quot; and &quot;scatter&quot; are supported.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">plot_type</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">label_addons</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">label_addons</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluator._get_ax">
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/index.html#macro_eeg_model.evaluation.evaluator.Evaluator._get_ax">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ax</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to get the appropriate subplot axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : numpy.ndarray</span>
+<span class="sd">            The array of axis objects for subplots.</span>
+<span class="sd">        rows : int</span>
+<span class="sd">            The number of rows in the subplot grid.</span>
+<span class="sd">        cols : int</span>
+<span class="sd">            The number of columns in the subplot grid.</span>
+<span class="sd">        i : int</span>
+<span class="sd">            The index of the current plot.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        matplotlib.axes.Axes</span>
+<span class="sd">            The appropriate axis object for the current subplot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">cols</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ax</span>
+            <span class="k">return</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="n">cols</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="n">cols</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mariia Steeghs-Turchina
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Mariia Steeghs-Turchina.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

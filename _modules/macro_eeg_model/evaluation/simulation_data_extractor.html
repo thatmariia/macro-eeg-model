@@ -180,6 +180,8 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/index.html">macro_eeg_model.evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html">macro_eeg_model.evaluation.coherence_computer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/evaluator/index.html">macro_eeg_model.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/fooof_tester/index.html">macro_eeg_model.evaluation.fooof_tester</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/peak_tester/index.html">macro_eeg_model.evaluation.peak_tester</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html">macro_eeg_model.evaluation.simulation_data_extractor</a></li>
 </ul>
 </details></li>
@@ -363,7 +365,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SimulationDataExtractor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The SimulationDataExtractor class is responsible for extracting and processing simulation data.</span>
@@ -386,7 +388,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="SimulationDataExtractor.__init__">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the SimulationDataExtractor by loading and processing the simulation data</span>
@@ -408,7 +410,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_simulations_data_per_node">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_data_per_node">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_data_per_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_simulations_data_per_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">processed_simulations_data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Organizes the processed simulation data by node and then simulation name.</span>
@@ -436,7 +438,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_simulations_epoched_power_per_node">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_epoched_power_per_node">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_epoched_power_per_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_simulations_epoched_power_per_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">processed_simulations_epoched_power</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Organizes the processed epoched power spectra by node and then simulation name.</span>
@@ -462,9 +464,8 @@ document.write(`
         <span class="k">return</span> <span class="n">simulations_epoched_power_per_node</span></div>
 
 
-
 <div class="viewcode-block" id="SimulationDataExtractor._get_processed_simulations_epoched_power">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_epoched_power">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_epoched_power">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_processed_simulations_epoched_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulations_info</span><span class="p">,</span> <span class="n">epoch_len</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes and organizes the epoched power spectra data by simulation name and then node.</span>
@@ -514,7 +515,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_simulations_power_per_node">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_power_per_node">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_power_per_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_simulations_power_per_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">processed_simulations_power</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Organizes the processed power spectra by node and then simulation name.</span>
@@ -542,7 +543,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_processed_simulations_power">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_power">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_power">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_processed_simulations_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulations_info</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes and organizes the power spectra data by simulation name and then node.</span>
@@ -576,7 +577,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_processed_simulations_data">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_processed_simulations_data">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_processed_simulations_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_processed_simulations_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulations_info</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes and organizes the raw simulation data by simulation name and then node.</span>
@@ -618,7 +619,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_simulations_info">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_simulations_info">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_simulations_info">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_simulations_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads simulation information from saved files in the directories within the</span>
@@ -663,7 +664,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="SimulationDataExtractor._get_surface_nodes">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.simulation_data_extractor.SimulationDataExtractor._get_surface_nodes">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html#macro_eeg_model.evaluation.SimulationDataExtractor._get_surface_nodes">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_surface_nodes</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

@@ -183,6 +183,22 @@ Package Contents
 
 
 
+   .. py:method:: _evaluate_fooof(node, fig=None, ax=None, show_legend=True)
+
+      Evaluates the presence of peaks (using :py:meth:`_get_fooof_peaks`)
+      and plots (using :py:meth:`_plot_metric`) the peaks.
+
+      :param node: The name of the brain region to evaluate.
+      :type node: str
+      :param fig: The figure object for plotting (default is None).
+      :type fig: matplotlib.figure.Figure, optional
+      :param ax: The axis object for plotting (default is None).
+      :type ax: matplotlib.axes.Axes, optional
+      :param show_legend: If True, shows the legend on the plot (default is True).
+      :type show_legend: bool, optional
+
+
+
    .. py:method:: _evaluate_power_node(node, fig=None, ax=None, show_legend=True)
 
       Evaluates (using :py:meth:`_get_simulated_power`)
@@ -215,6 +231,21 @@ Package Contents
       :type ax: matplotlib.axes.Axes, optional
       :param show_legend: If True, shows the legend on the plot (default is True).
       :type show_legend: bool, optional
+
+
+
+   .. py:method:: _get_fooof_peaks(node)
+
+      Computes the peaks in the power spectrum for a given node using :py:class:`FooofTester`.
+
+      :param node: The name of the brain region for which to compute the peaks.
+      :type node: str
+
+      :returns: A tuple containing:
+
+                - frequencies (numpy.ndarray): The array of frequencies.
+                - all_binary_peaks (dict): A dictionary of binary peaks for each simulation, keyed by simulation name.
+      :rtype: tuple
 
 
 
@@ -268,7 +299,7 @@ Package Contents
 
 
 
-   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None)
+   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, plot_type='line', fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None)
 
       Plots a metric (e.g., coherence or power) of data
       using :py:meth:`_plot_simulated_data`.
@@ -279,6 +310,8 @@ Package Contents
       :type sim_frequencies: numpy.ndarray
       :param sim_data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
       :type sim_data: dict
+      :param plot_type: The type of plot to create (default is "line"). Currently, "line" and "scatter" are supported.
+      :type plot_type: str, optional
       :param fig: The figure object for plotting (default is None).
       :type fig: matplotlib.figure.Figure, optional
       :param ax: The axis object for plotting (default is None).
@@ -298,7 +331,7 @@ Package Contents
 
 
 
-   .. py:method:: _plot_simulated_data(ax, frequencies, data, label_addons)
+   .. py:method:: _plot_simulated_data(ax, frequencies, data, label_addons, plot_type='line')
       :staticmethod:
 
 
@@ -312,6 +345,8 @@ Package Contents
       :type data: dict
       :param label_addons: The dictionary of label addons to append to the name of the data.
       :type label_addons: dict
+      :param plot_type: The type of plot to create (default is "line"). Currently, "line" and "scatter" are supported.
+      :type plot_type: str, optional
 
 
 

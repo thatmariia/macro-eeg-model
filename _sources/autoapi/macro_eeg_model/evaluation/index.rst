@@ -20,6 +20,8 @@ Submodules
 
    /autoapi/macro_eeg_model/evaluation/coherence_computer/index
    /autoapi/macro_eeg_model/evaluation/evaluator/index
+   /autoapi/macro_eeg_model/evaluation/fooof_tester/index
+   /autoapi/macro_eeg_model/evaluation/peak_tester/index
    /autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index
 
 
@@ -30,6 +32,7 @@ Classes
 
    macro_eeg_model.evaluation.CoherenceComputer
    macro_eeg_model.evaluation.Evaluator
+   macro_eeg_model.evaluation.PeakTester
    macro_eeg_model.evaluation.SimulationDataExtractor
 
 
@@ -203,6 +206,22 @@ Package Contents
 
 
 
+   .. py:method:: _evaluate_fooof(node, fig=None, ax=None, show_legend=True)
+
+      Evaluates the presence of peaks (using :py:meth:`_get_fooof_peaks`)
+      and plots (using :py:meth:`_plot_metric`) the peaks.
+
+      :param node: The name of the brain region to evaluate.
+      :type node: str
+      :param fig: The figure object for plotting (default is None).
+      :type fig: matplotlib.figure.Figure, optional
+      :param ax: The axis object for plotting (default is None).
+      :type ax: matplotlib.axes.Axes, optional
+      :param show_legend: If True, shows the legend on the plot (default is True).
+      :type show_legend: bool, optional
+
+
+
    .. py:method:: _evaluate_power_node(node, fig=None, ax=None, show_legend=True)
 
       Evaluates (using :py:meth:`_get_simulated_power`)
@@ -235,6 +254,21 @@ Package Contents
       :type ax: matplotlib.axes.Axes, optional
       :param show_legend: If True, shows the legend on the plot (default is True).
       :type show_legend: bool, optional
+
+
+
+   .. py:method:: _get_fooof_peaks(node)
+
+      Computes the peaks in the power spectrum for a given node using :py:class:`FooofTester`.
+
+      :param node: The name of the brain region for which to compute the peaks.
+      :type node: str
+
+      :returns: A tuple containing:
+
+                - frequencies (numpy.ndarray): The array of frequencies.
+                - all_binary_peaks (dict): A dictionary of binary peaks for each simulation, keyed by simulation name.
+      :rtype: tuple
 
 
 
@@ -288,7 +322,7 @@ Package Contents
 
 
 
-   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None)
+   .. py:method:: _plot_metric(title, sim_frequencies, sim_data, plot_type='line', fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None)
 
       Plots a metric (e.g., coherence or power) of data
       using :py:meth:`_plot_simulated_data`.
@@ -299,6 +333,8 @@ Package Contents
       :type sim_frequencies: numpy.ndarray
       :param sim_data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
       :type sim_data: dict
+      :param plot_type: The type of plot to create (default is "line"). Currently, "line" and "scatter" are supported.
+      :type plot_type: str, optional
       :param fig: The figure object for plotting (default is None).
       :type fig: matplotlib.figure.Figure, optional
       :param ax: The axis object for plotting (default is None).
@@ -318,7 +354,7 @@ Package Contents
 
 
 
-   .. py:method:: _plot_simulated_data(ax, frequencies, data, label_addons)
+   .. py:method:: _plot_simulated_data(ax, frequencies, data, label_addons, plot_type='line')
       :staticmethod:
 
 
@@ -332,6 +368,8 @@ Package Contents
       :type data: dict
       :param label_addons: The dictionary of label addons to append to the name of the data.
       :type label_addons: dict
+      :param plot_type: The type of plot to create (default is "line"). Currently, "line" and "scatter" are supported.
+      :type plot_type: str, optional
 
 
 
@@ -352,6 +390,121 @@ Package Contents
 
       :returns: The appropriate axis object for the current subplot.
       :rtype: matplotlib.axes.Axes
+
+
+
+.. py:class:: PeakTester(frequencies, peaks_range, others_range)
+
+   A class responsible for testing the significance of peak power values compared to other frequency ranges.
+
+   .. attribute:: frequencies
+
+      The array of frequencies corresponding to the power spectrum.
+
+      :type: numpy.ndarray
+
+   .. attribute:: peaks_range
+
+      The range of frequencies where peaks are expected.
+
+      :type: tuple
+
+   .. attribute:: others_range
+
+      The range of frequencies where other values are expected.
+
+      :type: tuple
+
+   .. attribute:: powers
+
+      The epoched power spectrum of the simulated EEG data.
+
+      :type: list
+
+   .. attribute:: peak_values
+
+      The mean power values in the peak range for each epoch.
+
+      :type: list
+
+   .. attribute:: other_values
+
+      The mean power values in the other range for each epoch.
+
+      :type: list
+
+
+   .. py:method:: __init__(frequencies, peaks_range, others_range)
+
+      Initializes the PeakTester class with the provided frequency ranges.
+
+      :param frequencies: The array of frequencies corresponding to the power spectrum.
+      :type frequencies: numpy.ndarray
+      :param peaks_range: The range of frequencies where peaks are expected.
+      :type peaks_range: tuple
+      :param others_range: The range of frequencies where other values are expected.
+      :type others_range: tuple
+
+
+
+   .. py:method:: compute_test_result(simulation_name, epoched_powers)
+
+      Computes the statistical test result for the peak power values compared to other frequency ranges.
+
+      :param simulation_name: The name of the simulation. (should include "pink" if the data was simulated with pink noise)
+      :type simulation_name: str
+      :param epoched_powers: The epoched power spectrum of the simulated EEG data.
+      :type epoched_powers: list
+
+      :returns: A tuple containing:
+
+                - frequencies (numpy.ndarray): The array of frequencies corresponding to the power spectrum.
+                - mean_power (numpy.ndarray): The mean power spectrum across epochs of the simulated EEG data.
+                - p_value (float): The calculated p-value.
+                - test_name (str): The name of the statistical test used.
+      :rtype: tuple
+
+
+
+   .. py:method:: _separate_peaks(power)
+
+      Separates the power values in the peak and other frequency ranges.
+
+      :param power: The power spectrum of the simulated EEG data.
+      :type power: numpy.ndarray
+
+
+
+   .. py:method:: _detrend_data(powers, is_pink)
+
+      Detrend the pink noise in the power spectrum by fitting a power-law trend and removing it.
+
+      :param powers: The power spectrum of the simulated EEG data.
+      :type powers: numpy.ndarray
+      :param is_pink: A flag indicating whether the data was simulated with pink noise.
+      :type is_pink: bool
+
+      :returns: A tuple containing:
+
+                - non_zero_freqs (numpy.ndarray): The array of non-zero frequencies.
+                - flattened_powers (numpy.ndarray): The corresponding detrended power spectrum
+      :rtype: tuple
+
+
+
+   .. py:method:: _choose_and_run_test(paired=True)
+
+      Automatically selects and runs the correct statistical test based on data characteristics.
+
+      :param paired: A flag indicating whether the data is paired or independent.
+      :type paired: bool
+
+      :returns: A tuple containing:
+
+                - t_stat (float): The calculated t-statistic.
+                - p_value (float): The calculated p-value.
+                - test_name (str): The name of the statistical test used.
+      :rtype: tuple
 
 
 

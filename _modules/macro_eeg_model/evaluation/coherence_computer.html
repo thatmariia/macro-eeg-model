@@ -180,6 +180,8 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/index.html">macro_eeg_model.evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html">macro_eeg_model.evaluation.coherence_computer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/evaluator/index.html">macro_eeg_model.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/fooof_tester/index.html">macro_eeg_model.evaluation.fooof_tester</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/peak_tester/index.html">macro_eeg_model.evaluation.peak_tester</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html">macro_eeg_model.evaluation.simulation_data_extractor</a></li>
 </ul>
 </details></li>
@@ -359,7 +361,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="CoherenceComputer">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">CoherenceComputer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class responsible for computing the coherence between signals.</span>
@@ -373,7 +375,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="CoherenceComputer.__init__">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">window_type</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the CoherenceComputer with the given sampling frequency and window type.</span>
@@ -391,7 +393,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="CoherenceComputer.compute_coherence_matched">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer.compute_coherence_matched">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer.compute_coherence_matched">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_coherence_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig1</span><span class="p">,</span> <span class="n">sig2</span><span class="p">,</span> <span class="n">smooth_signals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the coherence between two signals using :py:meth:`_compute_coherence`,</span>
@@ -435,7 +437,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="CoherenceComputer._compute_coherence">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer._compute_coherence">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer._compute_coherence">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_coherence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig1</span><span class="p">,</span> <span class="n">sig2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the coherence between two signals using their cross-spectrum and power spectra.</span>
@@ -481,7 +483,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="CoherenceComputer._smooth_signal">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer._smooth_signal">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/evaluation/index.html#macro_eeg_model.evaluation.coherence_computer.CoherenceComputer._smooth_signal">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_smooth_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signal</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Applies a smoothing window to a signal.</span>

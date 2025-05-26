@@ -180,6 +180,8 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/index.html">macro_eeg_model.evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/coherence_computer/index.html">macro_eeg_model.evaluation.coherence_computer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/evaluator/index.html">macro_eeg_model.evaluation.evaluator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/fooof_tester/index.html">macro_eeg_model.evaluation.fooof_tester</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/peak_tester/index.html">macro_eeg_model.evaluation.peak_tester</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/macro_eeg_model/evaluation/simulation_data_extractor/index.html">macro_eeg_model.evaluation.simulation_data_extractor</a></li>
 </ul>
 </details></li>
@@ -363,7 +365,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="GlobalSimulation">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/simulation/index.html#macro_eeg_model.simulation.global_simulation.GlobalSimulation">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/simulation/index.html#macro_eeg_model.GlobalSimulation">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GlobalSimulation</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class responsible for orchestrating the entire simulation process.</span>
@@ -378,7 +380,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="GlobalSimulation.__init__">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/simulation/index.html#macro_eeg_model.simulation.global_simulation.GlobalSimulation.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/simulation/index.html#macro_eeg_model.GlobalSimulation.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the GlobalSimulation class with the provided configuration.</span>
@@ -394,7 +396,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="GlobalSimulation.run">
-<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/simulation/index.html#macro_eeg_model.simulation.global_simulation.GlobalSimulation.run">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/macro_eeg_model/simulation/index.html#macro_eeg_model.GlobalSimulation.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">make_plots</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">simulation_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs the global simulation process, including model development, data simulation, processing, analysis, and optional saving/plotting.</span>
