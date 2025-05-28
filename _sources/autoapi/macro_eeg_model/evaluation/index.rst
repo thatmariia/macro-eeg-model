@@ -333,7 +333,7 @@ Package Contents
       :type sim_frequencies: numpy.ndarray
       :param sim_data: The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
       :type sim_data: dict
-      :param plot_type: The type of plot to create (default is "line"). Currently, "line" and "scatter" are supported.
+      :param plot_type: The type of plot to create (default is "line"). Currently, "line", "scatter", "mean_std" are supported.
       :type plot_type: str, optional
       :param fig: The figure object for plotting (default is None).
       :type fig: matplotlib.figure.Figure, optional
@@ -368,7 +368,7 @@ Package Contents
       :type data: dict
       :param label_addons: The dictionary of label addons to append to the name of the data.
       :type label_addons: dict
-      :param plot_type: The type of plot to create (default is "line"). Currently, "line" and "scatter" are supported.
+      :param plot_type: The type of plot to create (default is "line"). Currently, "line", "scatter", "mean_std" are supported.
       :type plot_type: str, optional
 
 
