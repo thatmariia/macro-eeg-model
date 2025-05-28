@@ -17,9 +17,6 @@ julich_brain_data/structural_connectivity_data/**/*
 # keep all .gitkeep's
 !**/.gitkeep
 
-# misc
-*TEST*.py
-
 # fonts
 fonts/**/*
 

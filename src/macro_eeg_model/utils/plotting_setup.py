@@ -59,6 +59,7 @@ COLOR_MAP = LinearSegmentedColormap.from_list("my_cmap", ["#00A087", "#208BB5", 
 # https://matplotlib.org/stable/users/explain/customizing.html
 
 mpl.rcParams['lines.linewidth'] = PLOT_SIZE / 2 #2.5
+mpl.rcParams['lines.markersize'] = PLOT_SIZE * 1
 
 mpl.rcParams['axes.linewidth'] = 0 #PLOT_SIZE / 10
 mpl.rcParams['axes.labelsize'] = 4 * PLOT_SIZE # 3

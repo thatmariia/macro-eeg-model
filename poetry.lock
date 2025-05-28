@@ -450,6 +450,28 @@ unicode = ["unicodedata2 (>=15.1.0) ; python_version <= \"3.12\""]
 woff = ["brotli (>=1.0.1) ; platform_python_implementation == \"CPython\"", "brotlicffi (>=0.8.0) ; platform_python_implementation != \"CPython\"", "zopfli (>=0.1.4)"]
 
 [[package]]
+name = "fooof"
+version = "1.1.1"
+description = "fitting oscillations & one-over f"
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "fooof-1.1.1-py3-none-any.whl", hash = "sha256:32dd2f82fbe958c322a788d316bc9bafb84181bda089680b96d2ae378d31e052"},
+    {file = "fooof-1.1.1.tar.gz", hash = "sha256:58d415a383470d7f23fa1823cd5ef6c6545e05eef4ead9bd96db3436fb8f4092"},
+]
+
+[package.dependencies]
+numpy = "*"
+scipy = ">=0.19"
+
+[package.extras]
+all = ["matplotlib", "pandas", "pytest", "tqdm"]
+data = ["pandas"]
+plot = ["matplotlib"]
+tests = ["pytest"]
+
+[[package]]
 name = "idna"
 version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1726,4 +1748,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "fbb48f36f497165911f6cd53085a373e7705309234fbf75bf4120f4c46198b79"
+content-hash = "2e973cc1c268b4a680a5e290a27330621e2926c046da440c25a76b831db0bf19"

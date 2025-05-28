@@ -5,11 +5,13 @@ import sys
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from tqdm import tqdm
+import numpy as np
 
 # local imports
 from .simulation_data_extractor import SimulationDataExtractor
 from .coherence_computer import CoherenceComputer
 from .peak_tester import PeakTester
+from .fooof_tester import FooofTester
 from macro_eeg_model.utils.plotting_setup import PLOT_SIZE, COLORS, notation, PLOT_FORMAT
 from macro_eeg_model.utils.paths import paths
 
@@ -58,12 +60,16 @@ class Evaluator:
         self._evaluate_metric(self._evaluate_coherence_node_pair, "Evaluating coherence", plot_overview, nr_rows, nr_cols,"Coherences_summary")
 
         nr_nodes = len(self.simulation_data_extractor.nodes)
-        nr_rows = (nr_nodes + 1) // 2
-        nr_cols = 2 if nr_nodes > 1 else 1
+        # nr_rows = (nr_nodes + 1) // 2
+        # nr_cols = 2 if nr_nodes > 1 else 1
+        nr_rows = nr_nodes
+        nr_cols = 1
 
         self._evaluate_metric(self._evaluate_power_node, "Evaluating power", plot_overview, nr_rows, nr_cols, "Powers_summary")
 
         self._evaluate_metric(self._evaluate_peaks, "Evaluating peaks", plot_overview, nr_rows, nr_cols,"Peaks_summary")
+
+        self._evaluate_metric(self._evaluate_fooof, "Evaluating fooof", plot_overview, nr_rows, nr_cols,"Fooof_summary")
 
         print(f"The evaluation plots have been saved in the 'plots' directory.")
 
@@ -168,12 +174,65 @@ class Evaluator:
             for key in p_values
         }
 
+        mean_p_value = np.mean(list(p_values.values()))
+
         self._plot_metric(
-            f"{notation(node)}",
+            f"{notation(node)}: p={mean_p_value:.3f} ({yes_peak if mean_p_value < 0.05 else no_peak})",
             frequencies, powers,
-            fig=fig, ax=ax, show_legend=True,
+            fig=fig, ax=ax, show_legend=False,
             y_label="Peaks", xlim=[self.frequencies[0], self.frequencies[1]], ylim=[0, 2e7], file_label=f"peaks_{node}",
             label_addons=label_addons
+        )
+
+    def _evaluate_fooof(self, node, fig=None, ax=None, show_legend=True):
+        """
+        Evaluates the presence of peaks (using :py:meth:`_get_fooof_peaks`)
+        and plots (using :py:meth:`_plot_metric`) the peaks.
+
+        Parameters
+        ----------
+        node : str
+            The name of the brain region to evaluate.
+        fig : matplotlib.figure.Figure, optional
+            The figure object for plotting (default is None).
+        ax : matplotlib.axes.Axes, optional
+            The axis object for plotting (default is None).
+        show_legend : bool, optional
+            If True, shows the legend on the plot (default is True).
+        """
+
+        frequencies, binary_peaks = self._get_fooof_peaks(node)
+
+        sim_counter = 1
+        upd_binary_peaks = {}
+
+        alpha = (8, 13)
+        nr_sims_in_alpha = 0
+        nr_sims = len(binary_peaks)
+        alpha_count = 0
+        total_count = 0
+
+        for key, values in binary_peaks.items():
+            curr_alpha_count = np.sum(values[alpha[0]:alpha[1]])
+            alpha_count += curr_alpha_count
+            total_count += np.sum(values)
+            if curr_alpha_count > 0:
+                nr_sims_in_alpha += 1
+
+            scaled_values = sim_counter * values
+            cleared_values = [np.nan if val == 0 else val for val in scaled_values]
+            upd_binary_peaks[key] = cleared_values
+            sim_counter += 1
+
+        percentage_in_alpha = 100 * nr_sims_in_alpha / nr_sims
+        percentage_of_alpha = 100 * alpha_count / total_count
+
+        self._plot_metric(
+            f"{notation(node)}: %in_a={percentage_in_alpha:.1f}, %of_a={percentage_of_alpha:.1f}",
+            frequencies, upd_binary_peaks,
+            plot_type="scatter",
+            fig=fig, ax=ax, show_legend=False,
+            y_label="Peak presence", file_label=f"fooof_{node}"
         )
 
     def _evaluate_power_node(self, node, fig=None, ax=None, show_legend=True):
@@ -198,6 +257,7 @@ class Evaluator:
         self._plot_metric(
             f"{notation(node)}",
             sim_frequencies, sim_powers,
+            # plot_type="mean_std",
             fig=fig, ax=ax, show_legend=show_legend if ax is not None else True,
             y_label="Power", xlim=[self.frequencies[0], self.frequencies[1]], ylim=[0, 2e7], file_label=f"power_{node}"
         )
@@ -228,9 +288,40 @@ class Evaluator:
         self._plot_metric(
             f"{notation(node1)} — {notation(node2)}",
             sim_frequencies_coherence, sim_coherences,
+            # plot_type="mean_std",
             fig=fig, ax=ax, show_legend=show_legend if ax is not None else True,
             y_label="Coherence", xlim=[1, self.frequencies[1]], ylim=[0, 0.6], file_label=f"coherence_{node1}_{node2}"
         )
+
+    def _get_fooof_peaks(self, node):
+        """
+        Computes the peaks in the power spectrum for a given node using :py:class:`FooofTester`.
+
+        Parameters
+        ----------
+        node : str
+            The name of the brain region for which to compute the peaks.
+
+        Returns
+        -------
+        tuple
+            A tuple containing:
+
+            - frequencies (numpy.ndarray): The array of frequencies.
+            - all_binary_peaks (dict): A dictionary of binary peaks for each simulation, keyed by simulation name.
+        """
+        frequencies = None
+        all_binary_peaks = {}
+
+        for key in self.simulation_data_extractor.simulation_names:
+            powers = self.simulation_data_extractor.simulations_power_per_node[node][key][1]
+            frequencies = self.simulation_data_extractor.simulations_info[key].frequencies
+
+            fooof_tester = FooofTester(frequencies=frequencies)
+            binary_peaks = fooof_tester.get_peaks_positions(powers)
+            all_binary_peaks[key] = binary_peaks
+
+        return frequencies, all_binary_peaks
 
     def _get_peaks(self, node):
         """
@@ -262,8 +353,8 @@ class Evaluator:
             frequencies = self.simulation_data_extractor.simulations_info[key].frequencies
             peak_tester = PeakTester(
                 frequencies=frequencies,
-                peaks_range=[8, 13],
-                others_range=[13, 20]
+                peaks_range=(8, 13),
+                others_range=(13, 30)
             )
             frequencies, detrended_powers, p_value, test_name = peak_tester.compute_test_result(key, epoched_powers)
             powers[key] = detrended_powers
@@ -338,6 +429,7 @@ class Evaluator:
             self,
             title,
             sim_frequencies, sim_data,
+            plot_type="line",
             fig=None, ax=None, show_legend=True, y_label=None, xlim=None, ylim=None, file_label=None, label_addons=None
     ):
         """
@@ -352,6 +444,8 @@ class Evaluator:
             The array of frequencies for the simulated data.
         sim_data : dict
             The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
+        plot_type : str, optional
+            The type of plot to create (default is "line"). Currently, "line", "scatter", "mean_std" are supported.
         fig : matplotlib.figure.Figure, optional
             The figure object for plotting (default is None).
         ax : matplotlib.axes.Axes, optional
@@ -376,13 +470,14 @@ class Evaluator:
 
         if label_addons is None:
             label_addons = {key: "" for key in sim_data}
-        self._plot_simulated_data(ax, sim_frequencies, sim_data, label_addons)
+        self._plot_simulated_data(ax, sim_frequencies, sim_data, label_addons, plot_type)
 
         ax.set_title(title)
         ax.set_xlim(xlim)
         ax.set_ylim(ylim)
         # ax.set_ylabel(y_label)
         ax.grid(which='both')
+        ax.set_axisbelow(True)
 
         if show_legend:
             handles, labels = ax.get_legend_handles_labels()
@@ -394,7 +489,7 @@ class Evaluator:
             fig.savefig(path)
 
     @staticmethod
-    def _plot_simulated_data(ax, frequencies, data, label_addons):
+    def _plot_simulated_data(ax, frequencies, data, label_addons, plot_type="line"):
         """
         Plots the simulated EEG data on a given axis.
 
@@ -408,10 +503,23 @@ class Evaluator:
             The simulated data (e.g., power or coherence) to plot, keyed by simulation name.
         label_addons : dict
             The dictionary of label addons to append to the name of the data.
+        plot_type : str, optional
+            The type of plot to create (default is "line"). Currently, "line", "scatter", "mean_std" are supported.
         """
 
+        if plot_type == "mean_std":
+            mean_data = np.mean(list(data.values()), axis=0)
+            std_data = np.std(list(data.values()), axis=0)
+
+            ax.fill_between(frequencies, mean_data - std_data, mean_data + std_data, label="std", color=COLORS[1], alpha=0.5)
+            ax.plot(frequencies, mean_data, label="mean", color=COLORS[0], alpha=1.0)
+            return
+
         for i, (name, d) in enumerate(data.items()):
-            ax.plot(frequencies, d, label=f"{name}{label_addons[name]}", color=COLORS[i], alpha=1.0)
+            if plot_type == "scatter":
+                ax.scatter(frequencies, d, label=f"{name}{label_addons[name]}", color=COLORS[i % len(COLORS)], alpha=1.0)
+            else:
+                ax.plot(frequencies, d, label=f"{name}{label_addons[name]}", color=COLORS[i % len(COLORS)], alpha=1.0)
 
     @staticmethod
     def _get_ax(ax, rows, cols, i):

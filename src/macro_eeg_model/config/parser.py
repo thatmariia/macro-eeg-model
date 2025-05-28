@@ -18,6 +18,8 @@ class Parser:
     ----------
     parser : argparse.ArgumentParser
         The argument parser instance used to parse command line arguments.
+    _default_n: int
+        The default number of simulations to run.
     _default_model_name : str
         The default name of the model.
     _default_nodes : str
@@ -65,6 +67,8 @@ class Parser:
         provided_model_params = self._load_yaml(paths.configs_path / "model_params.yml")
 
         # model params
+        self._default_n = provided_model_params.get("n", 1)
+
         self._default_model_name = provided_model_params.get("model_name", "Simulated macro EEG model")
 
         self._default_nodes = provided_model_params.get("nodes", "frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus")
@@ -127,6 +131,12 @@ class Parser:
         based on the loaded YAML configuration.
         """
 
+        self.parser.add_argument(
+            "--n",
+            type=int,
+            default=self._default_n,
+            help="number of simulations to run"
+        )
         self.parser.add_argument(
             "--model_name",
             type=str,
@@ -227,6 +237,9 @@ class Parser:
         ValueError
             If the parsed arguments are invalid.
         """
+
+        if args.n < 1:
+            raise ValueError("The number of simulations must be at least 1")
 
         if args.relay_station is not None and args.relay_station not in args.nodes:
             raise ValueError("The relay station must be one of the nodes")

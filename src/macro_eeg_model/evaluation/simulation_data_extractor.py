@@ -96,7 +96,6 @@ class SimulationDataExtractor:
         }
         return simulations_epoched_power_per_node
 
-
     def _get_processed_simulations_epoched_power(self, simulations_info, epoch_len=1000):
         """
         Processes and organizes the epoched power spectra data by simulation name and then node.

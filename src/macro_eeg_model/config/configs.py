@@ -19,6 +19,7 @@ def get_simulate_config():
 
         - config (ModelConfig): The configuration object for the simulation.
         - model_name (str): The name of the model as specified in the command line arguments.
+        - n (int): The number of simulations to run, as specified in the command line arguments.
     """
 
     args = get_parsed_args()
@@ -37,7 +38,7 @@ def get_simulate_config():
         dist_trunc_percent=args.dist_trunc_percent,
         custom_connectivity=args.custom_connectivity
     )
-    return config, args.model_name
+    return config, args.model_name, args.n
 
 
 def get_parsed_args():
