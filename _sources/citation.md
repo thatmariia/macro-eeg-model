@@ -2,23 +2,17 @@
 
 If you use this software in your work, please cite it using the following metadata.
 
-You can use the following BibTeX entry:
+You can cite all versions of the package using the following BibTeX entry:
 
 ```bibtex
-@software{Steeghs-Turchina_Macro_EEG_model_2025,
+@software{Steeghs-Turchina_Macro_EEG_model,
     author = {Steeghs-Turchina, Mariia and Srinivasan, Ramesh and Nunez, Paul L. and Nunez, Michael},
-    doi = {10.5281/zenodo.14924872},
+    doi = {10.5281/zenodo.13594675},
     month = feb,
     title = {{Macro EEG model}},
     url = {https://github.com/thatmariia/macro-eeg-model},
-    version = {2.0},
     year = {2025}
 }
 ```
 
-Or the following APA citation:
-
-```
-Steeghs-Turchina, M., Srinivasan, R., Nunez, P. L., & Nunez, M. (2024). Macro EEG model (Version 1.0) [Computer software]. https://doi.org/10.5281/zenodo.14924872
-```
-
+If you need a version-specific citation, you can find it on [Zenodo](https://doi.org/10.5281/zenodo.13594675).
