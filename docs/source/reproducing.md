@@ -13,9 +13,9 @@ To reproduce the slow wave dynamics of scalp EEG, the simulations are to be run 
 
 * Common parameters:
 
-| nodes                                                               | sample_rate | t_lags | t_secs | t_burnit | dist_trunc_percent |
-|---------------------------------------------------------------------|-------------|--------|--------|----------|--------------------|
-| frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus | 1000        | 300    | 500    | 10       | 0.0                |
+| nodes                                                               | n | sample_rate | t_lags | t_secs | t_burnit | dist_trunc_percent |
+|---------------------------------------------------------------------|---|-------------|--------|--------|----------|--------------------|
+| frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus | 1 | 1000        | 300    | 500    | 10       | 0.0                |
 
 The sequence of steps to reproduce the results is outlined in the `reproduce.sh` script and can be run in one go:
 ```sh
