@@ -22,28 +22,16 @@ The documentation provides all further details on how to
 install required packages, run the code, and access the results.
 Additionally, it contains the API reference.
 
+---
+
 ## Citation
 
-If you use this software in your work, please cite it using the following metadata.
+If you use this software in your work, please cite it using the information under "Cite this repository" on the right side of the GitHub page.
 
-You can use the following BibTeX entry:
+If you need a version-specific citation, you can find it on [Zenodo](https://doi.org/10.5281/zenodo.13594675).
 
-```bibtex
-@software{Steeghs-Turchina_Macro_EEG_model_2025,
-    author = {Steeghs-Turchina, Mariia and Srinivasan, Ramesh and Nunez, Paul L. and Nunez, Michael},
-    doi = {10.5281/zenodo.14924872},
-    month = feb,
-    title = {{Macro EEG model}},
-    url = {https://github.com/thatmariia/macro-eeg-model},
-    version = {2.0},
-    year = {2025}
-}
-```
+## License
 
-Or the following APA citation:
-
-```
-Steeghs-Turchina, M., Srinivasan, R., Nunez, P. L., & Nunez, M. (2024). Macro EEG model (Version 1.0) [Computer software]. https://doi.org/10.5281/zenodo.14924872
-```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 

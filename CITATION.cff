@@ -12,8 +12,6 @@ authors:
   given-names: "Michael"
   orcid: "https://orcid.org/0000-0002-9965-6282"
 title: "Macro EEG model"
-version: 2.0
-doi: 10.5281/zenodo.14924872
-date-released: 2025-02-25
+doi: 10.5281/zenodo.13594675
 url: "https://github.com/thatmariia/macro-eeg-model"
 
