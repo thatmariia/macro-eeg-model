@@ -33,6 +33,7 @@ Alternatively, you can provide the following arguments to the commands. They wil
 
 | arg name                | type (+ options)                                | default                                                                 | help                                                                                  |
 |-------------------------|-------------------------------------------------|-------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| `--n`                   | `int`                                           | `1`                                                                     | number of simulations to run                                                          |
 | `--model_name`          | `str`                                           | `"Simulated macro EEG model"`                                           | name of the model                                                                     |
 | `--nodes`               | `str` (a list of labels separated by semicolon) | `"frontal lobe; parietal lobe; occiptal lobe; temporal lobe; thalamus"` | brain areas where the nodes are placed (according to Julich brain labels)             |
 | `--relay_station`       | `str` (a label or `"none"`)                     | `"none"`                                                                | brain area to use as a relay station (according to Julich brain labels or 'none')     |
