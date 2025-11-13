@@ -1,4 +1,5 @@
 # --------------------------- PROJECT ---------------------------
+.vscode/
 
 *functional_connectivity_data
 *structural_connectivity_data
