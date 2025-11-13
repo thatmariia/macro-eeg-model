@@ -1,4 +1,5 @@
 from __future__ import annotations
+import time
 import numpy as np
 from macro_eeg.core import Stimulus, NodesCollection, SimulationParams
 from macro_eeg.core.types import NoiseCallable
@@ -7,7 +8,6 @@ import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import os
 from itertools import repeat
-
 
 
 def _run_trial_job(
@@ -176,7 +176,8 @@ def simulate(
     add_stimuli_to_data: bool = True,
     nr_trials: int = 1,
     show_progress: bool = False,
-    parallel_trials: int | None = None,  # <= NEW: set number of worker processes
+    parallel_trials: int | None = None,
+    cooldown: float | None = None,
 ) -> np.ndarray:
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
         return _simulate_trial(
@@ -186,13 +187,24 @@ def simulate(
     P = parallel_trials or min(nr_trials, max(1, (os.cpu_count() or 1)))
 
     with ProcessPoolExecutor(max_workers=P) as ex:
-        futs = [
-            ex.submit(
-                _run_trial_job,
-                i, noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data,
+        # futs = [
+        #     ex.submit(
+        #         _run_trial_job,
+        #         i, noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data,
+        #     )
+        #     for i in range(nr_trials)
+        # ]
+        futs = []
+        for i in range(nr_trials):
+            futs.append(
+                ex.submit(
+                    _run_trial_job,
+                    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data,
+                )
             )
-            for i in range(nr_trials)
-        ]
+            #optional cooldown between submissions
+            if cooldown:
+                time.sleep(cooldown)
         datas = []
         if show_progress:
             for fut in tqdm(
