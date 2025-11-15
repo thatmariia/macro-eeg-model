@@ -26,7 +26,7 @@ class Stimulus(BaseModel):
     onset_ms: int | TimeCallable
     duration_ms: int | TimeCallable
     edge_coeffs: EdgesCollection | None = None
-    stimulus_fn: StimulusCallable
+    stimulus_fn: StimulusCallable | None
 
     @field_validator("onset_ms", "duration_ms")
     def validate_time_field(cls, v):

@@ -11,10 +11,10 @@ from itertools import repeat
 
 
 def _run_trial_job(
-    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data
+    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli
 ):
     # show_progress must be False in workers
-    return _simulate_trial(noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data, False)
+    return _simulate_trial(noise_fn, nodes, params, lag_base, lags_stim, stimuli, False)
 
 
 def _var_step(
@@ -94,7 +94,6 @@ def _simulate_trial(
     lag_base: np.ndarray,
     lags_stim: list[np.ndarray] | None = None,
     stimuli: list[Stimulus] | None = None,
-    add_stimuli_to_data: bool = True,
     show_progress: bool = False,
 ) -> np.ndarray:
 
@@ -150,12 +149,11 @@ def _simulate_trial(
             x_t = _var_step(lag_base, hist)
 
         # add stimuli
-        if add_stimuli_to_data:
-            for stim in active_stimuli:
-                stimulus = stim.stimulus_fn(params.sample_rate, t)
-                target_coefs = stim.target_coefs(nodes)
-                stimulus_per_node = stimulus * target_coefs
-                x_t += stimulus_per_node
+        for stim in active_stimuli:
+            stimulus = stim.stimulus_fn(params.sample_rate, t)
+            target_coefs = stim.target_coefs(nodes)
+            stimulus_per_node = stimulus * target_coefs
+            x_t += stimulus_per_node
 
         # add noise
         x_t += noise[t, :]
@@ -173,7 +171,6 @@ def simulate(
     lag_base: np.ndarray,
     lags_stim: list[np.ndarray] | None = None,
     stimuli: list[Stimulus] | None = None,
-    add_stimuli_to_data: bool = True,
     nr_trials: int = 1,
     show_progress: bool = False,
     parallel_trials: int | None = None,
@@ -190,7 +187,7 @@ def simulate(
         # futs = [
         #     ex.submit(
         #         _run_trial_job,
-        #         i, noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data,
+        #         i, noise_fn, nodes, params, lag_base, lags_stim, stimuli,
         #     )
         #     for i in range(nr_trials)
         # ]
@@ -199,7 +196,7 @@ def simulate(
             futs.append(
                 ex.submit(
                     _run_trial_job,
-                    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli, add_stimuli_to_data,
+                    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli,
                 )
             )
             #optional cooldown between submissions
