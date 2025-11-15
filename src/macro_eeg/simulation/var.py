@@ -99,8 +99,6 @@ def _simulate_trial(
 
     if stimuli is None and lags_stim is not None:
         raise ValueError("lags_stim provided but stimuli is None")
-    if stimuli is not None and lags_stim is None:
-        raise ValueError("stimuli provided but lags_stim is None")
 
     stimuli = _resolve_stimuli_for_trial(stimuli)
 
@@ -135,7 +133,7 @@ def _simulate_trial(
             hist[:, k] = data[t - 1 - k, :]
 
         active_stimuli = [s for s in stimuli if s.is_active_at(t)]
-        if active_stimuli:
+        if active_stimuli and lags_stim:
             # add stimulus VAR step
             active_lags_stim = [
                 lags_stim[i]
@@ -150,6 +148,8 @@ def _simulate_trial(
 
         # add stimuli
         for stim in active_stimuli:
+            if stim.stimulus_fn is None:
+                continue
             stimulus = stim.stimulus_fn(params.sample_rate, t)
             target_coefs = stim.target_coefs(nodes)
             stimulus_per_node = stimulus * target_coefs

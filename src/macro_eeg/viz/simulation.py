@@ -11,6 +11,7 @@ def plot_simulation(
     index_to_lbl: dict[int, str],
     stim_windows: list[tuple[int, int]] | None = None,  # [(onset_s, dur_s), ...]
     smooth: float | None = 2.0,
+    plot_name: str | None = None,
     ax: Axes | None = None,
 ):
     T, N = data.shape
@@ -39,5 +40,11 @@ def plot_simulation(
         ax.legend(loc="upper right")
 
     ax.set_xlabel("Time (s)")
+
+    if plot_name:
+        title = f"Simulation: {plot_name}"
+        if smooth is not None:
+            title += " (smooth)"
+        ax.set_title(title)
 
     return fig, ax
