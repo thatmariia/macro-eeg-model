@@ -5,6 +5,10 @@
 *structural_connectivity_data
 # can obtain this data from https://search.kg.ebrains.eu/?category=Dataset&q=Parcellation%20bold#f16e449d-86e1-408b-9487-aa9d72e39901
 
+
+# npy files
+*.npy
+
 # plots
 plots/**/*
 

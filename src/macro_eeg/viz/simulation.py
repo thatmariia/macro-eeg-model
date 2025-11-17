@@ -32,7 +32,7 @@ def plot_simulation(
 
         if smooth:
             ys = gaussian_filter1d(y, sigma=smooth)
-            ax.plot(t, ys, label=f"{index_to_lbl[i]} (smooth)")
+            ax.plot(t, ys, label=index_to_lbl[i])
         else:
             ax.plot(t, y, label=index_to_lbl[i], alpha=0.25)
 
