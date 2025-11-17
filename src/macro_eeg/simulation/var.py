@@ -17,38 +17,6 @@ def _run_trial_job(
     return _simulate_trial(noise_fn, nodes, params, lag_base, lags_stim, stimuli, False)
 
 
-def _var_step(
-    lag_connectivity: np.ndarray,
-    history: np.ndarray,
-    node_coefs: np.ndarray | None = None,
-) -> np.ndarray:
-    """
-    Single VAR(p) step.
-
-    Parameters
-    ----------
-    lag_connectivity : (N, p*N)
-        Lagged connectivity matrix.
-    history : (N, p)
-        Columns are x_{t-1}, x_{t-2}, ..., x_{t-p}.
-
-    Returns
-    -------
-    (N,)
-        Next state x_t (without noise).
-    """
-    n, pN = lag_connectivity.shape
-    p = pN // n
-    # history is (N, p); we need column-major flatten
-    h = history.reshape(p * n, order="F")
-    res = lag_connectivity @ h
-
-    if node_coefs is None:
-        return res
-
-    return res * node_coefs
-
-
 def _combine_lags_stim(
     lags_stim: list[np.ndarray],
 ) -> np.ndarray:
@@ -87,6 +55,49 @@ def _resolve_stimuli_for_trial(
     return resolved_stimuli
 
 
+def _build_stimulus_schedule(
+    stimuli: list[Stimulus] | None,
+    t_start: int,
+    t_end: int,
+) -> list[list[int]] | None:
+    """
+    Precompute, for each time step, which stimuli are active.
+
+    Returns
+    -------
+    schedule : list of length t_end
+        schedule[t] is a list of indices into `stimuli` that are active at t.
+    """
+    if stimuli is None:
+        return None
+
+    schedule: list[list[int]] = [[] for _ in range(t_end)]
+
+    for idx, stim in enumerate(stimuli):
+        for t in range(t_start, t_end):
+            if stim.is_active_at(t):
+                schedule[t].append(idx)
+
+    return schedule
+
+
+def _precompute_target_coefs(
+    stimuli: list[Stimulus] | None,
+    nodes: NodesCollection,
+) -> list[np.ndarray | None]:
+    if stimuli is None:
+        return []
+
+    target_coefs_per_stim: list[np.ndarray | None] = []
+    for stim in stimuli:
+        if stim.stimulus_fn is None:
+            target_coefs_per_stim.append(None)
+        else:
+            target_coefs_per_stim.append(stim.target_coefs(nodes))
+
+    return target_coefs_per_stim
+
+
 def _simulate_trial(
     noise_fn: NoiseCallable,
     nodes: NodesCollection,
@@ -116,7 +127,21 @@ def _simulate_trial(
 
     data = np.zeros((nr_samples, nr_nodes), dtype=float)
 
-    loop_range = range(params.t_lags, nr_samples)
+    # precompute constants for VAR step
+    n = nr_nodes
+    pN = lag_base.shape[1]
+    p = pN // n
+    assert p == params.t_lags, "lag_base and params.t_lags mismatch"
+
+    # lag offsets: [1, 2, ..., p]
+    lag_offsets = np.arange(1, p + 1, dtype=int)
+
+    t_start = params.t_lags
+    t_end = nr_samples
+    stim_schedule = _build_stimulus_schedule(stimuli, t_start, t_end)
+    target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
+
+    loop_range = range(t_start, t_end)
     if show_progress:
         loop_range = tqdm(
             loop_range,
@@ -127,39 +152,37 @@ def _simulate_trial(
         )
 
     for t in loop_range:
-        # build history (N, p)
-        hist = np.empty((nr_nodes, params.t_lags), dtype=float)
-        for k in range(params.t_lags):
-            hist[:, k] = data[t - 1 - k, :]
+        hist = data[t - lag_offsets, :].T
 
-        active_stimuli = [s for s in stimuli if s.is_active_at(t)]
-        if active_stimuli and lags_stim:
-            # add stimulus VAR step
-            active_lags_stim = [
-                lags_stim[i]
-                for i, stim in enumerate(stimuli)
-                if stim.is_active_at(t)
-            ]
-            lag_stim_combined = _combine_lags_stim(active_lags_stim)
-            x_t = _var_step(lag_stim_combined, hist)
+        # VAR step
+        hist_flat = hist.reshape(n * p, order="F")
+
+        # select lag matrix (base vs stimulus)
+        active_indices = stim_schedule[t] if stim_schedule is not None else []
+        if active_indices and lags_stim:
+            active_lags_stim = [lags_stim[i] for i in active_indices]
+            lag_matrix = _combine_lags_stim(active_lags_stim)
         else:
-            # add base VAR step
-            x_t = _var_step(lag_base, hist)
+            lag_matrix = lag_base
+
+        x_t = lag_matrix @ hist_flat
 
         # add stimuli
-        for stim in active_stimuli:
+        for i in active_indices:
+            stim = stimuli[i]
             if stim.stimulus_fn is None:
                 continue
             stimulus = stim.stimulus_fn(params.sample_rate, t)
-            target_coefs = stim.target_coefs(nodes)
-            stimulus_per_node = stimulus * target_coefs
-            x_t += stimulus_per_node
+            target_coefs = target_coefs_per_stim[i]
+            if target_coefs is not None:
+                x_t += stimulus * target_coefs
 
         # add noise
         x_t += noise[t, :]
 
         data[t, :] = x_t
-        sys.stdout.flush()
+        if show_progress:
+            sys.stdout.flush()
 
     return data[nr_burnin :, :]
 
