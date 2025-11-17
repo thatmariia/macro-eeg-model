@@ -153,6 +153,7 @@ class EdgesCollection:
         edges: list[_NoSelfLoopEdge],
         *,
         nodes_collection: NodesCollection,
+        default_value: float = 0.0,
     ) -> EdgesCollection:
         """
         Build an EdgesCollection from a list of edges.
@@ -170,7 +171,7 @@ class EdgesCollection:
             raise ValueError(f"unsupported edge type: {edge_type}")
 
         n_nodes = len(nodes_collection.nodes)
-        mat = np.zeros((n_nodes, n_nodes), dtype=float)
+        mat = np.ones((n_nodes, n_nodes), dtype=float) * default_value
         for edge in edges:
             i = nodes_collection.node_to_index.get(edge.edge.src, None)
             j = nodes_collection.node_to_index.get(edge.edge.dst, None)
