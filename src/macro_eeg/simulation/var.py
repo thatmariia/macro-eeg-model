@@ -26,9 +26,9 @@ def _combine_lags_stim(
         return lags_stim[0]
 
     # combine by averaging
-    # combined = np.mean(np.stack(lags_stim, axis=0), axis=0)
-    # return combined
-    raise NotImplementedError("combining multiple stimulus lags not implemented")
+    combined = np.mean(np.stack(lags_stim, axis=0), axis=0)
+    return combined
+    # raise NotImplementedError("combining multiple stimulus lags not implemented")
 
 
 def _resolve_stimuli_for_trial(
