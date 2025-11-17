@@ -113,12 +113,6 @@ def _simulate_trial(
 
     stimuli = _resolve_stimuli_for_trial(stimuli)
 
-    if stimuli is None:
-        stimuli = []
-
-    if lags_stim is None:
-        lags_stim = []
-
     nr_burnin = params.t_burnin * params.sample_rate
     nr_samples = int(nr_burnin + params.t_secs * params.sample_rate)
     nr_nodes = len(nodes.nodes)
@@ -234,6 +228,7 @@ def simulate(
                 unit=" trial",
                 ascii=True,
                 leave=False,
+                file=sys.stdout,
             ):
                 datas.append(fut.result())
         else:
