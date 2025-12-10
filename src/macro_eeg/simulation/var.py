@@ -56,7 +56,7 @@ def _resolve_stimuli_for_trial(
 
 
 def _build_stimulus_schedule(
-    stimuli: list[Stimulus] | None, t_start: int, t_end: int, sample_rate
+    stimuli: list[Stimulus] | None, t_start: int, t_end: int, t_stim_origin: int, sample_rate
 ) -> list[list[int]] | None:
     """
     Precompute, for each time step, which stimuli are active.
@@ -71,11 +71,20 @@ def _build_stimulus_schedule(
 
     schedule: list[list[int]] = [[] for _ in range(t_end)]
 
+    total_activations = 0
     for idx, stim in enumerate(stimuli):
         for t in range(t_start, t_end):
-            t_ms = (t / sample_rate) * 1000.0
+            this_stim_activations = 0
+            t_ms = ((t - t_stim_origin) / sample_rate) * 1000.0
+            if t_ms < 0:
+                continue
             if stim.is_active_at(int(t_ms)):
                 schedule[t].append(idx)
+                total_activations += 1
+                this_stim_activations += 1
+
+        debug_err = f"DEBUG: stimulus {idx} '{stim.name}' activations:", this_stim_activations, "onset_ms:", stim.onset_ms, "duration_ms:", stim.duration_ms
+        print(*debug_err, file=sys.stderr)
 
     return schedule
 
@@ -132,7 +141,8 @@ def _simulate_trial(
 
     t_start = params.t_lags
     t_end = nr_samples
-    stim_schedule = _build_stimulus_schedule(stimuli, t_start, t_end, params.sample_rate)
+    t_stim_origin = t_start + nr_burnin
+    stim_schedule = _build_stimulus_schedule(stimuli, t_start, t_end, t_stim_origin, params.sample_rate)
     target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
 
     loop_range = range(t_start, t_end)
@@ -166,8 +176,8 @@ def _simulate_trial(
             stim = stimuli[i]
             if stim.stimulus_fn is None:
                 continue
-            time_s = t / params.sample_rate
-            stimulus = stim.stimulus_fn(params.sample_rate, time_s)
+            t_rel_s = (t - t_stim_origin) / params.sample_rate
+            stimulus = stim.stimulus_fn(params.sample_rate, t_rel_s)
             target_coefs = target_coefs_per_stim[i]
             if target_coefs is not None:
                 stim_data[t, :] += stimulus * target_coefs
@@ -199,6 +209,7 @@ def simulate(
     cooldown: float | None = None,
 ) -> tuple[np.ndarray, np.ndarray | None]:
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
+        print("Simulating single trial...", file=sys.stderr)
         return _simulate_trial(
             noise_fn, nodes, params, lag_base, lags_stim, stimuli, show_progress
         )
