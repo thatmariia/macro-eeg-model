@@ -56,9 +56,7 @@ def _resolve_stimuli_for_trial(
 
 
 def _build_stimulus_schedule(
-    stimuli: list[Stimulus] | None,
-    t_start: int,
-    t_end: int,
+    stimuli: list[Stimulus] | None, t_start: int, t_end: int, sample_rate
 ) -> list[list[int]] | None:
     """
     Precompute, for each time step, which stimuli are active.
@@ -75,7 +73,8 @@ def _build_stimulus_schedule(
 
     for idx, stim in enumerate(stimuli):
         for t in range(t_start, t_end):
-            if stim.is_active_at(t):
+            t_ms = (t / sample_rate) * 1000.0
+            if stim.is_active_at(int(t_ms)):
                 schedule[t].append(idx)
 
     return schedule
@@ -133,7 +132,7 @@ def _simulate_trial(
 
     t_start = params.t_lags
     t_end = nr_samples
-    stim_schedule = _build_stimulus_schedule(stimuli, t_start, t_end)
+    stim_schedule = _build_stimulus_schedule(stimuli, t_start, t_end, params.sample_rate)
     target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
 
     loop_range = range(t_start, t_end)
@@ -167,7 +166,8 @@ def _simulate_trial(
             stim = stimuli[i]
             if stim.stimulus_fn is None:
                 continue
-            stimulus = stim.stimulus_fn(params.sample_rate, t)
+            time_s = t / params.sample_rate
+            stimulus = stim.stimulus_fn(params.sample_rate, time_s)
             target_coefs = target_coefs_per_stim[i]
             if target_coefs is not None:
                 stim_data[t, :] += stimulus * target_coefs
