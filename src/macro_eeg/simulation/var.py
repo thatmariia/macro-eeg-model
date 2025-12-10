@@ -106,7 +106,7 @@ def _simulate_trial(
     lags_stim: list[np.ndarray] | None = None,
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
-) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray | None]:
 
     if stimuli is None and lags_stim is not None:
         raise ValueError("lags_stim provided but stimuli is None")
@@ -183,7 +183,7 @@ def _simulate_trial(
     if np.any(stim_data):
         return sim_data[nr_burnin :, :], stim_data[nr_burnin :, :]
 
-    return sim_data[nr_burnin :, :]
+    return sim_data[nr_burnin :, :], None
 
 
 def simulate(
@@ -197,7 +197,7 @@ def simulate(
     show_progress: bool = False,
     parallel_trials: int | None = None,
     cooldown: float | None = None,
-) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray | None]:
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
         return _simulate_trial(
             noise_fn, nodes, params, lag_base, lags_stim, stimuli, show_progress
@@ -244,5 +244,5 @@ def simulate(
         sim_datas, stim_datas = zip(*datas)
         return np.mean(sim_datas, axis=0), np.mean(stim_datas, axis=0)
     else:
-        return np.mean(datas, axis=0)
+        return np.mean(datas, axis=0), None
 
