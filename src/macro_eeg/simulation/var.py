@@ -106,7 +106,7 @@ def _simulate_trial(
     lags_stim: list[np.ndarray] | None = None,
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
-) -> np.ndarray:
+) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
 
     if stimuli is None and lags_stim is not None:
         raise ValueError("lags_stim provided but stimuli is None")
@@ -119,7 +119,8 @@ def _simulate_trial(
 
     noise = noise_fn(nr_nodes, nr_samples, params.sample_rate)
 
-    data = np.zeros((nr_samples, nr_nodes), dtype=float)
+    sim_data = np.zeros((nr_samples, nr_nodes), dtype=float)
+    stim_data = np.zeros((nr_samples, nr_nodes), dtype=float)
 
     # precompute constants for VAR step
     n = nr_nodes
@@ -146,7 +147,7 @@ def _simulate_trial(
         )
 
     for t in loop_range:
-        hist = data[t - lag_offsets, :].T
+        hist = sim_data[t - lag_offsets, :].T
 
         # VAR step
         hist_flat = hist.reshape(n * p, order="F")
@@ -169,16 +170,20 @@ def _simulate_trial(
             stimulus = stim.stimulus_fn(params.sample_rate, t)
             target_coefs = target_coefs_per_stim[i]
             if target_coefs is not None:
+                stim_data[t, :] += stimulus * target_coefs
                 x_t += stimulus * target_coefs
 
         # add noise
         x_t += noise[t, :]
 
-        data[t, :] = x_t
+        sim_data[t, :] = x_t
         if show_progress:
             sys.stdout.flush()
 
-    return data[nr_burnin :, :]
+    if np.any(stim_data):
+        return sim_data[nr_burnin :, :], stim_data[nr_burnin :, :]
+
+    return sim_data[nr_burnin :, :]
 
 
 def simulate(
@@ -192,7 +197,7 @@ def simulate(
     show_progress: bool = False,
     parallel_trials: int | None = None,
     cooldown: float | None = None,
-) -> np.ndarray:
+) -> np.ndarray | tuple[np.ndarray, np.ndarray]:
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
         return _simulate_trial(
             noise_fn, nodes, params, lag_base, lags_stim, stimuli, show_progress
@@ -234,5 +239,10 @@ def simulate(
         else:
             datas = [f.result() for f in futs]
 
-    return np.mean(datas, axis=0)
+    # return np.mean(datas, axis=0)
+    if isinstance(datas[0], tuple):
+        sim_datas, stim_datas = zip(*datas)
+        return np.mean(sim_datas, axis=0), np.mean(stim_datas, axis=0)
+    else:
+        return np.mean(datas, axis=0)
 
