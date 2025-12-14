@@ -129,7 +129,7 @@ def _build_lag_connectivity(
     nr_lags = sim_params.lags_ms
     lag_conn = np.zeros((n, nr_lags * n), dtype=float)
 
-    ms_per_sample = 1000.0 / sim_params.sample_rate
+    ms_per_sample = 1000.0 / sim_params.sample_rate_hz
 
     nodes_col = distances.nodes_collection
     nodes = nodes_col.nodes

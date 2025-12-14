@@ -130,12 +130,12 @@ def _simulate_trial(
 
     stimuli = _resolve_stimuli_for_trial(stimuli)
 
-    ms_per_sample = 1000.0 / params.sample_rate
+    ms_per_sample = 1000.0 / params.sample_rate_hz
     nr_burnin = int(params.burnin_ms / ms_per_sample)
     nr_samples = int((params.burnin_ms + params.sim_ms) / ms_per_sample)
     nr_nodes = len(nodes.nodes)
 
-    noise = noise_fn(nr_nodes, nr_samples, params.sample_rate)
+    noise = noise_fn(nr_nodes, nr_samples, params.sample_rate_hz)
 
     sim_data = np.zeros((nr_samples, nr_nodes), dtype=float)
     stim_data = np.zeros((nr_samples, nr_nodes), dtype=float)
@@ -153,7 +153,7 @@ def _simulate_trial(
     t_end = nr_samples
     t_stim_origin = t_start + nr_burnin
     stim_schedule = _build_stimulus_schedule(
-        stimuli, t_start, t_end, t_stim_origin, params.sample_rate
+        stimuli, t_start, t_end, t_stim_origin, params.sample_rate_hz
     )
     target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
 
@@ -189,8 +189,8 @@ def _simulate_trial(
             stim = stimuli[i]
             if stim.stimulus_fn is None:
                 continue
-            t_rel_ms = (t - t_stim_origin) / ms_per_sample
-            stimulus = stim.stimulus_fn(params.sample_rate, t_rel_ms)
+            t_rel_ms = (t - t_stim_origin) * ms_per_sample
+            stimulus = stim.stimulus_fn(params.sample_rate_hz, t_rel_ms)
             target_coefs = target_coefs_per_stim[i]
             if target_coefs is not None:
                 stim_data[t, :] += stimulus * target_coefs

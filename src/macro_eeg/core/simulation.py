@@ -5,7 +5,7 @@ from .stimuli import Stimulus
 
 
 class SimulationParams(BaseModel):
-    sample_rate: int = Field(gt=0)  # Hz
+    sample_rate_hz: int = Field(gt=0)  # Hz
     lags_ms: int = Field(gt=0)
     sim_ms: int = Field(gt=0)
     burnin_ms: int = Field(ge=0)
