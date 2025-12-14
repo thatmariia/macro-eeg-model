@@ -10,9 +10,7 @@ import os
 from itertools import repeat
 
 
-def _run_trial_job(
-    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli
-):
+def _run_trial_job(i, noise_fn, nodes, params, lag_base, lags_stim, stimuli):
     # show_progress must be False in workers
     return _simulate_trial(noise_fn, nodes, params, lag_base, lags_stim, stimuli, False)
 
@@ -56,7 +54,11 @@ def _resolve_stimuli_for_trial(
 
 
 def _build_stimulus_schedule(
-    stimuli: list[Stimulus] | None, t_start: int, t_end: int, t_stim_origin: int, sample_rate
+    stimuli: list[Stimulus] | None,
+    t_start: int,
+    t_end: int,
+    t_stim_origin: int,
+    sample_rate,
 ) -> list[list[int]] | None:
     """
     Precompute, for each time step, which stimuli are active.
@@ -73,9 +75,10 @@ def _build_stimulus_schedule(
 
     total_activations = 0
     for idx, stim in enumerate(stimuli):
+        this_stim_activations = 0
         for t in range(t_start, t_end):
-            this_stim_activations = 0
-            t_ms = ((t - t_stim_origin) / sample_rate) * 1000.0
+            ms_per_sample = 1000.0 / sample_rate
+            t_ms = (t - t_stim_origin) * ms_per_sample
             if t_ms < 0:
                 continue
             if stim.is_active_at(int(t_ms)):
@@ -83,7 +86,14 @@ def _build_stimulus_schedule(
                 total_activations += 1
                 this_stim_activations += 1
 
-        debug_err = f"DEBUG: stimulus {idx} '{stim.name}' activations:", this_stim_activations, "onset_ms:", stim.onset_ms, "duration_ms:", stim.duration_ms
+        debug_err = (
+            f"DEBUG: stimulus {idx} '{stim.name}' activations:",
+            this_stim_activations,
+            "onset_ms:",
+            stim.onset_ms,
+            "duration_ms:",
+            stim.duration_ms,
+        )
         print(*debug_err, file=sys.stderr)
 
     return schedule
@@ -115,14 +125,14 @@ def _simulate_trial(
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
 ) -> tuple[np.ndarray, np.ndarray | None]:
-
     if stimuli is None and lags_stim is not None:
         raise ValueError("lags_stim provided but stimuli is None")
 
     stimuli = _resolve_stimuli_for_trial(stimuli)
 
-    nr_burnin = params.t_burnin * params.sample_rate
-    nr_samples = int(nr_burnin + params.t_secs * params.sample_rate)
+    ms_per_sample = 1000.0 / params.sample_rate
+    nr_burnin = int(params.burnin_ms / ms_per_sample)
+    nr_samples = int((params.burnin_ms + params.sim_ms) / ms_per_sample)
     nr_nodes = len(nodes.nodes)
 
     noise = noise_fn(nr_nodes, nr_samples, params.sample_rate)
@@ -134,25 +144,28 @@ def _simulate_trial(
     n = nr_nodes
     pN = lag_base.shape[1]
     p = pN // n
-    assert p == params.t_lags, "lag_base and params.t_lags mismatch"
+    assert p == params.lags_ms, "lag_base and params.t_lags mismatch"
 
     # lag offsets: [1, 2, ..., p]
     lag_offsets = np.arange(1, p + 1, dtype=int)
 
-    t_start = params.t_lags
+    t_start = params.lags_ms
     t_end = nr_samples
     t_stim_origin = t_start + nr_burnin
-    stim_schedule = _build_stimulus_schedule(stimuli, t_start, t_end, t_stim_origin, params.sample_rate)
+    stim_schedule = _build_stimulus_schedule(
+        stimuli, t_start, t_end, t_stim_origin, params.sample_rate
+    )
     target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
 
     loop_range = range(t_start, t_end)
+    print("LOOP RANGE:", t_start, t_end, file=sys.stderr)
     if show_progress:
         loop_range = tqdm(
             loop_range,
             desc="Simulating single trial",
             unit=" sample",
             ascii=True,
-            leave=False
+            leave=False,
         )
 
     for t in loop_range:
@@ -176,8 +189,8 @@ def _simulate_trial(
             stim = stimuli[i]
             if stim.stimulus_fn is None:
                 continue
-            t_rel_s = (t - t_stim_origin) / params.sample_rate
-            stimulus = stim.stimulus_fn(params.sample_rate, t_rel_s)
+            t_rel_ms = (t - t_stim_origin) / ms_per_sample
+            stimulus = stim.stimulus_fn(params.sample_rate, t_rel_ms)
             target_coefs = target_coefs_per_stim[i]
             if target_coefs is not None:
                 stim_data[t, :] += stimulus * target_coefs
@@ -191,9 +204,9 @@ def _simulate_trial(
             sys.stdout.flush()
 
     if np.any(stim_data):
-        return sim_data[nr_burnin :, :], stim_data[nr_burnin :, :]
+        return sim_data[nr_burnin:, :], stim_data[nr_burnin:, :]
 
-    return sim_data[nr_burnin :, :], None
+    return sim_data[nr_burnin:, :], None
 
 
 def simulate(
@@ -229,10 +242,16 @@ def simulate(
             futs.append(
                 ex.submit(
                     _run_trial_job,
-                    i, noise_fn, nodes, params, lag_base, lags_stim, stimuli,
+                    i,
+                    noise_fn,
+                    nodes,
+                    params,
+                    lag_base,
+                    lags_stim,
+                    stimuli,
                 )
             )
-            #optional cooldown between submissions
+            # optional cooldown between submissions
             if cooldown:
                 time.sleep(cooldown)
         datas = []
@@ -256,4 +275,3 @@ def simulate(
         return np.mean(sim_datas, axis=0), np.mean(stim_datas, axis=0)
     else:
         return np.mean(datas, axis=0), None
-

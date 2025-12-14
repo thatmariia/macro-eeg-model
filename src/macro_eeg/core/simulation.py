@@ -6,9 +6,9 @@ from .stimuli import Stimulus
 
 class SimulationParams(BaseModel):
     sample_rate: int = Field(gt=0)  # Hz
-    t_lags: int = Field(gt=0)       # number of lags
-    t_secs: int = Field(gt=0)
-    t_burnin: int = Field(ge=0)
+    lags_ms: int = Field(gt=0)
+    sim_ms: int = Field(gt=0)
+    burnin_ms: int = Field(ge=0)
 
 
 class DiameterDist(BaseModel):
@@ -21,4 +21,3 @@ class DiameterDist(BaseModel):
         if self.shape == 0:
             raise ValueError("shape must not be zero")
         return self
-

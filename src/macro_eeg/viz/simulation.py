@@ -14,8 +14,10 @@ def plot_simulation(
     plot_name: str | None = None,
     ax: Axes | None = None,
 ):
+    smooth = smooth if smooth != 0 else None
+    
     T, N = data.shape
-    t = np.arange(T) / sample_rate
+    t = np.arange(T) #/ sample_rate
 
     if ax is None:
         fig, ax = plt.subplots(figsize=(8, 4))
@@ -39,7 +41,8 @@ def plot_simulation(
         ax.grid(True)
         ax.legend(loc="upper right")
 
-    ax.set_xlabel("Time (s)")
+    # ax.set_xlabel("Time (s)")
+    ax.set_xlabel("Time")
 
     if plot_name:
         title = f"Simulation: {plot_name}"

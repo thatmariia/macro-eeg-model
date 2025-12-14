@@ -126,7 +126,7 @@ def _build_lag_connectivity(
     Shape: (n, n * nr_lags)
     """
     n = connectivity.shape[0]
-    nr_lags = sim_params.t_lags
+    nr_lags = sim_params.lags_ms
     lag_conn = np.zeros((n, nr_lags * n), dtype=float)
 
     ms_per_sample = 1000.0 / sim_params.sample_rate
@@ -236,12 +236,12 @@ def compute(
             pbar.update(1)
             sys.stdout.flush()
 
-        main_ok = _is_stationary(lag_base, sim_params.t_lags)
+        main_ok = _is_stationary(lag_base, sim_params.lags_ms)
 
         stims_ok = True
         if make_stim_stationary and lags_stim:
             stims_ok = all(
-                _is_stationary(lag_s, sim_params.t_lags) for lag_s in lags_stim
+                _is_stationary(lag_s, sim_params.lags_ms) for lag_s in lags_stim
             )
 
         if main_ok and stims_ok:
