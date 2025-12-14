@@ -6,11 +6,13 @@ from macro_eeg.core.types import NoiseCallable
 from tqdm import tqdm
 # from tqdm.auto import tqdm
 import sys
-from concurrent.futures import as_completed, ThreadPoolExecutor
+from concurrent.futures import as_completed, ThreadPoolExecutor, ProcessPoolExecutor
 import os
 from itertools import repeat
 from threading import Lock
 from dataclasses import dataclass
+import multiprocessing as mp
+import queue as pyqueue
 
 
 def _combine_lags_stim(
@@ -167,11 +169,11 @@ def _simulate_trial(
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
     trial_id: int = 0,
-    progress_cb=None,
+    progress_q=None,
     progress_every: int = 200,
 ) -> tuple[np.ndarray, np.ndarray | None]:
-    import threading, time
-    print(f"trial {trial_id} start on {threading.get_ident()} at {time.time():.3f}", file=sys.stderr)
+    # import os
+    # print(f"trial {trial_id} pid={os.getpid()} ...", file=sys.stderr)
 
     # verify stimuli have values for onset/duration (not callables)
     if stimuli is not None:
@@ -242,20 +244,26 @@ def _simulate_trial(
             if (t % 50) == 0:
                 pbar.refresh()
         k = t - loop_range.start + 1
-        if progress_cb is not None and (k % progress_every == 0):
-            progress_cb(trial_id, progress_every)
+        if progress_q is not None and (k % progress_every == 0):
+            progress_q.put((trial_id, progress_every))
 
     if pbar is not None:
         pbar.close()
-    if progress_cb is not None:
+    if progress_q is not None:
         remaining = (loop_range.stop - loop_range.start) % progress_every
         if remaining:
-            progress_cb(trial_id, remaining)
+            progress_q.put((trial_id, remaining))
 
     sim_out = sim_data[cfg.nr_pre_cutoff :, :]
     had_stim = stimuli is not None and any(st.stimulus_fn is not None for st in stimuli)
     stim_out = stim_data[cfg.nr_pre_cutoff :, :] if had_stim else None
     return sim_out, stim_out
+
+
+def _run_trial_job(args):
+    # unpack in worker
+    return _simulate_trial(*args)
+
 
 def simulate(
     noise_fn: NoiseCallable,
@@ -297,39 +305,69 @@ def simulate(
     total = nr_trials * total_steps_per_trial
     trial_done = [0] * nr_trials
 
-    lock = Lock()
-    pbar = tqdm(
-        total=total,
-        desc="Simulating (all trials)",
-        unit="step",
-        leave=True,
-    )
+    ctx = mp.get_context("spawn")
+    manager = ctx.Manager()
+    progress_q = manager.Queue()
+    pbar = tqdm(total=total, desc="Simulating (all trials)", unit="step", leave=True)
 
-    tick = [0]
-    def cb(trial_id: int, n: int):
-        with lock:
-            trial_done[trial_id] += n
-            pbar.update(n)
-            tick[0] += 1
-            if tick[0] % 1 == 0:  # update postfix every 10 callbacks
-                postfix = {"last": f"T{trial_id}"}
-                postfix.update(
-                    {
-                        f"T{i}": f"{trial_done[i]}/{total_steps_per_trial}"
-                        for i in range(min(nr_trials, 8))
-                    }
-                )
-                pbar.set_postfix(postfix)
+    job_args = []
+    for i in range(nr_trials):
+        job_args.append(
+            (
+                noise_fn,
+                nodes,
+                params,
+                cfg,
+                lag_base,
+                lags_stim,
+                resolved_stimuli_per_trial[i],
+                False,  # show_progress in worker (keep False)
+                i,  # trial_id
+                progress_q,  # queue
+                200,  # progress_every
+            )
+        )
 
     P = parallel_trials or min(nr_trials, max(1, (os.cpu_count() or 1)))
 
-    with ThreadPoolExecutor(max_workers=P) as ex:
-        futs = []
-        for i in range(nr_trials):
-            futs.append(ex.submit(_simulate_trial, noise_fn, nodes, params, cfg, lag_base, lags_stim, resolved_stimuli_per_trial[i], False, i, cb, 200))
-            # optional cooldown between submissions
-            if cooldown:
-                time.sleep(cooldown)
+    with ProcessPoolExecutor(max_workers=P, mp_context=ctx) as ex:
+
+        futs = [ex.submit(_run_trial_job, a) for a in job_args]
+        # if cooldown:
+        #     time.sleep(cooldown)
+        pending = set(futs)
+        tick = 0
+
+        while pending:
+            # Drain progress messages
+            drained_any = False
+            while True:
+                try:
+                    tid, n = progress_q.get_nowait()
+                except pyqueue.Empty:
+                    break
+                drained_any = True
+                trial_done[tid] += n
+                pbar.update(n)
+                tick += 1
+                if tick % 25 == 0:
+                    # cheap-ish status
+                    pbar.set_postfix({
+                        "last": f"T{tid}",
+                        "done_trials": sum(d >= total_steps_per_trial for d in trial_done), 
+                    })
+
+            # Collect finished futures (non-blocking)
+            finished = {f for f in pending if f.done()}
+            for f in finished:
+                # will re-raise worker exceptions here
+                f.result()
+            pending -= finished
+
+            # Give the notebook UI time to repaint
+            if not drained_any:
+                time.sleep(0.01)
+
         datas = [f.result() for f in as_completed(futs)]
     pbar.close()
 
@@ -340,4 +378,5 @@ def simulate(
     else:
         stim_mean = np.mean(stim_datas, axis=0)
 
+    manager.shutdown()
     return sim_mean, stim_mean
