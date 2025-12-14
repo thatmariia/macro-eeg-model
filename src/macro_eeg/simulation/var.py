@@ -166,6 +166,7 @@ def _simulate_trial(
     lags_stim: list[np.ndarray] | None = None,
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
+    trial_id: int = 0,
     progress_cb=None,
     progress_every: int = 200,
 ) -> tuple[np.ndarray, np.ndarray | None]:
@@ -234,14 +235,14 @@ def _simulate_trial(
             if (t % 50) == 0:
                 pbar.refresh()
         if progress_cb is not None and ((t - loop_range.start) % progress_every == 0):
-            progress_cb(progress_every)
+            progress_cb(trial_id, progress_every)
 
     if pbar is not None:
         pbar.close()
     if progress_cb is not None:
         remaining = (loop_range.stop - loop_range.start) % progress_every
         if remaining:
-            progress_cb(remaining)
+            progress_cb(trial_id, remaining)
 
     sim_out = sim_data[cfg.nr_pre_cutoff :, :]
     had_stim = stimuli is not None and any(st.stimulus_fn is not None for st in stimuli)
@@ -268,32 +269,47 @@ def simulate(
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
         print("Simulating single trial...", file=sys.stderr)
         return _simulate_trial(
-            noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, show_progress, None
+            noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, show_progress, 0, None
         )
 
     total_steps_per_trial = cfg.nr_samples - cfg.t_start
     total = nr_trials * total_steps_per_trial
+    trial_done = [0] * nr_trials
 
     lock = Lock()
-    pbar = tqdm(total=total, desc="Simulating (all trials)", unit="step", leave=True)
+    pbar = tqdm(
+        total=total,
+        desc="Simulating (all trials)",
+        unit="step",
+        leave=True,
+    )
 
-    def make_cb():
-        def cb(n):
-            with lock:
-                pbar.update(n)
-
-        return cb
+    tick = [0]
+    def cb(trial_id: int, n: int):
+        with lock:
+            trial_done[trial_id] += n
+            pbar.update(n)
+            tick[0] += 1
+            if tick[0] % 1 == 0:  # update postfix every 10 callbacks
+                postfix = {"last": f"T{trial_id}"}
+                postfix.update(
+                    {
+                        f"T{i}": f"{trial_done[i]}/{total_steps_per_trial}"
+                        for i in range(min(nr_trials, 8))
+                    }
+                )
+                pbar.set_postfix(postfix)
 
     P = parallel_trials or min(nr_trials, max(1, (os.cpu_count() or 1)))
 
     with ThreadPoolExecutor(max_workers=P) as ex:
         futs = []
         for i in range(nr_trials):
-            futs.append(ex.submit(_simulate_trial, noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, False, make_cb(), 200))
-            datas = [f.result() for f in as_completed(futs)]
+            futs.append(ex.submit(_simulate_trial, noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, False, i, cb, 200))
             # optional cooldown between submissions
             if cooldown:
                 time.sleep(cooldown)
+        datas = [f.result() for f in as_completed(futs)]
     pbar.close()
 
     sim_datas, stim_datas = zip(*datas)
@@ -303,9 +319,4 @@ def simulate(
     else:
         stim_mean = np.mean(stim_datas, axis=0)
 
-    # shapes
-    print(
-        f"DEBUG: sim_mean shape: {sim_mean.shape}, stim_mean shape: {stim_mean.shape if stim_mean is not None else 'None'}",
-        file=sys.stderr,
-    )
     return sim_mean, stim_mean
