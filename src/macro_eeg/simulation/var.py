@@ -12,7 +12,10 @@ from itertools import repeat
 from threading import Lock
 from dataclasses import dataclass
 import multiprocessing as mp
+from multiprocessing import shared_memory
 import queue as pyqueue
+from typing import Any
+from collections.abc import Callable
 
 
 def _combine_lags_stim(
@@ -169,7 +172,7 @@ def _simulate_trial(
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
     trial_id: int = 0,
-    progress_q=None,
+    progress=None,
     progress_every: int = 200,
 ) -> tuple[np.ndarray, np.ndarray | None]:
     # import os
@@ -244,15 +247,13 @@ def _simulate_trial(
             if (t % 50) == 0:
                 pbar.refresh()
         k = t - loop_range.start + 1
-        if progress_q is not None and (k % progress_every == 0):
-            progress_q.put((trial_id, progress_every))
+        if progress is not None and (k % progress_every == 0):
+            progress[trial_id] = k
 
     if pbar is not None:
         pbar.close()
-    if progress_q is not None:
-        remaining = (loop_range.stop - loop_range.start) % progress_every
-        if remaining:
-            progress_q.put((trial_id, remaining))
+    if progress is not None:
+        progress[trial_id] = cfg.nr_samples - cfg.t_start
 
     sim_out = sim_data[cfg.nr_pre_cutoff :, :]
     had_stim = stimuli is not None and any(st.stimulus_fn is not None for st in stimuli)
@@ -260,9 +261,44 @@ def _simulate_trial(
     return sim_out, stim_out
 
 
-def _run_trial_job(args):
-    # unpack in worker
-    return _simulate_trial(*args)
+@dataclass
+class TrialJob:
+    noise_fn: Callable
+    nodes: Any
+    params: Any
+    cfg: Any
+    lag_base: Any
+    lags_stim: Any
+    stimuli: Any
+    show_progress: bool
+    trial_id: int
+    progress_shm_name: str
+    nr_trials: int
+    progress_every: int
+
+def _run_trial_job(job: TrialJob):
+    progress = None
+    if job.progress_shm_name is not None:
+        shm = shared_memory.SharedMemory(name=job.progress_shm_name)
+        progress = np.ndarray((job.nr_trials,), dtype=np.int64, buffer=shm.buf)
+
+    try:
+        return _simulate_trial(
+            job.noise_fn,
+            job.nodes,
+            job.params,
+            job.cfg,
+            job.lag_base,
+            job.lags_stim,
+            job.stimuli,
+            job.show_progress,
+            job.trial_id,
+            progress,
+            job.progress_every,
+        )
+    finally:
+        if job.progress_shm_name is not None:
+            shm.close()
 
 
 def simulate(
@@ -310,66 +346,64 @@ def simulate(
     progress_q = manager.Queue()
     pbar = tqdm(total=total, desc="Simulating (all trials)", unit="step", leave=True)
 
+    # shared progress counters (int64)
+    shm = shared_memory.SharedMemory(create=True, size=nr_trials * np.dtype(np.int64).itemsize)
+    progress = np.ndarray((nr_trials,), dtype=np.int64, buffer=shm.buf)
+    progress[:] = 0
+    last_total = 0
+    last_snapshot = progress.copy()
+
     job_args = []
     for i in range(nr_trials):
-        job_args.append(
-            (
-                noise_fn,
-                nodes,
-                params,
-                cfg,
-                lag_base,
-                lags_stim,
-                resolved_stimuli_per_trial[i],
-                False,  # show_progress in worker (keep False)
-                i,  # trial_id
-                progress_q,  # queue
-                200,  # progress_every
-            )
+        trial_job = TrialJob(
+            noise_fn=noise_fn,
+            nodes=nodes,
+            params=params,
+            cfg=cfg,
+            lag_base=lag_base,
+            lags_stim=lags_stim,
+            stimuli=resolved_stimuli_per_trial[i],
+            show_progress=False,  # show_progress in worker (keep False)
+            trial_id=i,
+            progress_shm_name=shm.name,
+            nr_trials=nr_trials,
+            progress_every=200,
         )
+        job_args.append(trial_job)
 
     P = parallel_trials or min(nr_trials, max(1, (os.cpu_count() or 1)))
 
-    with ProcessPoolExecutor(max_workers=P, mp_context=ctx) as ex:
+    try:
+        with ProcessPoolExecutor(max_workers=P, mp_context=ctx) as ex:
+            futs = [ex.submit(_run_trial_job, a) for a in job_args]
+            pending = set(futs)
 
-        futs = [ex.submit(_run_trial_job, a) for a in job_args]
-        # if cooldown:
-        #     time.sleep(cooldown)
-        pending = set(futs)
-        tick = 0
+            while pending:
+                # poll shared counters
+                snap = progress.copy()
+                total_done = int(snap.sum())
+                delta = total_done - last_total
+                if delta:
+                    pbar.update(delta)
+                    last_total = total_done
 
-        while pending:
-            # Drain progress messages
-            drained_any = False
-            while True:
-                try:
-                    tid, n = progress_q.get_nowait()
-                except pyqueue.Empty:
-                    break
-                drained_any = True
-                trial_done[tid] += n
-                pbar.update(n)
-                tick += 1
-                if tick % 25 == 0:
-                    # cheap-ish status
-                    pbar.set_postfix({
-                        "last": f"T{tid}",
-                        "done_trials": sum(d >= total_steps_per_trial for d in trial_done), 
-                    })
+                    # optional: show a few per-trial counters
+                    top = min(nr_trials, 6)
+                    pbar.set_postfix({f"T{i}": f"{int(snap[i])}/{total_steps_per_trial}" for i in range(top)})
 
-            # Collect finished futures (non-blocking)
-            finished = {f for f in pending if f.done()}
-            for f in finished:
-                # will re-raise worker exceptions here
-                f.result()
-            pending -= finished
+                # collect finished
+                finished = {f for f in pending if f.done()}
+                for f in finished:
+                    f.result()
+                pending -= finished
 
-            # Give the notebook UI time to repaint
-            if not drained_any:
-                time.sleep(0.01)
+                time.sleep(0.05)  # UI-friendly polling cadence
 
-        datas = [f.result() for f in as_completed(futs)]
-    pbar.close()
+            datas = [f.result() for f in futs]
+    finally:
+        pbar.close()
+        shm.close()
+        shm.unlink()
 
     sim_datas, stim_datas = zip(*datas)
     sim_mean = np.mean(sim_datas, axis=0)
