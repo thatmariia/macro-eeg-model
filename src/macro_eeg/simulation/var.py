@@ -170,10 +170,17 @@ def _simulate_trial(
     progress_cb=None,
     progress_every: int = 200,
 ) -> tuple[np.ndarray, np.ndarray | None]:
-    if stimuli is None and lags_stim is not None:
-        raise ValueError("lags_stim provided but stimuli is None")
+    import threading, time
+    print(f"trial {trial_id} start on {threading.get_ident()} at {time.time():.3f}", file=sys.stderr)
 
-    stimuli = _resolve_stimuli_for_trial(stimuli)
+    # verify stimuli have values for onset/duration (not callables)
+    if stimuli is not None:
+        for stim in stimuli:
+            if callable(stim.onset_ms) or callable(stim.duration_ms):
+                raise ValueError(
+                    "stimuli onset_ms and duration_ms must be resolved to values before calling _simulate_trial"
+                )
+
     nr_nodes = len(nodes.nodes)
 
     sim_data = np.zeros((cfg.nr_samples, nr_nodes), dtype=float)
@@ -234,7 +241,8 @@ def _simulate_trial(
             # Force an occasional refresh
             if (t % 50) == 0:
                 pbar.refresh()
-        if progress_cb is not None and ((t - loop_range.start) % progress_every == 0):
+        k = t - loop_range.start + 1
+        if progress_cb is not None and (k % progress_every == 0):
             progress_cb(trial_id, progress_every)
 
     if pbar is not None:
@@ -261,15 +269,28 @@ def simulate(
     parallel_trials: int | None = None,
     cooldown: float | None = None,
 ) -> tuple[np.ndarray, np.ndarray | None]:
+    if stimuli is None and lags_stim is not None:
+        raise ValueError("lags_stim provided but stimuli is None")
 
     nr_nodes = len(nodes.nodes)
     cfg = make_trial_config(params, lag_base, nr_nodes)
-
+    resolved_stimuli_per_trial = [
+        _resolve_stimuli_for_trial(stimuli) for _ in range(nr_trials)
+    ]
 
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
         print("Simulating single trial...", file=sys.stderr)
         return _simulate_trial(
-            noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, show_progress, 0, None
+            noise_fn,
+            nodes,
+            params,
+            cfg,
+            lag_base,
+            lags_stim,
+            resolved_stimuli_per_trial[0],
+            show_progress,
+            0,
+            None,
         )
 
     total_steps_per_trial = cfg.nr_samples - cfg.t_start
@@ -305,7 +326,7 @@ def simulate(
     with ThreadPoolExecutor(max_workers=P) as ex:
         futs = []
         for i in range(nr_trials):
-            futs.append(ex.submit(_simulate_trial, noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, False, i, cb, 200))
+            futs.append(ex.submit(_simulate_trial, noise_fn, nodes, params, cfg, lag_base, lags_stim, resolved_stimuli_per_trial[i], False, i, cb, 200))
             # optional cooldown between submissions
             if cooldown:
                 time.sleep(cooldown)
