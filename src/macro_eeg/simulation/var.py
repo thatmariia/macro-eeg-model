@@ -53,10 +53,10 @@ def _resolve_stimuli_for_trial(
         )
         resolved_stimuli.append(stim_copy)
 
-        print(
-            f"DEBUG: resolved stimulus '{stim.name}' onset_ms: {onset}, duration_ms: {duration}",
-            file=sys.stderr,
-        )
+        # print(
+        #     f"DEBUG: resolved stimulus '{stim.name}' onset_ms: {onset}, duration_ms: {duration}",
+        #     file=sys.stderr,
+        # )
 
     return resolved_stimuli
 
