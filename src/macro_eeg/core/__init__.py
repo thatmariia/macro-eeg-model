@@ -1,8 +1,7 @@
 from .nodes import Node, NodesCollection
 from .connectivity import Edge, EdgeConnectivity, EdgeConnectivityCoef, EdgeDistance, EdgesCollection
 from .stimuli import StimulusNodeTarget, Stimulus
-from .simulation import SimulationParams, DiameterDist
-from .timebase import TimeBase
+from .simulation import SimulationParams, DiameterDist, TimeBase
 # from .runtime import resolve_simulation, ResolvedSimulation, ResolvedStimulus
 
 __all__ = [

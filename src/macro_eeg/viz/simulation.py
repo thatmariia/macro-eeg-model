@@ -36,7 +36,7 @@ def plot_simulation(
             ys = gaussian_filter1d(y, sigma=smooth)
             ax.plot(t, ys, label=index_to_lbl[i])
         else:
-            ax.plot(t, y, label=index_to_lbl[i], alpha=0.25)
+            ax.plot(t, y, label=index_to_lbl[i])
 
         ax.grid(True)
         ax.legend(loc="upper right")

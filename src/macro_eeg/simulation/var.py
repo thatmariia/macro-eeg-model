@@ -1,13 +1,14 @@
 from __future__ import annotations
 import time
 import numpy as np
-from macro_eeg.core import Stimulus, NodesCollection, SimulationParams
+from macro_eeg.core import Stimulus, NodesCollection, SimulationParams, TimeBase
 from macro_eeg.core.types import NoiseCallable
 from tqdm import tqdm
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import os
 from itertools import repeat
+from dataclasses import dataclass
 
 
 def _run_trial_job(i, noise_fn, nodes, params, lag_base, lags_stim, stimuli):
@@ -58,7 +59,7 @@ def _build_stimulus_schedule(
     t_start: int,
     t_end: int,
     t_stim_origin: int,
-    sample_rate,
+    tb: TimeBase,
 ) -> list[list[int]] | None:
     """
     Precompute, for each time step, which stimuli are active.
@@ -77,8 +78,7 @@ def _build_stimulus_schedule(
     for idx, stim in enumerate(stimuli):
         this_stim_activations = 0
         for t in range(t_start, t_end):
-            ms_per_sample = 1000.0 / sample_rate
-            t_ms = (t - t_stim_origin) * ms_per_sample
+            t_ms = (t - t_stim_origin) * tb.ms_per_sample
             if t_ms < 0:
                 continue
             if stim.is_active_at(int(t_ms)):
@@ -116,6 +116,49 @@ def _precompute_target_coefs(
     return target_coefs_per_stim
 
 
+def _var_predict(
+    lag_matrix: np.ndarray,
+    sim_data: np.ndarray,
+    t: int,
+    lag_offsets: np.ndarray,
+) -> np.ndarray:
+    # sim_data shape: (T, n)
+    hist = sim_data[t - lag_offsets, :].T  # (n, p)
+    hist_flat = hist.reshape(hist.size, order="F")  # (n*p,)
+    return lag_matrix @ hist_flat  # (n,)
+
+
+@dataclass(frozen=True, slots=True)
+class TrialConfig:
+    nr_samples: int
+    nr_burnin: int
+    t_start: int
+    t_stim_origin: int
+    lag_offsets: np.ndarray
+
+
+def make_trial_config(
+    params: SimulationParams, lag_base: np.ndarray, n_nodes: int
+) -> TrialConfig:
+    n_burnin = params.timebase.ms_to_samples(params.burnin_ms)
+    n_samples = params.timebase.ms_to_samples(params.burnin_ms + params.sim_ms)
+
+    pN = lag_base.shape[1]
+    p = pN // n_nodes
+    assert p == params.lags_ms, "lag_base and params.lags_ms mismatch"
+
+    lag_offsets = np.arange(1, p + 1, dtype=int)
+    t_start = params.lags_ms
+    t_stim_origin = t_start + n_burnin
+    return TrialConfig(
+        nr_samples=n_samples,
+        nr_burnin=n_burnin,
+        t_start=t_start,
+        t_stim_origin=t_stim_origin,
+        lag_offsets=lag_offsets,
+    )
+
+
 def _simulate_trial(
     noise_fn: NoiseCallable,
     nodes: NodesCollection,
@@ -129,36 +172,22 @@ def _simulate_trial(
         raise ValueError("lags_stim provided but stimuli is None")
 
     stimuli = _resolve_stimuli_for_trial(stimuli)
-
-    ms_per_sample = 1000.0 / params.sample_rate_hz
-    nr_burnin = int(params.burnin_ms / ms_per_sample)
-    nr_samples = int((params.burnin_ms + params.sim_ms) / ms_per_sample)
     nr_nodes = len(nodes.nodes)
 
-    noise = noise_fn(nr_nodes, nr_samples, params.sample_rate_hz)
+    cfg = make_trial_config(params, lag_base, nr_nodes)
 
-    sim_data = np.zeros((nr_samples, nr_nodes), dtype=float)
-    stim_data = np.zeros((nr_samples, nr_nodes), dtype=float)
+    sim_data = np.zeros((cfg.nr_samples, nr_nodes), dtype=float)
+    stim_data = np.zeros((cfg.nr_samples, nr_nodes), dtype=float)
 
-    # precompute constants for VAR step
-    n = nr_nodes
-    pN = lag_base.shape[1]
-    p = pN // n
-    assert p == params.lags_ms, "lag_base and params.t_lags mismatch"
-
-    # lag offsets: [1, 2, ..., p]
-    lag_offsets = np.arange(1, p + 1, dtype=int)
-
-    t_start = params.lags_ms
-    t_end = nr_samples
-    t_stim_origin = t_start + nr_burnin
     stim_schedule = _build_stimulus_schedule(
-        stimuli, t_start, t_end, t_stim_origin, params.sample_rate_hz
+        stimuli, cfg.t_start, cfg.nr_samples, cfg.t_stim_origin, params.timebase
     )
     target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
 
-    loop_range = range(t_start, t_end)
-    print("LOOP RANGE:", t_start, t_end, file=sys.stderr)
+    noise = noise_fn(nr_nodes, cfg.nr_samples, params.sample_rate_hz)
+
+    loop_range = range(cfg.t_start, cfg.nr_samples)
+    print("LOOP RANGE:", cfg.t_start, cfg.nr_samples, file=sys.stderr)
     if show_progress:
         loop_range = tqdm(
             loop_range,
@@ -169,12 +198,6 @@ def _simulate_trial(
         )
 
     for t in loop_range:
-        hist = sim_data[t - lag_offsets, :].T
-
-        # VAR step
-        hist_flat = hist.reshape(n * p, order="F")
-
-        # select lag matrix (base vs stimulus)
         active_indices = stim_schedule[t] if stim_schedule is not None else []
         if active_indices and lags_stim:
             active_lags_stim = [lags_stim[i] for i in active_indices]
@@ -182,14 +205,14 @@ def _simulate_trial(
         else:
             lag_matrix = lag_base
 
-        x_t = lag_matrix @ hist_flat
+        x_t = _var_predict(lag_matrix, sim_data, t, cfg.lag_offsets)
 
         # add stimuli
         for i in active_indices:
             stim = stimuli[i]
             if stim.stimulus_fn is None:
                 continue
-            t_rel_ms = (t - t_stim_origin) * ms_per_sample
+            t_rel_ms = (t - cfg.t_stim_origin) * params.timebase.ms_per_sample
             stimulus = stim.stimulus_fn(params.sample_rate_hz, t_rel_ms)
             target_coefs = target_coefs_per_stim[i]
             if target_coefs is not None:
@@ -200,13 +223,13 @@ def _simulate_trial(
         x_t += noise[t, :]
 
         sim_data[t, :] = x_t
+
         if show_progress:
             sys.stdout.flush()
 
-    if np.any(stim_data):
-        return sim_data[nr_burnin:, :], stim_data[nr_burnin:, :]
-
-    return sim_data[nr_burnin:, :], None
+    sim_out = sim_data[cfg.nr_burnin :, :]
+    stim_out = stim_data[cfg.nr_burnin :, :] if np.any(stim_data) else None
+    return sim_out, stim_out
 
 
 def simulate(
