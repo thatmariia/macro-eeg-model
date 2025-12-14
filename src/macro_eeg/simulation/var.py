@@ -131,30 +131,40 @@ def _var_predict(
 @dataclass(frozen=True, slots=True)
 class TrialConfig:
     nr_samples: int
-    nr_burnin: int
     t_start: int
     t_stim_origin: int
+    nr_pre_cutoff: int
     lag_offsets: np.ndarray
 
 
 def make_trial_config(
     params: SimulationParams, lag_base: np.ndarray, n_nodes: int
 ) -> TrialConfig:
-    n_burnin = params.timebase.ms_to_samples(params.burnin_ms)
-    n_samples = params.timebase.ms_to_samples(params.burnin_ms + params.sim_ms)
+    nr_lags = params.timebase.ms_to_samples(params.lags_ms)
+    if lag_base.shape[1] % n_nodes != 0:
+        raise ValueError("lag_base columns must be a multiple of n_nodes (n_nodes * p)")
+    nr_lags_in_base = lag_base.shape[1] // n_nodes
+    if nr_lags != nr_lags_in_base:
+        raise ValueError(
+            f"lag_base has {nr_lags_in_base} lags, but params.lags_ms corresponds to {nr_lags} lags"
+        )
+    if nr_lags < 1:
+        raise ValueError("params.lags_ms must correspond to at least 1 sample")
 
-    pN = lag_base.shape[1]
-    p = pN // n_nodes
-    assert p == params.lags_ms, "lag_base and params.lags_ms mismatch"
+    nr_burnin = params.timebase.ms_to_samples(params.burnin_ms)
+    nr_sim_samples = params.timebase.ms_to_samples(params.sim_ms)
+    nr_samples = nr_burnin + nr_lags + nr_sim_samples
 
-    lag_offsets = np.arange(1, p + 1, dtype=int)
-    t_start = params.lags_ms
-    t_stim_origin = t_start + n_burnin
+    lag_offsets = np.arange(1, nr_lags + 1, dtype=int)
+    t_start = nr_lags
+    t_stim_origin = nr_lags + nr_burnin
+    nr_pre_cutoff = nr_lags + nr_burnin
+
     return TrialConfig(
-        nr_samples=n_samples,
-        nr_burnin=n_burnin,
+        nr_samples=nr_samples,
         t_start=t_start,
         t_stim_origin=t_stim_origin,
+        nr_pre_cutoff=nr_pre_cutoff,
         lag_offsets=lag_offsets,
     )
 
@@ -185,6 +195,7 @@ def _simulate_trial(
     target_coefs_per_stim = _precompute_target_coefs(stimuli, nodes)
 
     noise = noise_fn(nr_nodes, cfg.nr_samples, params.sample_rate_hz)
+    sim_data[: cfg.t_start, :] = noise[: cfg.t_start, :]
 
     loop_range = range(cfg.t_start, cfg.nr_samples)
     print("LOOP RANGE:", cfg.t_start, cfg.nr_samples, file=sys.stderr)
@@ -227,8 +238,9 @@ def _simulate_trial(
         if show_progress:
             sys.stdout.flush()
 
-    sim_out = sim_data[cfg.nr_burnin :, :]
-    stim_out = stim_data[cfg.nr_burnin :, :] if np.any(stim_data) else None
+    sim_out = sim_data[cfg.nr_pre_cutoff :, :]
+    had_stim = stimuli is not None and any(st.stimulus_fn is not None for st in stimuli)
+    stim_out = stim_data[cfg.nr_pre_cutoff :, :] if had_stim else None
     return sim_out, stim_out
 
 
