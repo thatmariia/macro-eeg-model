@@ -3,18 +3,14 @@ import time
 import numpy as np
 from macro_eeg.core import Stimulus, NodesCollection, SimulationParams, TimeBase
 from macro_eeg.core.types import NoiseCallable
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 # from tqdm.auto import tqdm
 import sys
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import as_completed, ThreadPoolExecutor
 import os
 from itertools import repeat
+from threading import Lock
 from dataclasses import dataclass
-
-
-def _run_trial_job(i, noise_fn, nodes, params, lag_base, lags_stim, stimuli):
-    # show_progress must be False in workers
-    return _simulate_trial(noise_fn, nodes, params, lag_base, lags_stim, stimuli, False)
 
 
 def _combine_lags_stim(
@@ -165,18 +161,19 @@ def _simulate_trial(
     noise_fn: NoiseCallable,
     nodes: NodesCollection,
     params: SimulationParams,
+    cfg: TrialConfig,
     lag_base: np.ndarray,
     lags_stim: list[np.ndarray] | None = None,
     stimuli: list[Stimulus] | None = None,
     show_progress: bool = False,
+    progress_cb=None,
+    progress_every: int = 200,
 ) -> tuple[np.ndarray, np.ndarray | None]:
     if stimuli is None and lags_stim is not None:
         raise ValueError("lags_stim provided but stimuli is None")
 
     stimuli = _resolve_stimuli_for_trial(stimuli)
     nr_nodes = len(nodes.nodes)
-
-    cfg = make_trial_config(params, lag_base, nr_nodes)
 
     sim_data = np.zeros((cfg.nr_samples, nr_nodes), dtype=float)
     stim_data = np.zeros((cfg.nr_samples, nr_nodes), dtype=float)
@@ -197,9 +194,9 @@ def _simulate_trial(
             desc="Simulating single trial",
             unit=" sample",
             ascii=True,
-            leave=True, 
+            leave=True,
             file=sys.stdout,
-            mininterval=0.1, 
+            mininterval=0.1,
             miniters=1,
             dynamic_ncols=True,
         )
@@ -236,15 +233,20 @@ def _simulate_trial(
             # Force an occasional refresh
             if (t % 50) == 0:
                 pbar.refresh()
+        if progress_cb is not None and ((t - loop_range.start) % progress_every == 0):
+            progress_cb(progress_every)
 
     if pbar is not None:
         pbar.close()
+    if progress_cb is not None:
+        remaining = (loop_range.stop - loop_range.start) % progress_every
+        if remaining:
+            progress_cb(remaining)
 
     sim_out = sim_data[cfg.nr_pre_cutoff :, :]
     had_stim = stimuli is not None and any(st.stimulus_fn is not None for st in stimuli)
     stim_out = stim_data[cfg.nr_pre_cutoff :, :] if had_stim else None
     return sim_out, stim_out
-
 
 def simulate(
     noise_fn: NoiseCallable,
@@ -258,67 +260,52 @@ def simulate(
     parallel_trials: int | None = None,
     cooldown: float | None = None,
 ) -> tuple[np.ndarray, np.ndarray | None]:
+
+    nr_nodes = len(nodes.nodes)
+    cfg = make_trial_config(params, lag_base, nr_nodes)
+
+
     if nr_trials == 1 or (parallel_trials is not None and parallel_trials <= 1):
         print("Simulating single trial...", file=sys.stderr)
         return _simulate_trial(
-            noise_fn, nodes, params, lag_base, lags_stim, stimuli, show_progress
+            noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, show_progress, None
         )
+
+    total_steps_per_trial = cfg.nr_samples - cfg.t_start
+    total = nr_trials * total_steps_per_trial
+
+    lock = Lock()
+    pbar = tqdm(total=total, desc="Simulating (all trials)", unit="step", leave=True)
+
+    def make_cb():
+        def cb(n):
+            with lock:
+                pbar.update(n)
+
+        return cb
 
     P = parallel_trials or min(nr_trials, max(1, (os.cpu_count() or 1)))
 
-    print(f"Simulating {nr_trials} trials in parallel using {P} processes...", file=sys.stderr)
-
-    with ProcessPoolExecutor(max_workers=P) as ex:
-        # futs = [
-        #     ex.submit(
-        #         _run_trial_job,
-        #         i, noise_fn, nodes, params, lag_base, lags_stim, stimuli,
-        #     )
-        #     for i in range(nr_trials)
-        # ]
+    with ThreadPoolExecutor(max_workers=P) as ex:
         futs = []
         for i in range(nr_trials):
-            futs.append(
-                ex.submit(
-                    _run_trial_job,
-                    i,
-                    noise_fn,
-                    nodes,
-                    params,
-                    lag_base,
-                    lags_stim,
-                    stimuli,
-                )
-            )
+            futs.append(ex.submit(_simulate_trial, noise_fn, nodes, params, cfg, lag_base, lags_stim, stimuli, False, make_cb(), 200))
+            datas = [f.result() for f in as_completed(futs)]
             # optional cooldown between submissions
             if cooldown:
                 time.sleep(cooldown)
-        datas = []
-        if show_progress:
-            # pbar = tqdm(
-            #     total=nr_trials,
-            #     desc="Simulating trials",
-            #     unit=" trial",
-            #     ascii=True,
-            #     leave=True,
-            #     file=sys.stdout,
-            #     dynamic_ncols=True,
-            # )
-            pbar = tqdm(
-                total=nr_trials, desc="Simulating trials", unit="trial", leave=True
-            )
-            for fut in as_completed(futs):
-                datas.append(fut.result())
-                pbar.update(1)
-            pbar.close()
-        else:
-            datas = [f.result() for f in futs]
+    pbar.close()
 
-    # return np.mean(datas, axis=0)
     sim_datas, stim_datas = zip(*datas)
     sim_mean = np.mean(sim_datas, axis=0)
     if np.any([s is None for s in stim_datas]):
         stim_mean = None
     else:
         stim_mean = np.mean(stim_datas, axis=0)
+
+    # shapes
+    print(
+        f"DEBUG: sim_mean shape: {sim_mean.shape}, stim_mean shape: {stim_mean.shape if stim_mean is not None else 'None'}",
+        file=sys.stderr,
+    )
     return sim_mean, stim_mean
