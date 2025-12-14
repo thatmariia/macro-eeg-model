@@ -3,7 +3,8 @@ import time
 import numpy as np
 from macro_eeg.core import Stimulus, NodesCollection, SimulationParams, TimeBase
 from macro_eeg.core.types import NoiseCallable
-from tqdm import tqdm
+from tqdm.notebook import tqdm
+# from tqdm.auto import tqdm
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import os
@@ -51,6 +52,11 @@ def _resolve_stimuli_for_trial(
         )
         resolved_stimuli.append(stim_copy)
 
+        print(
+            f"DEBUG: resolved stimulus '{stim.name}' onset_ms: {onset}, duration_ms: {duration}",
+            file=sys.stderr,
+        )
+
     return resolved_stimuli
 
 
@@ -74,27 +80,13 @@ def _build_stimulus_schedule(
 
     schedule: list[list[int]] = [[] for _ in range(t_end)]
 
-    total_activations = 0
     for idx, stim in enumerate(stimuli):
-        this_stim_activations = 0
         for t in range(t_start, t_end):
             t_ms = (t - t_stim_origin) * tb.ms_per_sample
             if t_ms < 0:
                 continue
             if stim.is_active_at(int(t_ms)):
                 schedule[t].append(idx)
-                total_activations += 1
-                this_stim_activations += 1
-
-        debug_err = (
-            f"DEBUG: stimulus {idx} '{stim.name}' activations:",
-            this_stim_activations,
-            "onset_ms:",
-            stim.onset_ms,
-            "duration_ms:",
-            stim.duration_ms,
-        )
-        print(*debug_err, file=sys.stderr)
 
     return schedule
 
@@ -198,14 +190,18 @@ def _simulate_trial(
     sim_data[: cfg.t_start, :] = noise[: cfg.t_start, :]
 
     loop_range = range(cfg.t_start, cfg.nr_samples)
-    print("LOOP RANGE:", cfg.t_start, cfg.nr_samples, file=sys.stderr)
+    pbar = None
     if show_progress:
-        loop_range = tqdm(
-            loop_range,
+        pbar = tqdm(
+            total=loop_range.stop - loop_range.start,
             desc="Simulating single trial",
             unit=" sample",
             ascii=True,
-            leave=False,
+            leave=True, 
+            file=sys.stdout,
+            mininterval=0.1, 
+            miniters=1,
+            dynamic_ncols=True,
         )
 
     for t in loop_range:
@@ -235,8 +231,14 @@ def _simulate_trial(
 
         sim_data[t, :] = x_t
 
-        if show_progress:
-            sys.stdout.flush()
+        if pbar is not None:
+            pbar.update(1)
+            # Force an occasional refresh
+            if (t % 50) == 0:
+                pbar.refresh()
+
+    if pbar is not None:
+        pbar.close()
 
     sim_out = sim_data[cfg.nr_pre_cutoff :, :]
     had_stim = stimuli is not None and any(st.stimulus_fn is not None for st in stimuli)
@@ -263,6 +265,8 @@ def simulate(
         )
 
     P = parallel_trials or min(nr_trials, max(1, (os.cpu_count() or 1)))
+
+    print(f"Simulating {nr_trials} trials in parallel using {P} processes...", file=sys.stderr)
 
     with ProcessPoolExecutor(max_workers=P) as ex:
         # futs = [
@@ -291,22 +295,30 @@ def simulate(
                 time.sleep(cooldown)
         datas = []
         if show_progress:
-            for fut in tqdm(
-                as_completed(futs),
-                total=nr_trials,
-                desc="Simulating trials",
-                unit=" trial",
-                ascii=True,
-                leave=False,
-                file=sys.stdout,
-            ):
+            # pbar = tqdm(
+            #     total=nr_trials,
+            #     desc="Simulating trials",
+            #     unit=" trial",
+            #     ascii=True,
+            #     leave=True,
+            #     file=sys.stdout,
+            #     dynamic_ncols=True,
+            # )
+            pbar = tqdm(
+                total=nr_trials, desc="Simulating trials", unit="trial", leave=True
+            )
+            for fut in as_completed(futs):
                 datas.append(fut.result())
+                pbar.update(1)
+            pbar.close()
         else:
             datas = [f.result() for f in futs]
 
     # return np.mean(datas, axis=0)
-    if isinstance(datas[0], tuple):
-        sim_datas, stim_datas = zip(*datas)
-        return np.mean(sim_datas, axis=0), np.mean(stim_datas, axis=0)
+    sim_datas, stim_datas = zip(*datas)
+    sim_mean = np.mean(sim_datas, axis=0)
+    if np.any([s is None for s in stim_datas]):
+        stim_mean = None
     else:
-        return np.mean(datas, axis=0), None
+        stim_mean = np.mean(stim_datas, axis=0)
+    return sim_mean, stim_mean
