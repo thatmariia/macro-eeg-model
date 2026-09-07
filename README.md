@@ -1,4 +1,17 @@
 # macro-eeg-model
+
+[![Status: archived](https://img.shields.io/badge/status-archived-lightgrey.svg)](https://github.com/thatmariia/diaxcondel)
+
+> [!IMPORTANT]
+> **This repository is archived and no longer maintained.**
+>
+> Moved to **[diaxcondel](https://github.com/thatmariia/diaxcondel)**.
+> Please use the new repository for current code and documentation.
+>
+> This repository remains available as the version associated with the original
+> paper. For a version-specific citation, see
+> [Zenodo](https://doi.org/10.5281/zenodo.13594675).
+
 ### Macroscopic EEG modeling with axon propagation delays
 
 The code simulates scalp-recorded EEG dynamics by implementing a linear macroscopic network model based on long-range axon delays. 
